@@ -1,0 +1,12 @@
+# Ignore hidden and temp files/folders.
+.*
+~*
+
+# Ignore editor files.
+.vscode
+
+# Ignore log files.
+.log
+
+# DON'T ignore these files.
+!.gitignore
