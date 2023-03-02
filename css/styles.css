@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/*
+Top title Row
+ */
+#title-row {
+    height: 10vh;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*
+Middle main row
+ */
+#main-row {
+    height: 80vh;
+    border: 1px solid black;
+}
+#main-row > col {
+    height: 80vh;
+}
+
+#left-graveyard {
+    height: 80vh;
+}
+
+#chess-board-container {
+    height: 80vh;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+#right-graveyard {
+    height: 80vh;
+}
+
+/*
+Bottom buttons row
+ */
+#buttons-row {
+    height: 10vh;
+    border: 1px solid black;
+
+}
