@@ -23,25 +23,22 @@ Top title Row
 Middle main row
  */
 #main-row {
-    height: 80vh;
+    height: 100vh;
     border: 1px solid black;
 }
-#main-row > col {
-    height: 80vh;
-}
+
 
 #left-graveyard {
-    height: 80vh;
+    height: 100%;
 }
 
 #chess-board-container {
-    height: 80vh;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
+    height: 100%;
+    border: 1px solid black;
 }
 
 #right-graveyard {
-    height: 80vh;
+    height: 100%;
 }
 
 /*
