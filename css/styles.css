@@ -1,0 +1,51 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/*
+Top title Row
+ */
+#title-row {
+    height: 10vh;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*
+Middle main row
+ */
+#main-row {
+    height: 100vh;
+    border: 1px solid black;
+}
+
+
+#left-graveyard {
+    height: 100%;
+}
+
+#chess-board-container {
+    height: 100%;
+    border: 1px solid black;
+}
+
+#right-graveyard {
+    height: 100%;
+}
+
+/*
+Bottom buttons row
+ */
+#buttons-row {
+    height: 10vh;
+    border: 1px solid black;
+
+}
