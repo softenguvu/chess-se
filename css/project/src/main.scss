@@ -1,0 +1,30 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+$custom-colors: (
+    "primaryRed": #E42929,
+    "primaryWhite": #FFFFFF,
+    "primaryGrey": #959595,
+    "primaryRedBlack": #554545,
+    "primaryBlack": #000000 
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+:root {
+    --bs-body-font-family: 'Roboto', sans-serif;
+}
+
+.row {
+    height: 12.5%;
+}
+
+.white {
+    background-color: #FFFFFF;
+}
+
+.black {
+    background-color: #000000;
+}
+
+@import "../node_modules/bootstrap/scss/bootstrap"
