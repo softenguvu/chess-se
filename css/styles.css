@@ -19,6 +19,13 @@ Top title Row
     align-items: center;
 }
 
+@media only screen and (orientation: portrait), (max-width: 930px) {
+    #title-row {
+        display: none;
+    }
+}
+
+
 /*
 Middle main row
  */
