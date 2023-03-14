@@ -48,6 +48,35 @@ Bottom buttons row
     border: 1px solid black;
 }
 
+#undo-move, #new-game {
+    color: #FFFFFF;
+    margin: auto; 
+    font-weight: 200;
+    padding: 5px 5px; 
+    background-color: #E42929;
+    box-shadow: 4px 6px 5px 0 #000000;
+    text-shadow: 2px 0 4px #000000;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center; 
+    width: 25%;
+    font-size:30px; 
+ }
+ 
+ #undo-move:hover, #new-game:hover {
+    background: #000000;
+    border: solid #000000 1px;
+    border-radius: 0;
+    text-decoration: none;
+ 
+ } 
+ 
+ #undo-move:active, #new-game:active {
+   background-color: #000000;
+   box-shadow: 0 5px #000;
+   transform: translateY(4px);
+ }
+
 /*
 Change overall layout at medium breakpoint
  */
