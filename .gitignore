@@ -11,3 +11,4 @@
 # DON'T ignore these files.
 !.gitignore
 !.gitkeep
+!.jshintrc

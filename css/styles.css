@@ -23,10 +23,9 @@ Top title Row
 Middle main row
  */
 #main-row {
-    height: 100vh;
+    height: 80vh;
     border: 1px solid black;
 }
-
 
 #left-graveyard {
     height: 100%;
@@ -78,4 +77,27 @@ Bottom buttons row
    transform: translateY(4px);
  }
 
- 
+/*
+Change overall layout at medium breakpoint
+ */
+@media screen and (max-width: 768px) {
+    #title-row {
+        display: none;
+    }
+
+    #main-row {
+        height: 100vh;
+    }
+
+    #left-graveyard {
+        height: 15%;
+    }
+
+    #chess-board-container {
+        height: 70%;
+    }
+
+    #left-graveyard {
+        height: 15%;
+    }
+}
