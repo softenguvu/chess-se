@@ -23,8 +23,9 @@ Top title Row
 Middle main row
  */
 #main-row {
-    height: 80vh;
+    height: 100vh;
     border: 1px solid black;
+    /*overflow: scroll;*/
 }
 
 #left-graveyard {
@@ -52,14 +53,6 @@ Bottom buttons row
 Change overall layout at medium breakpoint
  */
 @media screen and (max-width: 768px) {
-    #title-row {
-        display: none;
-    }
-
-    #main-row {
-        height: 100vh;
-    }
-
     #left-graveyard {
         height: 15%;
     }
@@ -68,7 +61,7 @@ Change overall layout at medium breakpoint
         height: 70%;
     }
 
-    #left-graveyard {
+    #right-graveyard {
         height: 15%;
     }
 }
