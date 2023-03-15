@@ -1,34 +1,40 @@
-//Make it static class 
-//instead 
-// Message.stalemateMessage
 
+//Creating Messages class
 class Messages{
 
-    constructor() {
+    static confirmReset(){
+        const resetConfirmMsg = "Are you sure you wish to reset the game?";
+        confirm(resetConfirmMsg);
 
-        if (this instanceof Messages){
-            throw Error ("This class can't be instantiated.");
-        }
     }
-
-static confirmReset(){
-    const resetConfirmMsg = "Are you sure you wish to reset the game?";
-    confirm(resetConfirmMsg);
-}
-
-static printPlayerTurn(){
-    var playerTurnMsg = "Player's turn.";
-    alert(playerTurnMsg);
-}
-
-
-static stalemateMsg(){
-    var stalemateMessage = "Stalemate, it's a draw!";
-    alert(resetconfirmMsg);
-}
-
-static printWinMsg(){
-    var winMsg = "Checkmate, Player wins!"; 
-    return playerTurnMsg;
-}
-}
+    
+    static printPlayer1Turn()
+    {
+        const player1TurnMsg = "White's Turn."
+        alert(player1TurnMsg);
+    }
+    
+    static printPlayer2Turn()
+    {
+        const player2TurnMsg = "Black's Turn."
+        alert(player2TurnMsg);
+    }
+    
+    static stalemateMsg()
+    {
+        const stalemateMessage = "Stalemate, it's a draw!"
+        alert(stalemateMessage);
+    }
+    
+    static printWinMsg1()
+    {
+        const winMsg1 = "Checkmate, White wins!"
+        alert(winMsg1);
+    }
+    
+    static printWinMsg2()
+    {
+        const winMsg2 = "Checkmate, Black wins!"
+        alert(winMsg2);
+    }
+    }
