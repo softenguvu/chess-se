@@ -18,14 +18,14 @@ export class Piece {
      * Gets location of piece on the board
      */
     getLocation() {
-        throw new Error("Method 'getLocation()' must be implemented");
+        return this.location;
     }
 
     /**
      * Sets the location of the piece on the board
      */
-    setLocation() {
-        throw new Error("Method 'setLocation()' must be implemented");
+    setLocation(location) {
+        this.location = location;
     }
 
     /**
