@@ -1,17 +1,17 @@
 /**
  * Abstract Piece class
  */
-class Piece {
-    location = "";
-    active = false;
-    taken = false;
-    imgPath = "";
-    playerOwner = -1;
+export class Piece {
 
     constructor() {
         if (this.constructor === Piece) {
             throw new Error("Error: cannot instantiate abstract Piece class");
         }
+        this.location = "";
+        this.active = false;
+        this.taken = false;
+        this.imgPath = "";
+        this.playerOwner = -1;
     }
 
     /**
