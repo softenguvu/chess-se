@@ -8,7 +8,6 @@ Top title Row
  */
 #title-row {
     height: 10vh;
-    border: 1px solid black;
     display: flex;
     align-items: center;
 }
@@ -24,8 +23,6 @@ Middle main row
  */
 #main-row {
     height: 100vh;
-    border: 1px solid black;
-    /*overflow: scroll;*/
 }
 
 #left-graveyard, #right-graveyard {
@@ -47,7 +44,6 @@ Bottom buttons row
  */
 #buttons-row {
     height: 10vh;
-    border: 1px solid black;
 }
 
 #undo-move, #new-game {
