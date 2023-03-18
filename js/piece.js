@@ -7,25 +7,113 @@ export class Piece {
         if (this.constructor === Piece) {
             throw new Error("Error: cannot instantiate abstract Piece class");
         }
-        this.location = "";
+        this.id = undefined;
+        this.rowPos = undefined
+        this.colPos = undefined;
         this.active = false;
         this.taken = false;
-        this.imgPath = "";
-        this.playerOwner = -1;
+        this.playerOwner = undefined;
     }
 
     /**
-     * Gets location of piece on the board
+     * Get piece Id
+     * @returns {*}
      */
-    getLocation() {
-        return this.location;
+    getId(){
+        return this.id;
     }
 
     /**
-     * Sets the location of the piece on the board
+     * Sets piece Id
+     * @param id new Id
      */
-    setLocation(location) {
-        this.location = location;
+    setId(id) {
+        this.id = id;
+    }
+
+    /**
+     * Gets the row position
+     * @returns {*}
+     */
+    getRowPos() {
+        return this.rowPos;
+    }
+
+    /**
+     * Gets the column position
+     * @returns {*}
+     */
+    getColPos() {
+        return this.colPos;
+    }
+
+    /**
+     * Sets the row position
+     * @param rowPos new rowPos
+     */
+    setRowPos(rowPos) {
+        this.rowPos = rowPos;
+    }
+
+    /**
+     * Sets the column position
+     * @param colPos new colPos
+     */
+    setColPos(colPos) {
+        this.colPos = colPos;
+    }
+
+    /**
+     * Check if piece is active
+     * @returns {boolean}
+     */
+    isActive() {
+        return this.active;
+    }
+
+    /**
+     * Set piece to active state
+     */
+    setActive() {
+        this.active = true;
+    }
+
+    /**
+     * Set piece to inactive state
+     */
+    setInactive() {
+        this.active = false;
+    }
+
+    /**
+     * Check if piece is taken
+     * @returns {boolean}
+     */
+    isTaken() {
+        return this.taken;
+    }
+
+    /**
+     * Set piece to taken state
+     */
+    setTaken() {
+        this.taken = true;
+    }
+
+    /**
+     * Gets the piece player owner
+     * @returns {*}
+     */
+    getPlayerOwner() {
+        return this.playerOwner;
+    }
+
+    /**
+     * Sets the piece player owner
+     * @param playerOwner 0 or 1
+     */
+    setPlayerOwner(playerOwner) {
+        this.playerOwner = playerOwner;
     }
 
     /**
