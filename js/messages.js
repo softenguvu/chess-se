@@ -1,6 +1,6 @@
 
 //Creating Messages class
-class Messages{
+export class Messages{
 
     static confirmReset(){
         const resetConfirmMsg = "Are you sure you wish to reset the game?";
