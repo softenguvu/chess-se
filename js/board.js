@@ -104,7 +104,7 @@ export class Board {
     /**
      * Initializes a chess piece on the board.
      * 
-     * @param {*} pieceType Type of chess piece to initialize.
+     * @param {Piece} pieceType Type of chess piece to initialize.
      * @param {int} pieceId Piece id to initiliaze piece with.
      * @param {int} rowIndex Row index of piece's position.
      * @param {int} colIndex Column index of piece's position.
