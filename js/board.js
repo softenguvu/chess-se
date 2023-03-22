@@ -42,8 +42,8 @@ export class Board {
 
         // Initialize black's pieces.
         const playerTwoId = 1;
-        const powerRowBlack = 6;  // Row index of black's power pieces.
-        const pawnRowBlack = 7;  // Row index of black's pawns.
+        const powerRowBlack = 7;  // Row index of black's power pieces.
+        const pawnRowBlack = 6;  // Row index of black's pawns.
         currPieceId = this._initPlayerPieces(
             currPieceId, playerTwoId, powerRowBlack, pawnRowBlack
         );
