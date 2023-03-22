@@ -27,6 +27,13 @@ export class Board {
     }
 
     /**
+     * Clears the board of all chess pieces.
+     */
+    reset() {
+        this.board = Array.from(new Array(8), () => new Array(8));
+    }
+
+    /**
      * Initializes chess pieces on the board for a game of chess.
      */
     initBoard() {
