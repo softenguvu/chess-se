@@ -74,7 +74,7 @@ export class Board {
      * @returns Updated piece id.
      */
     _initPawnRow(pawnRow, currPieceId, playerId) {
-        for (let col = 0; i < this.board.length; ++currPieceId, ++col) {
+        for (let col = 0; col < this.board.length; ++currPieceId, ++col) {
             this._initPiece(Pawn, currPieceId, pawnRow, col, playerId);
         }
 
