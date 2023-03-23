@@ -44,27 +44,26 @@ Bottom buttons row
  */
 #buttons-row {
     height: 10vh;
+    width: 100%;
 }
 
 #undo-move, #new-game {
-    color: #FFFFFF;
-    margin: auto; 
+    max-width: 100%;
+    font-size: x-large;
     font-weight: 200;
     padding: 5px 5px; 
     background-color: #E42929;
+    border: 1px #000000;
     box-shadow: 4px 6px 5px 0 #000000;
-    text-shadow: 2px 0 4px #000000;
     text-decoration: none;
     cursor: pointer;
     text-align: center; 
-    width: 25%;
-    font-size:30px; 
+    
  }
  
  #undo-move:hover, #new-game:hover {
+    border: 1px #000000;
     background: #000000;
-    border: solid #000000 1px;
-    border-radius: 0;
     text-decoration: none;
  
  } 
