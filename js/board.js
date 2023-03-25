@@ -27,6 +27,26 @@ export class Board {
     }
 
     /**
+     * Marks the possible moves of a chess piece on the board.
+     * 
+     * @param {[[int, int]]} possibleMoves List of row-column indices on
+     * the board that indicate possible moves of a chess piece.
+     */
+    markPossibleMoves(possibleMoves) {
+        const rowStr = "87654321";  // Row labels indexed from top down.
+        const colStr = "abcdefgh";  // Column labels indexed from left to right.
+        possibleMoves.forEach(location => {
+            const [rowIndex, colIndex] = location;
+            const squarePos = colStr[colIndex] + rowStr[rowIndex];
+            const color = this.board[rowIndex][colIndex] ?
+                "primaryRed" :  // Red if contains piece.
+                "primaryRedBlack";  // RedBlack if doesn't contain piece.
+
+            this._markSquare(squarePos, color);
+        });
+    }
+
+    /**
      * Clears the board of all chess pieces.
      */
     reset() {
@@ -54,6 +74,22 @@ export class Board {
         currPieceId = this._initPlayerPieces(
             currPieceId, playerTwoId, powerRowBlack, pawnRowBlack
         );
+    }
+
+    /**
+     * Marks a square on the board with the given color.
+     * 
+     * @param {string} squarePos Position (e.g. "a8") of the square on the
+     * board that will be marked with the given color.
+     * @param {string} color Color to mark the square on the board.
+     */
+    _markSquare(squarePos, color) {
+        const squareBgColors = [
+            "bg-black", "bg-white", "bg-primaryRedBlack", "bg-primaryRed"
+        ];
+        const boardSquare = document.getElementById(squarePos);
+        boardSquare.classList.remove(...squareBgColors);
+        boardSquare.classList.add("bg-" + color);
     }
 
     /**
