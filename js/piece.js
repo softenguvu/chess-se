@@ -12,7 +12,8 @@ export class Piece {
         this.colPos = undefined;
         this.active = false;
         this.taken = false;
-        this.playerOwner = undefined;
+        this.playerId = undefined;
+        this.unicodeChar = undefined;
     }
 
     /**
@@ -104,16 +105,16 @@ export class Piece {
      * Gets the piece player owner
      * @returns {*}
      */
-    getPlayerOwner() {
-        return this.playerOwner;
+    getPlayerId() {
+        return this.playerId;
     }
 
     /**
      * Sets the piece player owner
      * @param playerOwner 0 or 1
      */
-    setPlayerOwner(playerOwner) {
-        this.playerOwner = playerOwner;
+    setPlayerId(playerOwner) {
+        this.playerId = playerOwner;
     }
 
     /**
@@ -136,5 +137,25 @@ export class Piece {
     possibleMoves()
     {
         throw new Error("Method 'possibleMoves()' must be implemented");
+    }
+
+    /**
+     * Converts cell id into row and column number
+     * @param id cell id
+     * @returns {(number|number)[]}
+     */
+    convertId(id) {
+        let row = id.charCodeAt(0) - 97;
+        let col = parseInt(id.charAt(1));
+        col = Math.abs(col - 8);
+        return [row, col];
+    }
+
+    /**
+     * Converts piece position into id
+     * @returns {string}
+     */
+    convertPos() {
+        return String.fromCharCode(this.rowPos + 97) + Math.abs(this.colPos - 8);
     }
 }
