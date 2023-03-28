@@ -10,6 +10,7 @@ export class Pawn extends Piece{
         this.taken = false;
         this.moved = false;
         this.playerOwner = playerId;
+        this.unicodeChar = "";
     }
 
     /**
@@ -142,8 +143,12 @@ export class Pawn extends Piece{
             possibleMoves.push([this.rowPos, this.colPos+(moveDir*2)])
         }
 
-        if (0 < this.colPos+moveDir < 7 && !board[this.rowPos][this.colPos+moveDir]) { // Check 'in front' of the piece
+        if (0 <= this.colPos+moveDir <= 7 && !board[this.rowPos][this.colPos+moveDir]) { // Check 'in front' of the piece
             possibleMoves.push([this.rowPos, this.colPos+moveDir])
+        }
+
+        if (0 <= this.colPos+moveDir <= 7 && (board[this.rowPos+moveDir][this.colPos+moveDir] && 0 <= this.rowPos+moveDir <= 7) || (board[this.rowPos-moveDir][this.colPos+moveDir] && 0 <= this.rowPos-moveDir <= 7)) { // Check the pieces attackable locations for pieces
+
         }
     }
 }
