@@ -13,6 +13,7 @@ export class Piece {
         this.active = false;
         this.taken = false;
         this.playerOwner = undefined;
+        this.takenPiece = undefined;
     }
 
     /**
