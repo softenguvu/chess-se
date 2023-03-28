@@ -3,6 +3,8 @@ import { Piece } from "./piece.js"
 export class Pawn extends Piece{
 
     constructor(pieceId, rowIndex, colIndex, playerId) {
+        super()
+
         this.id = pieceId;
         this.rowPos = rowIndex
         this.colPos = colIndex;
@@ -10,108 +12,7 @@ export class Pawn extends Piece{
         this.taken = false;
         this.moved = false;
         this.playerOwner = playerId;
-        this.unicodeChar = "";
-    }
-
-    /**
-     * Get piece Id
-     * @returns {*}
-     */
-    getId(){
-        return this.id;
-    }
-
-    /**
-     * Sets piece Id
-     * @param id new Id
-     */
-    setId(id) {
-        this.id = id;
-    }
-
-    /**
-     * Gets the row position
-     * @returns {*}
-     */
-    getRowPos() {
-        return this.rowPos;
-    }
-
-    /**
-     * Gets the column position
-     * @returns {*}
-     */
-    getColPos() {
-        return this.colPos;
-    }
-
-    /**
-     * Sets the row position
-     * @param rowPos new rowPos
-     */
-    setRowPos(rowPos) {
-        this.rowPos = rowPos;
-    }
-
-    /**
-     * Sets the column position
-     * @param colPos new colPos
-     */
-    setColPos(colPos) {
-        this.colPos = colPos;
-    }
-
-    /**
-     * Check if piece is active
-     * @returns {boolean}
-     */
-    isActive() {
-        return this.active;
-    }
-
-    /**
-     * Set piece to active state
-     */
-    setActive() {
-        this.active = true;
-    }
-
-    /**
-     * Set piece to inactive state
-     */
-    setInactive() {
-        this.active = false;
-    }
-
-    /**
-     * Check if piece is taken
-     * @returns {boolean}
-     */
-    isTaken() {
-        return this.taken;
-    }
-
-    /**
-     * Set piece to taken state
-     */
-    setTaken() {
-        this.taken = true;
-    }
-
-    /**
-     * Gets the piece player owner
-     * @returns {*}
-     */
-    getPlayerOwner() {
-        return this.playerOwner;
-    }
-
-    /**
-     * Sets the piece player owner
-     * @param playerOwner 0 or 1
-     */
-    setPlayerOwner(playerOwner) {
-        this.playerOwner = playerOwner;
+        this.unicodeChar = "&#9817;";
     }
 
     /**
@@ -124,31 +25,56 @@ export class Pawn extends Piece{
     /**
      * Move piece to new location and sets piece location property
      */
-    movePiece() {
-        throw new Error("Method 'movePiece' must be implemented");
+    movePiece(id, board) {
+        //Convert position and id
+        let curPos = String.fromCharCode(this.rowPos + 97) + (this.colPos+1);
+        let movePos = [(id.charCodeAt(0)-97), parseInt(id.charAt(1))-1]
+
+        board[this.rowPos][this.colPos] = null;
+
+        // Update piece position
+        this.rowPos = movePos[0];
+        this.colPos = movePos[1];
+
+        // Update frontend
+        document.getElementById(curPos).innerHTML = null;
+        document.getElementById(id).innerHTML = this.unicodeChar;
+
+        // Update board
+        
+        board[this.rowPos][this.colPos] = this;
+        console.log(board)
     }
 
     possibleMoves(board) {
         let possibleMoves = [];
-        var moveDir = 0
+        var moveDir = 0;
 
-        if (playerOwner == 0) { // Check which direction the piece can move
-            moveDir = 1
+        if (this.playerOwner == 0) { // Check which direction the piece can move
+            moveDir = 1;
         }
         else {
-            moveDir = -1
+            moveDir = -1;
         }
         
-        if (!this.moved && !board[this.rowPos][this.colPos+(moveDir*2)]) { // Check 'in front' of the piece if it hasn't moved yet
-            possibleMoves.push([this.rowPos, this.colPos+(moveDir*2)])
+        if (!this.moved && board[this.rowPos+(moveDir*2)][this.colPos] === undefined && board[this.rowPos+moveDir][this.colPos] === undefined) { // Check 'in front' of the piece if it hasn't moved yet
+            possibleMoves.push([this.rowPos+(moveDir*2), this.colPos]);
         }
 
-        if (0 <= this.colPos+moveDir <= 7 && !board[this.rowPos][this.colPos+moveDir]) { // Check 'in front' of the piece
-            possibleMoves.push([this.rowPos, this.colPos+moveDir])
+        if (0 <= this.rowPos+moveDir <= 7) {
+            if (board[this.rowPos+moveDir][this.colPos] === undefined) { // Check 'in front' of the piece
+                possibleMoves.push([this.rowPos+moveDir, this.colPos]);
+            }
+
+            if (0 <= this.colPos+moveDir <= 7 && board[this.rowPos+moveDir][this.colPos+moveDir] !== undefined) { // Check the pieces attackable locations for pieces
+                possibleMoves.push([this.rowPos+moveDir, this.colPos+moveDir]);
+            }
+
+            if (0 <= this.colPos-moveDir <= 7 && board[this.rowPos+moveDir][this.colPos-moveDir] !== undefined) { // Check the pieces attackable locations for pieces
+                possibleMoves.push([this.rowPos+moveDir, this.colPos-moveDir]);
+            }
         }
 
-        if (0 <= this.colPos+moveDir <= 7 && (board[this.rowPos+moveDir][this.colPos+moveDir] && 0 <= this.rowPos+moveDir <= 7) || (board[this.rowPos-moveDir][this.colPos+moveDir] && 0 <= this.rowPos-moveDir <= 7)) { // Check the pieces attackable locations for pieces
-
-        }
+        return possibleMoves;
     }
 }
