@@ -8,7 +8,6 @@ Top title Row
  */
 #title-row {
     height: 10vh;
-    border: 1px solid black;
     display: flex;
     align-items: center;
 }
@@ -24,12 +23,15 @@ Middle main row
  */
 #main-row {
     height: 100vh;
-    border: 1px solid black;
 }
 
-
-#left-graveyard {
+#left-graveyard, #right-graveyard {
     height: 100%;
+    background-color: #959595;
+    border: 2px solid black; 
+    border-radius: 10px;
+    padding: 20px; 
+
 }
 
 #chess-board-container {
@@ -37,15 +39,55 @@ Middle main row
     border: 1px solid black;
 }
 
-#right-graveyard {
-    height: 100%;
-}
-
 /*
 Bottom buttons row
  */
 #buttons-row {
     height: 10vh;
-    border: 1px solid black;
+}
 
+#undo-move, #new-game {
+    color: #FFFFFF;
+    margin: auto; 
+    font-weight: 200;
+    padding: 5px 5px; 
+    background-color: #E42929;
+    box-shadow: 4px 6px 5px 0 #000000;
+    text-shadow: 2px 0 4px #000000;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center; 
+    width: 25%;
+    font-size:30px; 
+ }
+ 
+ #undo-move:hover, #new-game:hover {
+    background: #000000;
+    border: solid #000000 1px;
+    border-radius: 0;
+    text-decoration: none;
+ 
+ } 
+ 
+ #undo-move:active, #new-game:active {
+   background-color: #000000;
+   box-shadow: 0 5px #000;
+   transform: translateY(4px);
+ }
+
+/*
+Change overall layout at medium breakpoint
+ */
+@media screen and (max-width: 768px) {
+    #left-graveyard {
+        height: 15%;
+    }
+
+    #chess-board-container {
+        height: 70%;
+    }
+
+    #right-graveyard {
+        height: 15%;
+    }
 }
