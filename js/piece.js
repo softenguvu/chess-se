@@ -14,6 +14,7 @@ export class Piece {
         this.taken = false;
         this.playerId = undefined;
         this.unicodeChar = undefined;
+        this.takenPiece = undefined;
     }
 
     /**
@@ -157,5 +158,14 @@ export class Piece {
      */
     convertPos() {
         return String.fromCharCode(this.rowPos + 97) + Math.abs(this.colPos - 8);
+    }
+
+    validateMove(row, col, possibleMoves) {
+        for (let i = 0; i < possibleMoves.length; i++) {
+            if (possibleMoves[i][0] === row && possibleMoves[i][1] === col) {
+                return true;
+            }
+        }
+        return false;
     }
 }

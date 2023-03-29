@@ -18,26 +18,30 @@ export class Rook extends Piece {
     }
 
     /**
-     * Moves piece to cell {id}, updates frontend and Board.board with piece position
-     * @param id desired cell id
+     * Moves piece to {row}, {col} and updates board
+     * @param row new row
+     * @param col new column
      * @param board Board.board
      */
-    movePiece(id, board) {
-        //Convert position and id
-        let curPos = this.convertPos();
-        let movePos = this.convertId(id);
+    movePiece(row, col, board) {
+        let possibleMoves = this.possibleMoves(board);
+        if (!this.validateMove(row, col, possibleMoves)) { // ignore invalid move
+            return;
+        }
 
-        // Update piece position
-        this.rowPos = movePos[0];
-        this.colPos = movePos[1];
-
-        // Update frontend
-        document.getElementById(curPos).innerHTML = null;
-        document.getElementById(id).innerHTML = this.unicodeChar;
+        if (board[row][col]) { // taking a piece
+            this.takenPiece = board[row][col];
+            this.takenPiece.setTaken();
+            board[row][col] = null;
+        }
 
         // Update board
         board[this.rowPos][this.colPos] = null;
-        board[this.rowPos][this.colPos] = this;
+        board[row][col] = this;
+
+        // Update piece position
+        this.rowPos = row;
+        this.colPos = col;
     }
 
     /**
@@ -78,4 +82,5 @@ export class Rook extends Piece {
         return possibleMoves;
     }
 }
+
 
