@@ -24,6 +24,8 @@ export class Board {
 
         // 2D array of Piece.
         this.board = Array.from(new Array(8), () => new Array(8));
+        // Mapping between player id and list of taken pieces.
+        this.takenPieces = new Map();
     }
 
     /**
