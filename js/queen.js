@@ -1,129 +1,125 @@
-import { Board } from "./board.js"
-/*
-* Queen class
-*/
+import { Piece } from "./piece.js"
 
+/*
+* Represents a queen chess piece that is used with the Board class
+*/
 export class Queen extends Piece{
     /**
-     * Constructor
+     * Instantiates a queen piece with the given position and piece ID.
+     * The piece belongs to the player with the given player ID.
+     * 
+     * @param {int} id Piece's ID.
+     * @param {int} rowPos Piece's row position.
+     * @param {int} colPos Piece's column position.
+     * @param {int} playerOwner
+     * 
      */
-    constructor(pieceId, rowIndex, colIndex, playerId) {
+    constructor(id, rowPos, colPos, playerOwner) {
         super();
-        id = pieceId;
-        rowPos = rowIndex;
-        colPos = colIndex;
-        playerOwner = playerId;
+        this.id = id;
+        this.rowPos = rowPos;
+        this.colPos = colPos;
+        this.playerOwner = playerOwner;
     }
 
 
     /**
      * Move piece to new location and sets piece location property
      */
-    movePiece() {
+    movePiece(/**pass in board object */) {
         
     }
 
     /**
-     * Gets list of possible moves piece can make
+     * Gets list of possible moves that the queen piece can make.
+     * It looks in every direction the queen can move and continues to
+     * add moves to the possible moves array unless another piece or
+     * the end of the board in encountered. If another piece is encountered,
+     * the queen can only move there if it belongs to the other player.
+     * 
+     * @param {Array.<Array.<int>>} board A 2D array representation of the board.
+     * @returns {Array.<Array.<int>>} Returns a 2D array of the possible moves.
      */
-    possibleMoves() {
+    possibleMoves(board) {
         let possibleMoves = [];
-        let moveToAdd = [];
+
+        let maxRows = board.length;
+        let maxCols = board[0].length;
+        let minRows, minCols = 0;
         /**
          * Get row increasing moves
          */
-        for (let i = rowPos + 1; i <= 7; i++) {
-            if (Board[i][colPos] !== null && Board[i][colPos].getPlayerOwner() == playerOwner) {
+        for (let i = rowPos + 1; i < maxRows; i++) {
+            if (board[i][colPos] !== null && board[i][colPos].getPlayerOwner() == playerOwner) {
                 break;
             }
-            moveToAdd = [i, colPos];
-            possibleMoves.push(moveToAdd);
+            possibleMoves.push([i, colPos]);
         }
         /**
          * Get row decreasing moves
          */
-        for (let i = rowPos - 1; i >= 0; i--) {
-            if (Board[i][colPos] !== null && Board[i][colPos].getPlayerOwner() == playerOwner) {
+        for (let i = rowPos - 1; i >= minRows; i--) {
+            if (board[i][colPos] !== null && board[i][colPos].getPlayerOwner() == playerOwner) {
                 break;
             }
-            moveToAdd = [i, colPos];
-            possibleMoves.push(moveToAdd);
+            possibleMoves.push([i, colPos]);
         }
         /**
          * Get col increasing moves
          */
-        for (let i = colPos + 1; i <= 7; i++) {
-            if (Board[rowPos][i] !== null && Board[rowPos][i].getPlayerOwner() == playerOwner) {
+        for (let i = colPos + 1; i < maxCols; i++) {
+            if (board[rowPos][i] !== null && board[rowPos][i].getPlayerOwner() == playerOwner) {
                 break;
             }
-            moveToAdd = [rowPos, i];
-            possibleMoves.push(moveToAdd);
+            possibleMoves.push([rowPos, i]);
         }
         /**
          * Get col decreasing moves
          */
-        for (let i = colPos - 1; i >= 0; i--) {
-            if (Board[rowPos][i] !== null && Board[rowPos][i].getPlayerOwner() == playerOwner) {
+        for (let i = colPos - 1; i >= minCols; i--) {
+            if (board[rowPos][i] !== null && board[rowPos][i].getPlayerOwner() == playerOwner) {
                 break;
             }
-            moveToAdd = [rowPos, i];
-            possibleMoves.push(moveToAdd);
+            possibleMoves.push([rowPos, i]);
         }
         /**
          * Get row and col increasing moves
          */
-        let i = rowPos + 1;
-        let y = colPos + 1;
-        while (i <= 7 && y <= 7) {
-            if (Board[i][y] !== null && Board[i][y].getPlayerOwner() == playerOwner) {
+        for (let i = rowPos + 1, y = colPos + 1; i < maxRows && y < maxCols; i++, y++) {
+            if (board[i][y] !== null && board[i][y].getPlayerOwner() == playerOwner) {
                 break;
             }
-            moveToAdd = [i, y];
-            possibleMoves.push(moveToAdd);
+            possibleMoves.push([i, y]);
             i++;
             y++;
         }
+
         /**
          * Get row and col decreasing moves
          */
-        i = rowPos - 1;
-        y = colPos - 1;
-        while (i >= 0 && y >= 0) {
-            if (Board[i][y] !== null && Board[i][y].getPlayerOwner() == playerOwner) {
+        for (let i = rowPos - 1, y = colPos - 1; i >= minRows && y >= minCols; i--, y--) {
+            if (board[i][y] !== null && board[i][y].getPlayerOwner() == playerOwner) {
                 break;
             }
-            moveToAdd = [i, y];
-            possibleMoves.push(moveToAdd);
-            i--;
-            y--;
+            possibleMoves.push([i, y]);
         }
         /**
          * Get row increasing and col decreasing moves
          */
-        i = rowPos + 1;
-        y = colPos - 1;
-        while (i <= 7 && y >= 0) {
-            if (Board[i][y] !== null && Board[i][y].getPlayerOwner() == playerOwner) {
+        for (let i = rowPos + 1, y = colPos - 1; i < maxRows && y >= minCols; i++, y--) {
+            if (board[i][y] !== null && board[i][y].getPlayerOwner() == playerOwner) {
                 break;
             }
-            moveToAdd = [i, y];
-            possibleMoves.push(moveToAdd);
-            i++;
-            y--;
+            possibleMoves.push([i, y]);
         }
         /**
          * Get row decreasing and col increasing moves
          */
-        i = rowPos - 1;
-        y = colPos + 1;
-        while (i >= 0 && y <= 7) {
-            if (Board[i][y] !== null && Board[i][y].getPlayerOwner() == playerOwner) {
+        for (let i = rowPos - 1, y = colPos + 1; i >= minRows && y < maxCols; i--, y++) {
+            if (board[i][y] !== null && board[i][y].getPlayerOwner() == playerOwner) {
                 break;
             }
-            moveToAdd = [i, y];
-            possibleMoves.push(moveToAdd);
-            i--;
-            y++;
+            possibleMoves.push([i, y]);
         }
         return possibleMoves;
     }
