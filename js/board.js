@@ -49,10 +49,11 @@ export class Board {
     }
 
     /**
-     * Clears the board of all chess pieces.
+     * Clears the board of all chess pieces and taken pieces.
      */
     reset() {
         this.board = Array.from(new Array(8), () => new Array(8));
+        this.takenPieces.clear();
     }
 
     /**
