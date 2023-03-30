@@ -57,7 +57,8 @@ export class Board {
     }
 
     /**
-     * Initializes chess pieces on the board for a game of chess.
+     * Initializes chess pieces on the board and taken pieces for a game of
+     * chess.
      */
     initBoard() {
         let currPieceId = 0;
@@ -69,6 +70,7 @@ export class Board {
         currPieceId = this._initPlayerPieces(
             currPieceId, playerOneId, powerRowWhite, pawnRowWhite
         );
+        this.takenPieces.set(playerOneId, []);
 
         // Initialize black's pieces.
         const playerTwoId = 1;
@@ -77,6 +79,7 @@ export class Board {
         currPieceId = this._initPlayerPieces(
             currPieceId, playerTwoId, powerRowBlack, pawnRowBlack
         );
+        this.takenPieces.set(playerTwoId, []);
     }
 
     /**
