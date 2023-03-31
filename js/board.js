@@ -24,6 +24,7 @@ export class Board {
 
         // 2D array of Piece.
         this.board = Array.from(new Array(8), () => new Array(8));
+        this.lastMoved = null;
     }
 
     /**
@@ -51,6 +52,13 @@ export class Board {
      */
     reset() {
         this.board = Array.from(new Array(8), () => new Array(8));
+    }
+
+    /**
+     * Undos the previous move
+     */
+    undo() {
+        this.lastMoved.undo();
     }
 
     /**
