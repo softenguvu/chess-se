@@ -8,18 +8,35 @@ export class Pawn extends Piece{
         this.id = pieceId;
         this.rowPos = rowIndex
         this.colPos = colIndex;
+        this.prevRowPos = 0;
+        this.prevColPos = 0;
         this.active = true;
         this.taken = false;
         this.moved = false;
         this.playerOwner = playerId;
+        this.lastTake = null;
         this.unicodeChar = "&#9817;";
     }
 
     /**
      * Undo previous action
      */
-    undo() {
-        throw new Error("Method 'undo()' must be implemented");
+    undo(board) {
+        // Remove the piece from its current location
+        board[this.rowPos][this.colPos] = null;
+
+        // See if we took a piece during that last move
+        if (this.lastTake != null) {
+            this.lastTake.taken = false;
+
+            board[this.rowPos][this.colPos] = this.lastTake;
+        }
+
+        // Set the current location to the previous location and put the piece in its new current location
+        this.rowPos = this.prevRowPos;
+        this.colPos = this.prevColPos;
+
+        board[this.rowPos][this.colPos] = this;
     }
 
     /**
@@ -33,6 +50,8 @@ export class Pawn extends Piece{
         board[this.rowPos][this.colPos] = null;
 
         // Update piece position
+        this.prevColPos = this.colPos;
+        this.prevRowPos = this.rowPos;
         this.rowPos = movePos[0];
         this.colPos = movePos[1];
 
@@ -41,9 +60,14 @@ export class Pawn extends Piece{
         document.getElementById(id).innerHTML = this.unicodeChar;
 
         // Update board
-        
+        if (board[this.rowPos][this.colPos]) {
+            this.lastTake = board[this.rowPos][this.colPos];
+            this.lastTake.taken = true;
+        }
+        else {
+            this.lastTake = null;
+        }
         board[this.rowPos][this.colPos] = this;
-        console.log(board)
     }
 
     possibleMoves(board) {
