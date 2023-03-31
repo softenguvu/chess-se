@@ -20,13 +20,17 @@ export class Queen extends Piece{
         this.rowPos = rowPos;
         this.colPos = colPos;
         this.playerOwner = playerOwner;
+        this.unicodeChar = "&#9813;";
     }
 
 
     /**
      * Move piece to new location and sets piece location property
+     * @param {int} row New row position
+     * @param {int} col New column position
+     * @param {Array.<Array.<int>>} board 2D array representation of the board
      */
-    movePiece(/**pass in board object */) {
+    movePiece(row, col, board) {
         
     }
 
@@ -90,8 +94,6 @@ export class Queen extends Piece{
                 break;
             }
             possibleMoves.push([i, y]);
-            i++;
-            y++;
         }
 
         /**
