@@ -42,27 +42,26 @@ export class Pawn extends Piece{
     /**
      * Move piece to new location and sets piece location property
      */
-    movePiece(id, board) {
-        //Convert position and id
-        let curPos = String.fromCharCode(this.rowPos + 97) + (this.colPos+1);
-        let movePos = [(id.charCodeAt(0)-97), parseInt(id.charAt(1))-1]
+    movePiece(row, col, board) {
+        // Make sure the move is valid
+        const possMoves = this.possibleMoves(board);
+        if (!this.validateMove(row, col, possMoves)) {
+            return;
+        }
 
+        // Remove piece from its previous place
         board[this.rowPos][this.colPos] = null;
 
         // Update piece position
         this.prevColPos = this.colPos;
         this.prevRowPos = this.rowPos;
-        this.rowPos = movePos[0];
-        this.colPos = movePos[1];
-
-        // Update frontend
-        document.getElementById(curPos).innerHTML = null;
-        document.getElementById(id).innerHTML = this.unicodeChar;
+        this.rowPos = row;
+        this.colPos = col;
 
         // Update board
         if (board[this.rowPos][this.colPos]) {
             this.lastTake = board[this.rowPos][this.colPos];
-            this.lastTake.taken = true;
+            this.lastTake.setTaken();
         }
         else {
             this.lastTake = null;
@@ -81,7 +80,9 @@ export class Pawn extends Piece{
             moveDir = -1;
         }
         
-        if (!this.moved && board[this.rowPos+(moveDir*2)][this.colPos] === undefined && board[this.rowPos+moveDir][this.colPos] === undefined) { // Check 'in front' of the piece if it hasn't moved yet
+        if (!this.moved &&
+                board[this.rowPos+(moveDir*2)][this.colPos] === undefined &&
+                board[this.rowPos+moveDir][this.colPos] === undefined) { // Check 'in front' of the piece if it hasn't moved yet
             possibleMoves.push([this.rowPos+(moveDir*2), this.colPos]);
         }
 

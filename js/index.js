@@ -1,5 +1,4 @@
 import { Pawn } from "./pawn.js";
-import { Board } from "./board.js";
 
 // Add 'click' event-listener to the 'New Game' button.
 const newGameButton = document.getElementById("new-game");
