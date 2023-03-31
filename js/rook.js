@@ -24,23 +24,23 @@ export class Rook extends Piece {
      * @param board Board.board
      */
     movePiece(row, col, board) {
-        let possibleMoves = this.possibleMoves(board);
+        let possibleMoves = this.possibleMoves(board.board);
         if (!this.validateMove(row, col, possibleMoves)) { // ignore invalid move
             return;
         }
 
-        if (board[row][col]) { // taking a piece
-            this.takenPiece = board[row][col];
+        if (board.board[row][col]) { // taking a piece
+            this.takenPiece = board.board[row][col];
             this.takenPiece.setTaken();
-            board[row][col] = null;
+            board.board[row][col] = null;
         }
         else {
             this.takenPiece = null;
         }
 
         // Update board
-        board[this.rowPos][this.colPos] = null;
-        board[row][col] = this;
+        board.board[this.rowPos][this.colPos] = null;
+        board.board[row][col] = this;
 
         // Update piece position
         this.rowPos = row;
