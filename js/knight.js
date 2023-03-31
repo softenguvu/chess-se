@@ -30,44 +30,21 @@ export class Knight extends Piece {
      * possible moves of knight at current position.
      */
     possibleMoves(board) {
-        return [
-            ...this._movesLeftRight("left", board),
-            ...this._movesLeftRight("right", board)
+        // Row-column offsets from knight's current position that yield
+        // potential moves.
+        const moveOffsets = [
+            [-1, -2], [-2, -1], [-2, +1], [-1, +2],  // Moves above knight.
+            [+1, -2], [+2, -1], [+2, +1], [+1, +2]  // Moves below knight.
         ];
-    }
-
-    /**
-     * Determines the possible moves to left or right of knight.
-     *
-     * @param {string} side Which side of knight to check for possible moves.
-     * Valid args: "left" | "right"
-     * @param {[[Piece]]} board Chess board (2D array of chess pieces).
-     * @returns List of row-column indices on the chess board that indicate
-     * possible moves to left or right of knight.
-     */
-    _movesLeftRight(side, board) {
-        const validSides = ["left", "right"];
-        if (!validSides.includes(side)) {
-            throw new Error(`'${side}' is not a valid side`);
-        }
 
         let possibleMoves = [];
-        // Check moves below then above knight.
-        const negateRowDiff = [false, false, true, true];
-        // Check moves left or right of knight.
-        const negateColDiff = (side === "left") ? true : false;
-        for (
-            // Offset from knight's current position.
-            let i = 0, rowDiff = 2, colDiff = 1;
-            i < 4;
-            ++i, [rowDiff, colDiff] = [colDiff, rowDiff]
-        ) {
-            const row = this.rowPos + Math.pow(-1, negateRowDiff[i]) * rowDiff;
-            const col = this.colPos + Math.pow(-1, negateColDiff) * colDiff;
+        moveOffsets.forEach(([rowDiff, colDiff]) => {
+            const row = this.rowPos + rowDiff;
+            const col = this.colPos + colDiff;
             if (this._possibleMove(row, col, board)) {
                 possibleMoves.push([row, col]);
             }
-        }
+        });
 
         return possibleMoves;
     }
