@@ -160,6 +160,13 @@ export class Piece {
         return String.fromCharCode(this.rowPos + 97) + Math.abs(this.colPos - 8);
     }
 
+    /**
+     * Validates move checking if [row, col] is in possible moves
+     * @param row row pos
+     * @param col col pos
+     * @param possibleMoves arr of possible moves
+     * @returns {boolean}
+     */
     validateMove(row, col, possibleMoves) {
         for (let i = 0; i < possibleMoves.length; i++) {
             if (possibleMoves[i][0] === row && possibleMoves[i][1] === col) {
