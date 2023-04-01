@@ -23,17 +23,6 @@ export class Queen extends Piece{
         this.unicodeChar = "&#9813;";
     }
 
-
-    /**
-     * Move piece to new location and sets piece location property
-     * @param {int} row New row position
-     * @param {int} col New column position
-     * @param {Array.<Array.<int>>} board 2D array representation of the board
-     */
-    movePiece(row, col, board) {
-        
-    }
-
     /**
      * Gets list of possible moves that the queen piece can make.
      * It looks in every direction the queen can move and continues to
