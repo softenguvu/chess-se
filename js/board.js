@@ -55,13 +55,6 @@ export class Board {
     }
 
     /**
-     * Undos the previous move
-     */
-    undo() {
-        this.lastMoved.undo();
-    }
-
-    /**
      * Initializes chess pieces on the board for a game of chess.
      */
     initBoard() {
