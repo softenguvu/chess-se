@@ -10,10 +10,8 @@ export class Pawn extends Piece{
         this.colPos = colIndex;
         this.prevRowPos = 0;
         this.prevColPos = 0;
-        this.active = true;
-        this.taken = false;
         this.moved = false;
-        this.playerOwner = playerId;
+        this.playerId = playerId;
         this.lastTake = null;
         this.unicodeChar = "&#9817;";
     }
@@ -73,7 +71,7 @@ export class Pawn extends Piece{
         let possibleMoves = [];
         var moveDir = 0;
 
-        if (this.playerOwner == 0) { // Check which direction the piece can move
+        if (this.playerId == 0) { // Check which direction the piece can move
             moveDir = 1;
         }
         else {

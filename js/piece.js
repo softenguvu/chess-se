@@ -10,9 +10,10 @@ export class Piece {
         this.id = undefined;
         this.rowPos = undefined
         this.colPos = undefined;
-        this.active = false;
-        this.taken = false;
-        this.playerOwner = undefined;
+        this.playerId = undefined;
+        this.prevRowPos = null;
+        this.prevColPos = null;
+        this.lastTake = null;
     }
 
     /**
@@ -61,43 +62,6 @@ export class Piece {
      */
     setColPos(colPos) {
         this.colPos = colPos;
-    }
-
-    /**
-     * Check if piece is active
-     * @returns {boolean}
-     */
-    isActive() {
-        return this.active;
-    }
-
-    /**
-     * Set piece to active state
-     */
-    setActive() {
-        this.active = true;
-    }
-
-    /**
-     * Set piece to inactive state
-     */
-    setInactive() {
-        this.active = false;
-    }
-
-    /**
-     * Check if piece is taken
-     * @returns {boolean}
-     */
-    isTaken() {
-        return this.taken;
-    }
-
-    /**
-     * Set piece to taken state
-     */
-    setTaken() {
-        this.taken = true;
     }
 
     /**
