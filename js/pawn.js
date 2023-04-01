@@ -17,27 +17,6 @@ export class Pawn extends Piece{
     }
 
     /**
-     * Undo previous action
-     */
-    undo(board) {
-        // Remove the piece from its current location
-        board[this.rowPos][this.colPos] = null;
-
-        // See if we took a piece during that last move
-        if (this.lastTake != null) {
-            this.lastTake.taken = false;
-
-            board[this.rowPos][this.colPos] = this.lastTake;
-        }
-
-        // Set the current location to the previous location and put the piece in its new current location
-        this.rowPos = this.prevRowPos;
-        this.colPos = this.prevColPos;
-
-        board[this.rowPos][this.colPos] = this;
-    }
-
-    /**
      * Move piece to new location and sets piece location property
      */
     movePiece(row, col, board) {
