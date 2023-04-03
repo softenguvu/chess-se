@@ -18,36 +18,6 @@ export class Rook extends Piece {
     }
 
     /**
-     * Moves piece to {row}, {col} and updates board
-     * @param row new row
-     * @param col new column
-     * @param board Board.board
-     */
-    movePiece(row, col, board) {
-        let possibleMoves = this.possibleMoves(board.board);
-        if (!this.validateMove(row, col, possibleMoves)) { // ignore invalid move
-            return;
-        }
-
-        if (board.board[row][col]) { // taking a piece
-            this.takenPiece = board.board[row][col];
-            this.takenPiece.setTaken();
-            board.board[row][col] = null;
-        }
-        else {
-            this.takenPiece = null;
-        }
-
-        // Update board
-        board.board[this.rowPos][this.colPos] = null;
-        board.board[row][col] = this;
-
-        // Update piece position
-        this.rowPos = row;
-        this.colPos = col;
-    }
-
-    /**
      * Gets a list of possible moves the rook piece can make including attack moves
      * @param board 8x8 board array
      * @returns {*[]}

@@ -14,7 +14,6 @@ export class Piece {
         this.taken = false;
         this.playerId = undefined;
         this.unicodeChar = undefined;
-        this.takenPiece = undefined;
     }
 
     /**
