@@ -138,40 +138,4 @@ export class Piece {
     {
         throw new Error("Method 'possibleMoves()' must be implemented");
     }
-
-    /**
-     * Converts cell id into row and column number
-     * @param id cell id
-     * @returns {(number|number)[]}
-     */
-    convertId(id) {
-        let row = id.charCodeAt(0) - 97;
-        let col = parseInt(id.charAt(1));
-        col = Math.abs(col - 8);
-        return [row, col];
-    }
-
-    /**
-     * Converts piece position into id
-     * @returns {string}
-     */
-    convertPos() {
-        return String.fromCharCode(this.rowPos + 97) + Math.abs(this.colPos - 8);
-    }
-
-    /**
-     * Validates move checking if [row, col] is in possible moves
-     * @param row row pos
-     * @param col col pos
-     * @param possibleMoves arr of possible moves
-     * @returns {boolean}
-     */
-    validateMove(row, col, possibleMoves) {
-        for (let i = 0; i < possibleMoves.length; i++) {
-            if (possibleMoves[i][0] === row && possibleMoves[i][1] === col) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
