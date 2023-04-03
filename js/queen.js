@@ -11,15 +11,15 @@ export class Queen extends Piece{
      * @param {int} id Piece's ID.
      * @param {int} rowPos Piece's row position.
      * @param {int} colPos Piece's column position.
-     * @param {int} playerOwner
+     * @param {int} playerId
      * 
      */
-    constructor(id, rowPos, colPos, playerOwner) {
+    constructor(id, rowPos, colPos, playerId) {
         super();
         this.id = id;
         this.rowPos = rowPos;
         this.colPos = colPos;
-        this.playerOwner = playerOwner;
+        this.playerId = playerId;
         this.unicodeChar = "&#9813;";
     }
 
@@ -43,7 +43,7 @@ export class Queen extends Piece{
          * Get row increasing moves
          */
         for (let i = rowPos + 1; i < maxRows; i++) {
-            if (board[i][colPos] !== null && board[i][colPos].getPlayerOwner() == playerOwner) {
+            if (board[i][colPos] !== null && board[i][colPos].getPlayerId() == playerId) {
                 break;
             }
             possibleMoves.push([i, colPos]);
@@ -52,7 +52,7 @@ export class Queen extends Piece{
          * Get row decreasing moves
          */
         for (let i = rowPos - 1; i >= minRows; i--) {
-            if (board[i][colPos] !== null && board[i][colPos].getPlayerOwner() == playerOwner) {
+            if (board[i][colPos] !== null && board[i][colPos].getPlayerId() == playerId) {
                 break;
             }
             possibleMoves.push([i, colPos]);
@@ -61,7 +61,7 @@ export class Queen extends Piece{
          * Get col increasing moves
          */
         for (let i = colPos + 1; i < maxCols; i++) {
-            if (board[rowPos][i] !== null && board[rowPos][i].getPlayerOwner() == playerOwner) {
+            if (board[rowPos][i] !== null && board[rowPos][i].getPlayerId() == playerId) {
                 break;
             }
             possibleMoves.push([rowPos, i]);
@@ -70,7 +70,7 @@ export class Queen extends Piece{
          * Get col decreasing moves
          */
         for (let i = colPos - 1; i >= minCols; i--) {
-            if (board[rowPos][i] !== null && board[rowPos][i].getPlayerOwner() == playerOwner) {
+            if (board[rowPos][i] !== null && board[rowPos][i].getPlayerId() == playerId) {
                 break;
             }
             possibleMoves.push([rowPos, i]);
@@ -79,7 +79,7 @@ export class Queen extends Piece{
          * Get row and col increasing moves
          */
         for (let i = rowPos + 1, y = colPos + 1; i < maxRows && y < maxCols; i++, y++) {
-            if (board[i][y] !== null && board[i][y].getPlayerOwner() == playerOwner) {
+            if (board[i][y] !== null && board[i][y].getPlayerId() == playerId) {
                 break;
             }
             possibleMoves.push([i, y]);
@@ -89,7 +89,7 @@ export class Queen extends Piece{
          * Get row and col decreasing moves
          */
         for (let i = rowPos - 1, y = colPos - 1; i >= minRows && y >= minCols; i--, y--) {
-            if (board[i][y] !== null && board[i][y].getPlayerOwner() == playerOwner) {
+            if (board[i][y] !== null && board[i][y].getPlayerId() == playerId) {
                 break;
             }
             possibleMoves.push([i, y]);
@@ -98,7 +98,7 @@ export class Queen extends Piece{
          * Get row increasing and col decreasing moves
          */
         for (let i = rowPos + 1, y = colPos - 1; i < maxRows && y >= minCols; i++, y--) {
-            if (board[i][y] !== null && board[i][y].getPlayerOwner() == playerOwner) {
+            if (board[i][y] !== null && board[i][y].getPlayerId() == playerId) {
                 break;
             }
             possibleMoves.push([i, y]);
@@ -107,7 +107,7 @@ export class Queen extends Piece{
          * Get row decreasing and col increasing moves
          */
         for (let i = rowPos - 1, y = colPos + 1; i >= minRows && y < maxCols; i--, y++) {
-            if (board[i][y] !== null && board[i][y].getPlayerOwner() == playerOwner) {
+            if (board[i][y] !== null && board[i][y].getPlayerId() == playerId) {
                 break;
             }
             possibleMoves.push([i, y]);
