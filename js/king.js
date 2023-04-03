@@ -35,27 +35,30 @@ export class King extends Piece {
     possibleMoves(board) {
         let possibleMoves = [];
 
-        if (this.rowPos + 1 <= 7) {  // check below
+        if (this.rowPos + 1 <= 7 && board[this.rowPos + 1][this.colPos].getPlayerId() !== this.playerId) {  // check below
             possibleMoves.push([this.rowPos + 1, this.colPos]);
         }
-
-        if (this.rowPos - 1 >= 0) { // check above
+        if (this.rowPos - 1 >= 0 && board[this.rowPos - 1][this.colPos].getPlayerId() !== this.playerId) { // check above
             possibleMoves.push([this.rowPos - 1, this.colPos]);
         }
-
-        if (this.colPos + 1 <= 7) { // check right
+        if (this.colPos + 1 <= 7 && board[this.rowPos][this.colPos + 1].getPlayerId() !== this.playerId) { // check
             possibleMoves.push([this.rowPos, this.colPos + 1]);
         }
-
-        if (this.colPos - 1 >= 0) { // check left
+        if (this.colPos - 1 >= 0 && board[this.rowPos][this.colPos - 1].getPlayerId() !== this.playerId) { // check left
             possibleMoves.push([this.rowPos, this.colPos - 1]);
         }
-
-        if (this.rowPos - 1 >= 0 && this.colPos - 1 >= 0) {
+        if (this.rowPos - 1 >= 0 && this.colPos - 1 >= 0 && board[this.rowPos - 1][this.colPos - 1].getPlayerId() !== this.playerId) { // check top left
             possibleMoves.push([this.rowPos - 1, this.colPos - 1]);
         }
-
-
+        if (this.rowPos - 1 >= 0 && this.colPos + 1 <= 7 && board[this.rowPos - 1][this.colPos + 1].getPlayerId() !== this.playerId) { // check top right
+            possibleMoves.push([this.rowPos - 1, this.colPos + 1]);
+        }
+        if (this.rowPos + 1 <= 7 && this.colPos - 1 >= 0 && board[this.rowPos + 1][this.colPos - 1].getPlayerId() !== this.playerId) { // check bottom left
+            possibleMoves.push([this.rowPos + 1, this.colPos - 1]);
+        }
+        if (this.rowPos + 1 <= 7 && this.colPos + 1 <= 7 && board[this.rowPos + 1][this.colPos + 1].getPlayerId() !== this.playerId) { // check bottom right
+            possibleMoves.push([this.rowPos + 1, this.colPos + 1]);
+        }
         return possibleMoves;
     }
 }
@@ -64,5 +67,5 @@ let board = new Board();
 let k = new King(1, 3, 3, 0);
 
 console.log("Test")
-let pMoves = k.possibleMoves(board.board);
+let pMoves = k.possibleMoves(board);
 console.log(pMoves)
