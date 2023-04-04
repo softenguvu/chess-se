@@ -12,6 +12,7 @@ export class Piece {
         this.colPos = null;
         this.active = false;
         this.taken = false;
+        this.unicodeChar = undefined;
         this.playerId = null;
         this.lastTake = null;
     }
