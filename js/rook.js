@@ -29,11 +29,17 @@ export class Rook extends Piece {
                 possibleMoves.push([i, this.colPos]);
                 break;
             }
+            if (board[i][this.colPos] && board[i][this.colPos].getPlayerId() === this.playerId) {
+                break;
+            }
             possibleMoves.push([i, this.colPos]);
         }
         for (let i = this.rowPos - 1; i >= 0; i--) { // check above
             if (board[i][this.colPos] && board[i][this.colPos].getPlayerId() !== this.playerId) {
                 possibleMoves.push([i, this.colPos]);
+                break;
+            }
+            if (board[i][this.colPos] && board[i][this.colPos].getPlayerId() === this.playerId) {
                 break;
             }
             possibleMoves.push([i, this.colPos]);
@@ -43,11 +49,17 @@ export class Rook extends Piece {
                 possibleMoves.push([this.rowPos, i]);
                 break;
             }
+            if (board[this.rowPos][i] && board[this.rowPos][i].getPlayerId() === this.playerId) {
+                break;
+            }
             possibleMoves.push([this.rowPos, i]);
         }
         for (let i = this.colPos - 1; i >= 0; i--) { // check to the left
             if (board[this.rowPos][i] && board[this.rowPos][i].getPlayerId() !== this.playerId) {
                 possibleMoves.push([this.rowPos, i]);
+                break;
+            }
+            if (board[this.rowPos][i] && board[this.rowPos][i].getPlayerId() === this.playerId) {
                 break;
             }
             possibleMoves.push([this.rowPos, i]);
