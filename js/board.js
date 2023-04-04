@@ -24,6 +24,8 @@ export class Board {
 
         // 2D array of Piece.
         this.board = Array.from(new Array(8), () => new Array(8));
+        // Mapping between player id and list of taken pieces.
+        this.takenPieces = new Map();
     }
 
     /**
@@ -47,14 +49,16 @@ export class Board {
     }
 
     /**
-     * Clears the board of all chess pieces.
+     * Clears the board of all chess pieces and taken pieces.
      */
     reset() {
         this.board = Array.from(new Array(8), () => new Array(8));
+        this.takenPieces.clear();
     }
 
     /**
-     * Initializes chess pieces on the board for a game of chess.
+     * Initializes chess pieces on the board and taken pieces for a game of
+     * chess.
      */
     initBoard() {
         let currPieceId = 0;
@@ -66,6 +70,7 @@ export class Board {
         currPieceId = this._initPlayerPieces(
             currPieceId, playerOneId, powerRowWhite, pawnRowWhite
         );
+        this.takenPieces.set(playerOneId, []);
 
         // Initialize black's pieces.
         const playerTwoId = 1;
@@ -74,6 +79,7 @@ export class Board {
         currPieceId = this._initPlayerPieces(
             currPieceId, playerTwoId, powerRowBlack, pawnRowBlack
         );
+        this.takenPieces.set(playerTwoId, []);
     }
 
     /**
