@@ -280,3 +280,14 @@ const undoButton = document.getElementById("undo-move");
 undoButton.addEventListener("click", () =>
     console.log("Undo button: Click Event Triggered")
 );
+
+function highlightPossibleMoves(piece, board){
+    const possibleMoves = piece.possibleMoves(board);
+    possibleMoves.forEach(([row, col]) => {
+        let square = document.querySelector('#square-${row}--${col}');
+        if (square) {
+            square.classList.add("highlight");
+            //TO-DO: Add highlight css class. 
+        }
+    });
+}
