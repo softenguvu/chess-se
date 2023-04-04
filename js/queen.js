@@ -1,4 +1,4 @@
-import { Piece } from "./piece.js"
+import { Piece } from "./piece.js";
 
 /*
 * Represents a queen chess piece that is used with the Board class
@@ -42,44 +42,44 @@ export class Queen extends Piece{
         /**
          * Get row increasing moves
          */
-        for (let i = rowPos + 1; i < maxRows; i++) {
-            if (board[i][colPos] !== null && board[i][colPos].getPlayerId() == playerId) {
+        for (let i = this.rowPos + 1; i < maxRows; i++) {
+            if (board[i][this.colPos] !== null && board[i][this.colPos].getPlayerId() == this.playerId) {
                 break;
             }
-            possibleMoves.push([i, colPos]);
+            possibleMoves.push([i, this.colPos]);
         }
         /**
          * Get row decreasing moves
          */
-        for (let i = rowPos - 1; i >= minRows; i--) {
-            if (board[i][colPos] !== null && board[i][colPos].getPlayerId() == playerId) {
+        for (let i = this.rowPos - 1; i >= minRows; i--) {
+            if (board[i][this.colPos] !== null && board[i][this.colPos].getPlayerId() == this.playerId) {
                 break;
             }
-            possibleMoves.push([i, colPos]);
+            possibleMoves.push([i, this.colPos]);
         }
         /**
          * Get col increasing moves
          */
-        for (let i = colPos + 1; i < maxCols; i++) {
-            if (board[rowPos][i] !== null && board[rowPos][i].getPlayerId() == playerId) {
+        for (let i = this.colPos + 1; i < maxCols; i++) {
+            if (board[this.rowPos][i] !== null && board[this.rowPos][i].getPlayerId() == this.playerId) {
                 break;
             }
-            possibleMoves.push([rowPos, i]);
+            possibleMoves.push([this.rowPos, i]);
         }
         /**
          * Get col decreasing moves
          */
-        for (let i = colPos - 1; i >= minCols; i--) {
-            if (board[rowPos][i] !== null && board[rowPos][i].getPlayerId() == playerId) {
+        for (let i = this.colPos - 1; i >= minCols; i--) {
+            if (board[this.rowPos][i] !== null && board[this.rowPos][i].getPlayerId() == this.playerId) {
                 break;
             }
-            possibleMoves.push([rowPos, i]);
+            possibleMoves.push([this.rowPos, i]);
         }
         /**
          * Get row and col increasing moves
          */
-        for (let i = rowPos + 1, y = colPos + 1; i < maxRows && y < maxCols; i++, y++) {
-            if (board[i][y] !== null && board[i][y].getPlayerId() == playerId) {
+        for (let i = this.rowPos + 1, y = this.colPos + 1; i < maxRows && y < maxCols; i++, y++) {
+            if (board[i][y] !== null && board[i][y].getPlayerId() == this.playerId) {
                 break;
             }
             possibleMoves.push([i, y]);
@@ -88,8 +88,8 @@ export class Queen extends Piece{
         /**
          * Get row and col decreasing moves
          */
-        for (let i = rowPos - 1, y = colPos - 1; i >= minRows && y >= minCols; i--, y--) {
-            if (board[i][y] !== null && board[i][y].getPlayerId() == playerId) {
+        for (let i = this.rowPos - 1, y = this.colPos - 1; i >= minRows && y >= minCols; i--, y--) {
+            if (board[i][y] !== null && board[i][y].getPlayerId() == this.playerId) {
                 break;
             }
             possibleMoves.push([i, y]);
@@ -97,8 +97,8 @@ export class Queen extends Piece{
         /**
          * Get row increasing and col decreasing moves
          */
-        for (let i = rowPos + 1, y = colPos - 1; i < maxRows && y >= minCols; i++, y--) {
-            if (board[i][y] !== null && board[i][y].getPlayerId() == playerId) {
+        for (let i = this.rowPos + 1, y = this.colPos - 1; i < maxRows && y >= minCols; i++, y--) {
+            if (board[i][y] !== null && board[i][y].getPlayerId() == this.playerId) {
                 break;
             }
             possibleMoves.push([i, y]);
@@ -106,8 +106,8 @@ export class Queen extends Piece{
         /**
          * Get row decreasing and col increasing moves
          */
-        for (let i = rowPos - 1, y = colPos + 1; i >= minRows && y < maxCols; i--, y++) {
-            if (board[i][y] !== null && board[i][y].getPlayerId() == playerId) {
+        for (let i = this.rowPos - 1, y = this.colPos + 1; i >= minRows && y < maxCols; i--, y++) {
+            if (board[i][y] !== null && board[i][y].getPlayerId() == this.playerId) {
                 break;
             }
             possibleMoves.push([i, y]);
