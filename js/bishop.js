@@ -41,18 +41,15 @@ export class Bishop extends Piece {
                 let newCol = this.colPos + colDiagonal;
                 while (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
                     // check if the square contains opponent's piece 
-                    if (board[newRow][newCol] && board[newRow][newCol].getPlayerId() !== playerId) {
+                    if (board[newRow][newCol] && board[newRow][newCol].getPlayerId() !== this.playerId) {
                         possibleMoves.push([newRow, newCol]);
                         break;
                     }
                     // check if the square is occupied by same player's piece 
-                    if (board[newRow][newCol] && board[newRow][newCol].getPlayerId() === playerId) {
+                    if (board[newRow][newCol] && board[newRow][newCol].getPlayerId() === this.playerId) {
                         break;
                     }
-                    // check if the square is on the same diagonal path as the Bishop  
-                    if (Math.abs(this.rowPos - newRow) === Math.abs(this.colPos - newCol)) {
-                        possibleMoves.push([newRow, newCol]);
-                    }
+                    possibleMoves.push([newRow, newCol]);
                     newRow += rowDiagonal;
                     newCol += colDiagonal;
                 }
