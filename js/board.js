@@ -84,6 +84,9 @@ export class Board {
         this.takenPieces.set(playerTwoId, []);
     }
 
+    /**
+     * Renders all chess pieces in the frontend.
+     */
     renderPieces() {
         this._renderLivePieces();
         const playerOneId = 0;
@@ -175,6 +178,9 @@ export class Board {
         );
     }
 
+    /**
+     * Renders all chess pieces in the frontend chess board that have not been taken.
+     */
     _renderLivePieces() {
         this.board.forEach((row, rowIndex) =>
             row.forEach((col, colIndex) => {
@@ -187,6 +193,13 @@ export class Board {
         );
     }
 
+    /**
+     * Renders taken chess pieces for the player with the given player id in the
+     * corresponding frontend graveyard with the given element id.
+     * 
+     * @param {*} playerId Player's id.
+     * @param {*} graveyardId Frontend graveyard's HTML element id.
+     */
     _renderTakenPieces(playerId, graveyardId) {
         const takenPiecesHTML = [];
         this.takenPieces.get(playerId).forEach(takenPiece =>
