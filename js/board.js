@@ -22,6 +22,10 @@ export class Board {
         }
         Board._instance = this;
 
+        // Row labels indexed from top down.
+        Board.rowStr = "87654321";
+        // Column labels indexed from left to right.
+        Board.colStr = "abcdefgh";
         // 2D array of Piece.
         this.board = Array.from(new Array(8), () => new Array(8));
         // Mapping between player id and list of taken pieces.
@@ -35,11 +39,9 @@ export class Board {
      * the board that indicate possible moves of a chess piece.
      */
     markPossibleMoves(possibleMoves) {
-        const rowStr = "87654321";  // Row labels indexed from top down.
-        const colStr = "abcdefgh";  // Column labels indexed from left to right.
         possibleMoves.forEach(location => {
             const [rowIndex, colIndex] = location;
-            const squarePos = colStr[colIndex] + rowStr[rowIndex];
+            const squarePos = Board.colStr[colIndex] + Board.rowStr[rowIndex];
             const color = this.board[rowIndex][colIndex] ?
                 "primaryRed" :  // Red if contains piece.
                 "primaryRedBlack";  // RedBlack if doesn't contain piece.
