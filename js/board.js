@@ -1,10 +1,10 @@
-// import { Bishop } from "./bishop.js";
+import { Bishop } from "./bishop.js";
 import { King } from "./king.js";
-// import { Knight } from "./knight.js";
-// import { Pawn } from "./pawn.js";
+import { Knight } from "./knight.js";
+import { Pawn } from "./pawn.js";
 import { Piece } from "./piece.js";
-// import { Queen } from "./queen.js";
-// import { Rook } from "./rook.js";
+import { Queen } from "./queen.js";
+import { Rook } from "./rook.js";
 
 /**
  * Represents an 8x8 chess board that contains chess pieces.
