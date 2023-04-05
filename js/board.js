@@ -197,8 +197,8 @@ export class Board {
      * Renders taken chess pieces for the player with the given player id in the
      * corresponding frontend graveyard with the given element id.
      * 
-     * @param {*} playerId Player's id.
-     * @param {*} graveyardId Frontend graveyard's HTML element id.
+     * @param {int} playerId Player's id.
+     * @param {string} graveyardId Frontend graveyard's HTML element id.
      */
     _renderTakenPieces(playerId, graveyardId) {
         const takenPiecesHTML = [];
