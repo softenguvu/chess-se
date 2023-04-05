@@ -1,5 +1,4 @@
 import {Piece} from "./piece.js";
-import {Board} from "./board.js";
 
 export class King extends Piece {
     /**
@@ -19,22 +18,12 @@ export class King extends Piece {
     }
 
     /**
-     * Moves piece to {row}, {col} and updates board
-     * @param row new row
-     * @param col new column
-     * @param board Board.board
-     */
-    movePiece(row, col, board) {
-    }
-
-    /**
      * Gets a list of possible moves the rook piece can make including attack moves
      * @param board Board singleton instance
      * @returns {*[]}
      */
     possibleMoves(board) {
         let possibleMoves = [];
-
         if (this.rowPos + 1 <= 7 && board[this.rowPos + 1][this.colPos].getPlayerId() !== this.playerId) {  // check below
             possibleMoves.push([this.rowPos + 1, this.colPos]);
         }
@@ -62,10 +51,3 @@ export class King extends Piece {
         return possibleMoves;
     }
 }
-
-let board = new Board();
-let k = new King(1, 3, 3, 0);
-
-console.log("Test")
-let pMoves = k.possibleMoves(board);
-console.log(pMoves)
