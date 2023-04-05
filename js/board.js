@@ -84,6 +84,14 @@ export class Board {
         this.takenPieces.set(playerTwoId, []);
     }
 
+    renderPieces() {
+        this._renderLivePieces();
+        const playerOneId = 0;
+        this._renderTakenPieces(playerOneId, "left-graveyard");
+        const playerTwoId = 1;
+        this._renderTakenPieces(playerTwoId, "right-graveyard");
+    }
+
     /**
      * Marks a square on the board with the given color.
      * 
@@ -165,5 +173,27 @@ export class Board {
         this.board[rowIndex][colIndex] = new pieceType(
             pieceId, rowIndex, colIndex, playerId
         );
+    }
+
+    _renderLivePieces() {
+        this.board.forEach((row, rowIndex) =>
+            row.forEach((col, colIndex) => {
+                if (col) {  // Contains piece.
+                    const squarePos = Board.colStr[colIndex] + Board.rowStr[rowIndex];
+                    const boardSquare = document.getElementById(squarePos);
+                    boardSquare.innerHTML = col.unicodeChar;
+                }
+            })
+        );
+    }
+
+    _renderTakenPieces(playerId, graveyardId) {
+        const takenPiecesHTML = [];
+        this.takenPieces.get(playerId).forEach(takenPiece =>
+            takenPiecesHTML.push(`<div class="col">${takenPiece.unicodeChar}</div>`)
+        );
+
+        const graveyard = document.getElementById(graveyardId);
+        graveyard.innerHTML = takenPiecesHTML.join("");
     }
 }
