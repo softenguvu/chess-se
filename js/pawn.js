@@ -16,36 +16,6 @@ export class Pawn extends Piece{
         this.unicodeChar = "&#9817;";
     }
 
-    /**
-     * Move piece to new location and sets piece location property
-     */
-    movePiece(row, col, board) {
-        // Make sure the move is valid
-        const possMoves = this.possibleMoves(board);
-        if (!this.validateMove(row, col, possMoves)) {
-            return;
-        }
-
-        // Remove piece from its previous place
-        board[this.rowPos][this.colPos] = null;
-
-        // Update piece position
-        this.prevColPos = this.colPos;
-        this.prevRowPos = this.rowPos;
-        this.rowPos = row;
-        this.colPos = col;
-
-        // Update board
-        if (board[this.rowPos][this.colPos]) {
-            this.lastTake = board[this.rowPos][this.colPos];
-            this.lastTake.setTaken();
-        }
-        else {
-            this.lastTake = null;
-        }
-        board[this.rowPos][this.colPos] = this;
-    }
-
     possibleMoves(board) {
         let possibleMoves = [];
         var moveDir = 0;
