@@ -34,6 +34,16 @@ Middle main row
 
 }
 
+/*
+Add highlight to squares when piece is clicked
+Setting as yellow for now, will change once 
+I get event handler to work. 
+ */
+.highlight {
+    background-color: yellow;
+  }
+
+
 #chess-board-container {
     height: 100%;
     border: 1px solid black;

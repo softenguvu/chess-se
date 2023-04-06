@@ -1,8 +1,20 @@
 // Function that handles adding event listeners to the chess board
 function initBoardEvListener() {
     // First column. 'a' column
+    //example of what functionality for a square would look like
+    //if approved, will apply to all squares 
     const a1Board = document.getElementById("a1");
     a1Board.addEventListener("click", function(event) {
+        const piece = getPiece(a1Board); //get piece on square a1
+        if (piece) {
+            const potentialMoves = piece.possibleMoves();
+            const getallSquares = document.querySelectorAll("#chess-board-container .col"); //select all squares
+            getallSquares.forEach(square => square.classList.remove("highlight")); //ensure no highlight on other squares
+            potentialMoves.forEach(moveTo => { //iterate through potential moves
+                const moveToSquare = document.getElementById(`${moveTo[0]}${moveTo[1]}`);//represent row and col
+                moveToSquare.classList.add("highlight"); //Adds the highlight css style of potential moves for the piece
+            })
+        }
     });
 
     const a2Board = document.getElementById("a2");
@@ -281,13 +293,15 @@ undoButton.addEventListener("click", () =>
     console.log("Undo button: Click Event Triggered")
 );
 
-function highlightPossibleMoves(piece, board){
-    const possibleMoves = piece.possibleMoves(board);
-    possibleMoves.forEach(([row, col]) => {
-        let square = document.querySelector('#square-${row}--${col}');
-        if (square) {
-            square.classList.add("highlight");
-            //TO-DO: Add highlight css class. 
-        }
-    });
+// Get the piece associated with the square that the piece is on, by utilizing board class. 
+function getPiece(position) {
+    //Convert the piece position to row-col indicies.
+    const row = 8 - parseInt(position[1]);
+    const col = position.charCodeAt(0) - 97;
+
+    //Gets the piece at given position from board. 
+    const board = new Board();
+    const piece = board.board[row][col];
+
+    return piece;
 }
