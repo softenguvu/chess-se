@@ -18,36 +18,51 @@ export class King extends Piece {
     }
 
     /**
-     * Gets a list of possible moves the rook piece can make including attack moves
+     * Gets a list of possible moves the king piece can make including attack moves
      * @param board Board singleton instance
      * @returns {*[]}
      */
     possibleMoves(board) {
         let possibleMoves = [];
-        if (this.rowPos + 1 <= 7 && board[this.rowPos + 1][this.colPos].getPlayerId() !== this.playerId) {  // check below
-            possibleMoves.push([this.rowPos + 1, this.colPos]);
-        }
-        if (this.rowPos - 1 >= 0 && board[this.rowPos - 1][this.colPos].getPlayerId() !== this.playerId) { // check above
-            possibleMoves.push([this.rowPos - 1, this.colPos]);
-        }
-        if (this.colPos + 1 <= 7 && board[this.rowPos][this.colPos + 1].getPlayerId() !== this.playerId) { // check
-            possibleMoves.push([this.rowPos, this.colPos + 1]);
-        }
-        if (this.colPos - 1 >= 0 && board[this.rowPos][this.colPos - 1].getPlayerId() !== this.playerId) { // check left
-            possibleMoves.push([this.rowPos, this.colPos - 1]);
-        }
-        if (this.rowPos - 1 >= 0 && this.colPos - 1 >= 0 && board[this.rowPos - 1][this.colPos - 1].getPlayerId() !== this.playerId) { // check top left
-            possibleMoves.push([this.rowPos - 1, this.colPos - 1]);
-        }
-        if (this.rowPos - 1 >= 0 && this.colPos + 1 <= 7 && board[this.rowPos - 1][this.colPos + 1].getPlayerId() !== this.playerId) { // check top right
-            possibleMoves.push([this.rowPos - 1, this.colPos + 1]);
-        }
-        if (this.rowPos + 1 <= 7 && this.colPos - 1 >= 0 && board[this.rowPos + 1][this.colPos - 1].getPlayerId() !== this.playerId) { // check bottom left
-            possibleMoves.push([this.rowPos + 1, this.colPos - 1]);
-        }
-        if (this.rowPos + 1 <= 7 && this.colPos + 1 <= 7 && board[this.rowPos + 1][this.colPos + 1].getPlayerId() !== this.playerId) { // check bottom right
-            possibleMoves.push([this.rowPos + 1, this.colPos + 1]);
-        }
+        const moveOffsets = [
+            [-1, -1], [-1, +1], [+1, -1], [+1, +1], //corners
+            [+1, 0], [-1, 0], [0, +1], [0, -1]
+        ];
+        moveOffsets.forEach(([rowDiff, colDiff]) => {
+            const row = this.rowPos + rowDiff;
+            const col = this.colPos + colDiff;
+            if (this._possibleMove(row, col, board)) {
+                possibleMoves.push([row, col]);
+            }
+        });
         return possibleMoves;
+    }
+
+    /**
+     * Determines if the provided position is a valid possible move.
+     * @param {int} row Row position.
+     * @param {int} col Column position.
+     * @param {[[Piece]]} board Chess board (2D array of chess pieces).
+     * @returns Whether the provided position is a valid possible move.
+     */
+    _possibleMove(row, col, board) {
+        return this._withinBounds(row, col, board) && (
+            (board[row][col]) ?  // Check if chess piece is present at position.
+                board[row][col].getPlayerId() !== this.playerId :
+                true
+        );
+    }
+
+    /**
+     * Determines if the provided position is within boundaries of the provided
+     * chess board.
+     * @param {int} row Row position.
+     * @param {int} col Column position.
+     * @param {[[Piece]]} board Chess board (2D array of chess pieces).
+     * @returns Whether the provided position is within boundaries of the
+     * provided chess board.
+     */
+    _withinBounds(row, col, board) {
+        return row >= 0 && row < board.length && col >= 0 && col < board.length;
     }
 }
