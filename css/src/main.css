@@ -1,8 +1,4 @@
 @charset "UTF-8";
-:root {
-  --bs-body-font-family: "Roboto", sans-serif;
-}
-
 .row {
   height: 12.5%;
 }
@@ -11264,4 +11260,21 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
-}/*# sourceMappingURL=main.css.map */
+}
+:root {
+  --bs-body-font-family:
+      "Open Sans",
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      Roboto,
+      "Helvetica Neue",
+      "Noto Sans",
+      "Liberation Sans",
+      Arial,
+      sans-serif,
+      "Apple Color Emoji",
+      "Segoe UI Emoji",
+      "Segoe UI Symbol",
+      "Noto Color Emoji";
+}
