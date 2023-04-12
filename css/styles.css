@@ -34,19 +34,11 @@ Middle main row
 
 }
 
-/*
-Add highlight to squares when piece is clicked
-Setting as yellow for now, will change once 
-I get event handler to work. 
- */
-.highlight {
-    background-color: yellow;
-  }
-
 
 #chess-board-container {
     height: 100%;
     border: 1px solid black;
+    cursor: pointer;
 }
 
 /*
@@ -56,6 +48,7 @@ Bottom buttons row
     height: 10vh;
     width: 100%;
 }
+
 
 #undo-move, #new-game {
     max-width: 100%;
