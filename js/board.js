@@ -184,11 +184,9 @@ export class Board {
     _renderLivePieces() {
         this.board.forEach((row, rowIndex) =>
             row.forEach((col, colIndex) => {
-                if (col) {  // Contains piece.
-                    const squarePos = Board.colStr[colIndex] + Board.rowStr[rowIndex];
-                    const boardSquare = document.getElementById(squarePos);
-                    boardSquare.innerHTML = col.unicodeChar;
-                }
+                const squarePos = Board.colStr[colIndex] + Board.rowStr[rowIndex];
+                const boardSquare = document.getElementById(squarePos);
+                boardSquare.innerHTML = (col) ? col.unicodeChar : "";
             })
         );
     }
