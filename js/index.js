@@ -1,7 +1,5 @@
 import { Board } from "./board.js";
 
-const board = new Board();
-
 // Function that handles adding event listeners to the chess board
 function initBoardEvListener() {
     // First column. 'a' column
@@ -277,6 +275,9 @@ newGameButton.addEventListener("click", () => {
     board.reset();
     board.initBoard();
     board.renderPieces();
+    playerOnePieces = [];
+    playerTwoPieces = [];
+    getPlayerPieces()
 });
 
 // Add 'click' event-listener to the 'Undo' button.
@@ -285,25 +286,22 @@ undoButton.addEventListener("click", () =>
     console.log("Undo button: Click Event Triggered")
 );
 
-let playerOnePieces = [];
-let playerTwoPieces = [];
-
 // This function get's run once, at the very beginning
 function getPlayerPieces() {
     // Row zero and one go to player one
-    for(i = 0; i < BOARD.board[0].length; ++i) {
-        playerOnePieces.push(BOARD.board[0][i]);
+    for(let i = 0; i < board.board[0].length; ++i) {
+        playerOnePieces.push(board.board[0][i]);
     }
-    for(i = 0; i < BOARD.board[1].length; ++i) {
-        playerOnePieces.push(BOARD.board[1][i]);
+    for(let i = 0; i < board.board[1].length; ++i) {
+        playerOnePieces.push(board.board[1][i]);
     }
 
     // Row 6 and 7 go to player two
-    for(i = 0; i < BOARD.board[6].length; ++i) {
-        playerOnePieces.push(BOARD.board[6][i]);
+    for(let i = 0; i < board.board[6].length; ++i) {
+        playerOnePieces.push(board.board[6][i]);
     }
-    for(i = 0; i < BOARD.board[7].length; ++i) {
-        playerOnePieces.push(BOARD.board[7][i]);
+    for(let i = 0; i < board.board[7].length; ++i) {
+        playerOnePieces.push(board.board[7][i]);
     }
 }
 
@@ -319,7 +317,7 @@ function detectCheck(kingPiece, board) {
         let colPos = underAttackPiece.getColPos();
         let rowPos = underAttackPiece.getRowPos();
 
-        for(i = 0; i < possibleMoveSet.length; ++i) {
+        for(let i = 0; i < possibleMoveSet.length; ++i) {
             if(possibleMoveSet[i][0] == rowPos && possibleMoveSet[i][1] == colPos) {
                 return true;
             }
@@ -349,7 +347,7 @@ function detectCheck(kingPiece, board) {
             if (currClosestFriend == null) {
                 attackingEnemies.push(currClosestEnemy);
             }
-            if (harmsWay(currClosestFriend, currClosestEnemy.possibleMoves())) {
+            else if (harmsWay(currClosestFriend, currClosestEnemy.possibleMoves(board))) {
                 defendingFriends.push(currClosestFriend);
             }
         }
@@ -362,10 +360,10 @@ function detectCheck(kingPiece, board) {
      * Get row increasing moves
      */
     for (let i = kingPiece.rowPos + 1; i < maxRows; i++) {
-        if (board[i][kingPiece.colPos] !== null && board[i][kingPiece.colPos].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
+        if (board[i][kingPiece.colPos] !== undefined && board[i][kingPiece.colPos].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
             currClosestFriend = board[i][kingPiece.colPos]
         }
-        if (board[i][kingPiece.colPos] !== null && board[i][kingPiece.colPos].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
+        if (board[i][kingPiece.colPos] !== undefined && board[i][kingPiece.colPos].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
             currClosestEnemy = board[i][kingPiece.colPos]
         }
     }
@@ -379,10 +377,10 @@ function detectCheck(kingPiece, board) {
      * Get row decreasing moves
      */
     for (let i = kingPiece.rowPos - 1; i >= minRows; i--) {
-        if (board[i][kingPiece.colPos] !== null && board[i][kingPiece.colPos].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
+        if (board[i][kingPiece.colPos] !== undefined && board[i][kingPiece.colPos].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
             currClosestFriend = board[i][kingPiece.colPos]
         }
-        if (board[i][kingPiece.colPos] !== null && board[i][kingPiece.colPos].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
+        if (board[i][kingPiece.colPos] !== undefined && board[i][kingPiece.colPos].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
             currClosestEnemy = board[i][kingPiece.colPos]
         }
     }
@@ -396,10 +394,10 @@ function detectCheck(kingPiece, board) {
      * Get col increasing moves
      */
     for (let i = kingPiece.colPos + 1; i < maxCols; i++) {
-        if (board[kingPiece.rowPos][i] !== null && board[kingPiece.rowPos][i].getPlayerId() == kingPiece.playerId  && currClosestFriend == null) {
+        if (board[kingPiece.rowPos][i] !== undefined && board[kingPiece.rowPos][i].getPlayerId() == kingPiece.playerId  && currClosestFriend == null) {
             currClosestFriend = board[kingPiece.rowPos][i];
         }
-        if (board[kingPiece.rowPos][i] !== null && board[kingPiece.rowPos][i].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
+        if (board[kingPiece.rowPos][i] !== undefined && board[kingPiece.rowPos][i].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
             currClosestEnemy = board[kingPiece.rowPos][i];
         }
     }
@@ -413,10 +411,10 @@ function detectCheck(kingPiece, board) {
      * Get col decreasing moves
      */
     for (let i = kingPiece.colPos - 1; i >= minCols; i--) {
-        if (board[kingPiece.rowPos][i] !== null && board[kingPiece.rowPos][i].getPlayerId() == kingPiece.playerId  && currClosestFriend == null) {
+        if (board[kingPiece.rowPos][i] !== undefined && board[kingPiece.rowPos][i].getPlayerId() == kingPiece.playerId  && currClosestFriend == null) {
             currClosestFriend = board[kingPiece.rowPos][i];
         }
-        if (board[kingPiece.rowPos][i] !== null && board[kingPiece.rowPos][i].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
+        if (board[kingPiece.rowPos][i] !== undefined && board[kingPiece.rowPos][i].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
             currClosestEnemy = board[kingPiece.rowPos][i];
         }
     }
@@ -430,10 +428,10 @@ function detectCheck(kingPiece, board) {
      * Get row and col increasing moves
      */
     for (let i = kingPiece.rowPos + 1, y = kingPiece.colPos + 1; i < maxRows && y < maxCols; i++, y++) {
-        if (board[i][y] !== null && board[i][y].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
+        if (board[i][y] !== undefined && board[i][y].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
             currClosestFriend = board[i][y];
         }
-        if (board[i][y] !== null && board[i][y].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
+        if (board[i][y] !== undefined && board[i][y].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
             currClosestEnemy = board[i][y];
         }
     }
@@ -447,10 +445,10 @@ function detectCheck(kingPiece, board) {
      * Get row and col decreasing moves
      */
     for (let i = kingPiece.rowPos - 1, y = kingPiece.colPos - 1; i >= minRows && y >= minCols; i--, y--) {
-        if (board[i][y] !== null && board[i][y].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
+        if (board[i][y] !== undefined && board[i][y].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
             currClosestFriend = board[i][y];
         }
-        if (board[i][y] !== null && board[i][y].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
+        if (board[i][y] !== undefined && board[i][y].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
             currClosestEnemy = board[i][y];
         }
     }
@@ -464,10 +462,10 @@ function detectCheck(kingPiece, board) {
      * Get row increasing and col decreasing moves
      */
     for (let i = kingPiece.rowPos + 1, y = kingPiece.colPos - 1; i < maxRows && y >= minCols; i++, y--) {
-        if (board[i][y] !== null && board[i][y].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
+        if (board[i][y] !== undefined && board[i][y].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
             currClosestFriend = board[i][y];
         }
-        if (board[i][y] !== null && board[i][y].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
+        if (board[i][y] !== undefined && board[i][y].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
             currClosestEnemy = board[i][y];
         }
     }
@@ -481,10 +479,10 @@ function detectCheck(kingPiece, board) {
      * Get row decreasing and col increasing moves
      */
     for (let i = kingPiece.rowPos - 1, y = kingPiece.colPos + 1; i >= minRows && y < maxCols; i--, y++) {
-        if (board[i][y] !== null && board[i][y].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
+        if (board[i][y] !== undefined && board[i][y].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
             currClosestFriend = board[i][y];
         }
-        if (board[i][y] !== null && board[i][y].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
+        if (board[i][y] !== undefined && board[i][y].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
             currClosestEnemy = board[i][y];
         }
     }
@@ -610,3 +608,10 @@ function detectCheckmate(kingPiece, board) {
         return false;
     }
 }
+
+let playerOnePieces = [];
+let playerTwoPieces = [];
+const board = new Board();
+board.initBoard();
+board.renderPieces();
+getPlayerPieces();

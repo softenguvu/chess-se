@@ -177,7 +177,6 @@ export class Board {
             pieceId, rowIndex, colIndex, playerId
         );
     }
-<<<<<<< HEAD
 
     /**
      * Renders all chess pieces in the frontend chess board that have not been taken.
@@ -208,6 +207,4 @@ export class Board {
         const graveyard = document.getElementById(graveyardId);
         graveyard.innerHTML = takenPiecesHTML.join("");
     }
-=======
->>>>>>> def43f7 (Wrote programs, did zero testing however)
 }
