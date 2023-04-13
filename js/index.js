@@ -288,8 +288,23 @@ undoButton.addEventListener("click", () =>
 let playerOnePieces = [];
 let playerTwoPieces = [];
 
+// This function get's run once, at the very beginning
 function getPlayerPieces() {
+    // Row zero and one go to player one
+    for(i = 0; i < BOARD.board[0].length; ++i) {
+        playerOnePieces.push(BOARD.board[0][i]);
+    }
+    for(i = 0; i < BOARD.board[1].length; ++i) {
+        playerOnePieces.push(BOARD.board[1][i]);
+    }
 
+    // Row 6 and 7 go to player two
+    for(i = 0; i < BOARD.board[6].length; ++i) {
+        playerOnePieces.push(BOARD.board[6][i]);
+    }
+    for(i = 0; i < BOARD.board[7].length; ++i) {
+        playerOnePieces.push(BOARD.board[7][i]);
+    }
 }
 
 /**
@@ -559,11 +574,13 @@ function detectCheckmate(kingPiece, board) {
         if (kingPiece.playerId == 0) {
             // Use playerOnePieces
             playerOnePieces.forEach((piece) => {
-                const pieceMoves = piece.possibleMoves();
-                for(i = 0; i < pieceMoves.length; ++i) {
-                    for(j = 0; j < attackVectors.length; ++j) {
-                        if(pieceMoves[i][0] == attackVectors[j][0] && pieceMoves[i][1] == attackVectors[j][1]) {
-                            powerPieces.push(piece);
+                if (!piece.isTaken()) {
+                    const pieceMoves = piece.possibleMoves();
+                    for(i = 0; i < pieceMoves.length; ++i) {
+                        for(j = 0; j < attackVectors.length; ++j) {
+                            if(pieceMoves[i][0] == attackVectors[j][0] && pieceMoves[i][1] == attackVectors[j][1]) {
+                                powerPieces.push(piece);
+                            }
                         }
                     }
                 }
@@ -572,11 +589,13 @@ function detectCheckmate(kingPiece, board) {
         else {
             // Use playerTwoPieces
             playerTwoPieces.forEach((piece) => {
-                const pieceMoves = piece.possibleMoves();
-                for(i = 0; i < pieceMoves.length; ++i) {
-                    for(j = 0; j < attackVectors.length; ++j) {
-                        if(pieceMoves[i][0] == attackVectors[j][0] && pieceMoves[i][1] == attackVectors[j][1]) {
-                            powerPieces.push(piece);
+                if (!piece.isTaken()) {
+                    const pieceMoves = piece.possibleMoves();
+                    for(i = 0; i < pieceMoves.length; ++i) {
+                        for(j = 0; j < attackVectors.length; ++j) {
+                            if(pieceMoves[i][0] == attackVectors[j][0] && pieceMoves[i][1] == attackVectors[j][1]) {
+                                powerPieces.push(piece);
+                            }
                         }
                     }
                 }
