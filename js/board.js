@@ -158,29 +158,4 @@ export class Board {
             pieceId, rowIndex, colIndex, playerId
         );
     }
-
-    /**
-     * This detects check at the beginning of someones turn
-     * 
-     */
-    detectCheck() {
-
-    }
-
-    /**
-     * This detects check for a pieces possible moveset
-     * 
-     * Takes something, haven't decided what exactly yet
-     */
-    detectCheckAfterMove() {
-
-    }
-
-    /**
-     * Detects checkmate using the previously defined check functions
-     * 
-     */
-    detectCheckmate() {
-
-    }
 }
