@@ -11,6 +11,8 @@ $custom-colors: (
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
+$grid-row-columns: 12;
+
 .row {
     height: 12.5%;
 }
