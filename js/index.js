@@ -1,7 +1,7 @@
 import { Board } from "./board.js";
 
 // Create an instance of the board class
-const BOARD = new Board()
+const board = new Board()
 
 // Add 'click' event-listener to the 'New Game' button.
 const newGameButton = document.getElementById("new-game");
@@ -13,6 +13,10 @@ newGameButton.addEventListener("click", () =>
 
 // Add 'click' event-listener to the 'Undo' button.
 const undoButton = document.getElementById("undo-move");
-undoButton.addEventListener("click", () =>
-    BOARD.lastPieceMoved.undo(BOARD)
+undoButton.addEventListener("click", () => {
+        if (board.lastPieceMoved !== null) {
+            board.lastPieceMoved.undo(board);
+            board.renderPieces();
+        }
+    }
 );
