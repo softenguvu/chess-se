@@ -22,6 +22,10 @@ export class Board {
         }
         Board._instance = this;
 
+        // Row labels indexed from top down.
+        Board.rowStr = "87654321";
+        // Column labels indexed from left to right.
+        Board.colStr = "abcdefgh";
         // 2D array of Piece.
         this.board = Array.from(new Array(8), () => new Array(8));
         // Mapping between player id and list of taken pieces.
@@ -35,11 +39,9 @@ export class Board {
      * the board that indicate possible moves of a chess piece.
      */
     markPossibleMoves(possibleMoves) {
-        const rowStr = "87654321";  // Row labels indexed from top down.
-        const colStr = "abcdefgh";  // Column labels indexed from left to right.
         possibleMoves.forEach(location => {
             const [rowIndex, colIndex] = location;
-            const squarePos = colStr[colIndex] + rowStr[rowIndex];
+            const squarePos = Board.colStr[colIndex] + Board.rowStr[rowIndex];
             const color = this.board[rowIndex][colIndex] ?
                 "primaryRed" :  // Red if contains piece.
                 "primaryRedBlack";  // RedBlack if doesn't contain piece.
@@ -80,6 +82,17 @@ export class Board {
             currPieceId, playerTwoId, powerRowBlack, pawnRowBlack
         );
         this.takenPieces.set(playerTwoId, []);
+    }
+
+    /**
+     * Renders all chess pieces in the frontend.
+     */
+    renderPieces() {
+        this._renderLivePieces();
+        const playerOneId = 0;
+        this._renderTakenPieces(playerOneId, "left-graveyard");
+        const playerTwoId = 1;
+        this._renderTakenPieces(playerTwoId, "right-graveyard");
     }
 
     /**
@@ -163,5 +176,35 @@ export class Board {
         this.board[rowIndex][colIndex] = new pieceType(
             pieceId, rowIndex, colIndex, playerId
         );
+    }
+
+    /**
+     * Renders all chess pieces in the frontend chess board that have not been taken.
+     */
+    _renderLivePieces() {
+        this.board.forEach((row, rowIndex) =>
+            row.forEach((col, colIndex) => {
+                const squarePos = Board.colStr[colIndex] + Board.rowStr[rowIndex];
+                const boardSquare = document.getElementById(squarePos);
+                boardSquare.innerHTML = (col) ? col.unicodeChar : "";
+            })
+        );
+    }
+
+    /**
+     * Renders taken chess pieces for the player with the given player id in the
+     * corresponding frontend graveyard with the given element id.
+     * 
+     * @param {int} playerId Player's id.
+     * @param {string} graveyardId Frontend graveyard's HTML element id.
+     */
+    _renderTakenPieces(playerId, graveyardId) {
+        const takenPiecesHTML = [];
+        this.takenPieces.get(playerId).forEach(takenPiece =>
+            takenPiecesHTML.push(`<div class="col">${takenPiece.unicodeChar}</div>`)
+        );
+
+        const graveyard = document.getElementById(graveyardId);
+        graveyard.innerHTML = takenPiecesHTML.join("");
     }
 }

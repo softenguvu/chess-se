@@ -1,3 +1,7 @@
+import { Board } from "./board.js";
+
+const board = new Board();
+
 // Function that handles adding event listeners to the chess board
 function initBoardEvListener() {
     // First column. 'a' column
@@ -269,11 +273,11 @@ initBoardEvListener();
 
 // Add 'click' event-listener to the 'New Game' button.
 const newGameButton = document.getElementById("new-game");
-newGameButton.addEventListener("click", () =>
-    console.log(
-        "New Game button: Click Event Triggered"
-    )
-);
+newGameButton.addEventListener("click", () => {
+    board.reset();
+    board.initBoard();
+    board.renderPieces();
+});
 
 // Add 'click' event-listener to the 'Undo' button.
 const undoButton = document.getElementById("undo-move");
