@@ -8,7 +8,7 @@ export class Piece {
             throw new Error("Error: cannot instantiate abstract Piece class");
         }
         this.id = undefined;
-        this.rowPos = undefined
+        this.rowPos = undefined;
         this.colPos = undefined;
         this.playerId = undefined;
         this.prevRowPos = null;
