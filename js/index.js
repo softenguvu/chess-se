@@ -3,26 +3,49 @@ const board = new Board();
 
 let activePiece = null; //global variable to keep track of active piece
 
+/* 
+Helper function to "reset" the colors of the board,
+and makes the colors of the squares black and white, 
+(if it's an even square, it's white; if it's odd, it's black)
+and removes the highlights. 
+*/
+function colorAllSquares() {
+    const rowStr = "87654321";
+    const colStr = "abcdefgh";
+    for (let i = 0; i < board.board.length; i++){
+        for (let j = 0; j < board.board[i].length; j++) {
+            const squarePos = colStr[j] + rowStr[i];
+            const evenSquare = (i + j) % 2 == 0;
+            const color = evenSquare ? "white" : "black";
+            const getSquare = document.getElementById(squarePos);
+            getSquare.classList.remove("bg-primaryRed", "bg-primaryRedBlack");
+            getSquare.classList.add("bg-" + color);
+        }
+    }
+}
+
+
+/*
+This Event Listener function resets the colors of the chess squares,
+and then proceeds. 
+*/
 function initBoardEvListener() {
     const rows = 8;
     const cols = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
-    //loop through rows and cols, to get the squares of the chessboard.
     for (let i = 1; i <= rows; i++) {
         for (let j = 0; j < cols.length; j++) {
-            const element = document.getElementById(cols[j] + i);
+            const squareString = cols[j] + i.toString();
+            const element = document.getElementById(squareString);
             element.addEventListener("click", function (event) {
-                //const col = cols[j];
-                //const row = i;
-                //console.log(`You clicked on the square: ${col}${row}`); //for testing purposes to ensure I simplified the OG code correctly.
-                const boardSquare = event.target.id; //get the square that was clicked
-                const position = boardSquare.match(/([a-h][1-8])/)[0]; // extract the position string using a regex. 
-                const piece = getPiece(position); //get the piece from the boardsquare
-                if (piece !== null) { //ensure clicked square actually has a piece 
-                    activePiece = piece; //update active piece to the piece clicked 
-                    colorAllSquares(); //color all squares back to black and white, remove highlights. 
-                    const potentialMoves = piece.possibleMoves(board); //get the possible moves for the piece 
-                    board.markPossibleMoves(potentialMoves); // mark possible moves on the board 
+                const boardSquare = event.target.id; 
+                const position = boardSquare.match(/([a-h][1-8])/)[0]; 
+                const piece = getPiece(position); 
+                if (piece !== null) { 
+                    activePiece = piece; 
+                    colorAllSquares();
+                    const potentialMoves = piece.possibleMoves(board);
+                    board.markPossibleMoves(potentialMoves); 
                 }
             });
         }
@@ -30,31 +53,6 @@ function initBoardEvListener() {
 }
 
 initBoardEvListener();
-
-/* 
-Helper function to "reset" the colors of the board 
-by making all the squares on the chessboard white and black again,
-removes the highlights.
-*/
-
-function colorAllSquares() {
-
-    const rows = 8;
-    const cols = ["a", "b", "c", "d", "e", "f", "g", "h"];
-
-    //loop through rows and cols, to get the squares of the chessboard.
-    for (let i = 1; i <= rows; i++) {
-        for (let j = 0; j < cols.length; j++) {
-            const allSquares = document.getElementById(cols[j] + i);
-            for (let k = 0; k < allSquares.children.length; k++) {
-                const isEven = (Math.floor(k / 8) + k) % 2 == 0;
-                allSquares[k].classList.toggle('bg-white', isEven); //if square position is even, it's a white square
-                allSquares[k].classList.toggle('bg-black', !isEven); //if square position is odd, it's a black square
-                allSquares[k].classList.remove('bg-primaryRedBlack', 'bg-primaryRed'); //remove square highlights
-            }
-        }
-    }
-}
 
 
 /* 
