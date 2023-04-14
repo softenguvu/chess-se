@@ -30,6 +30,8 @@ export class Board {
         this.board = Array.from(new Array(8), () => new Array(8));
         // Mapping between player id and list of taken pieces.
         this.takenPieces = new Map();
+        // The most recently moved piece.
+        this.lastPieceMoved = null;
     }
 
     /**

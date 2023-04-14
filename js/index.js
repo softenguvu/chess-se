@@ -1,6 +1,7 @@
 import { Board } from "./board.js";
 
-const board = new Board();
+// Create an instance of the board class
+const board = new Board()
 
 // Function that handles adding event listeners to the chess board
 function initBoardEvListener() {
@@ -281,6 +282,10 @@ newGameButton.addEventListener("click", () => {
 
 // Add 'click' event-listener to the 'Undo' button.
 const undoButton = document.getElementById("undo-move");
-undoButton.addEventListener("click", () =>
-    console.log("Undo button: Click Event Triggered")
+undoButton.addEventListener("click", () => {
+        if (board.lastPieceMoved !== null) {
+            board.lastPieceMoved.undo(board);
+            board.renderPieces();
+        }
+    }
 );
