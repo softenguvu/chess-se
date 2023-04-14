@@ -58,6 +58,7 @@ export class Board {
     reset() {
         this.board = Array.from(new Array(8), () => new Array(8));
         this.takenPieces.clear();
+        this.lastPieceMoved = null;
     }
 
     /**
