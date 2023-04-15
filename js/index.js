@@ -2,7 +2,7 @@ import {Board} from './board.js';
 const board = new Board();
 
 let activePiece = null; //global variable to keep track of active piece
-
+let currentPlayer = 0; //global variable to keep track of currentPlayer turn- set to white piece initially. 
 /* 
 Helper function to "reset" the colors of the board,
 and makes the colors of the squares black and white, 
@@ -40,12 +40,14 @@ function initBoardEvListener() {
             const element = document.getElementById(squareString);
             element.addEventListener("click", () => {
                 const piece = getPiece(squareString);
-                if (piece) {
+                if (piece && piece.pieceId == currentPlayer) {
                     activePiece = piece;
                     colorAllSquares();
                     const potentialMoves = piece.possibleMoves(board);
                     board.markPossibleMoves(potentialMoves);
                 }
+
+                currentPlayer = currentPlayer === 0 ? 1 : 0; //update currentPlayer after turn is up 
             }
             );
         }
