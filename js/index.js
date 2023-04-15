@@ -282,8 +282,12 @@ newGameButton.addEventListener("click", () => {
 
 // Add 'click' event-listener to the 'Undo' button.
 const undoButton = document.getElementById("undo-move");
-undoButton.addEventListener("click", () =>
-    console.log("Undo button: Click Event Triggered")
+undoButton.addEventListener("click", () => {
+        if (board.lastPieceMoved !== null) {
+            board.lastPieceMoved.undo(board);
+            board.renderPieces();
+        }
+    }
 );
 
 // This function get's run once, at the very beginning
