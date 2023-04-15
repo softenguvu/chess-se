@@ -9,4 +9,8 @@ QUnit.module("Board", hooks => {
     hooks.beforeEach(() => {
         board = new Board();
     });
+
+    hooks.afterEach(() => {
+        board.reset();
+    });
 });
