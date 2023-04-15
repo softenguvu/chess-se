@@ -26,8 +26,9 @@ function colorAllSquares() {
 
 
 /*
-This Event Listener function resets the colors of the chess squares,
-and then proceeds. 
+Function for event handlers that resets the colors of the chess squares,
+and then proceeds to mark the possible squares a chess piece can 
+move to if the piece is there. Active piece variable is then updated.
 */
 function initBoardEvListener() {
     const rows = 8;
@@ -37,20 +38,21 @@ function initBoardEvListener() {
         for (let j = 0; j < cols.length; j++) {
             const squareString = cols[j] + i.toString();
             const element = document.getElementById(squareString);
-            element.addEventListener("click", function (event) {
-                const boardSquare = event.target.id; 
-                const position = boardSquare.match(/([a-h][1-8])/)[0]; 
-                const piece = getPiece(position); 
-                if (piece !== null) { 
-                    activePiece = piece; 
+            element.addEventListener("click", () => {
+                const piece = getPiece(squareString);
+                if (piece) {
+                    activePiece = piece;
                     colorAllSquares();
                     const potentialMoves = piece.possibleMoves(board);
-                    board.markPossibleMoves(potentialMoves); 
+                    board.markPossibleMoves(potentialMoves);
                 }
-            });
+            }
+            );
         }
     }
+
 }
+
 
 initBoardEvListener();
 
@@ -69,6 +71,17 @@ function getPiece(position) {
     return piece;
 }
 
+//function movePiece {
+    //check that piece is not null. 
+    //check that piece belongs to current player who's turn it is.
+    //check that it's a valid move. 
+    //if it's a valid move, then we can call movePiece. 
+    //set the active piece to the piece that was clicked. 
+    //move piece to clicked on square.
+    //call my colorAllSquares function.
+    //call detectCheckmate after piece is moved.
+    //do it after you move a piece. 
+//}
 
 // Add 'click' event-listener to the 'New Game' button.
 const newGameButton = document.getElementById("new-game");
