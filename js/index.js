@@ -40,7 +40,7 @@ function initBoardEvListener() {
             const element = document.getElementById(squareString);
             element.addEventListener("click", () => {
                 const piece = getPiece(squareString);
-                if (piece && piece.pieceId == currentPlayer) {
+                if (piece && piece.getPlayerId() == currentPlayer) {
                     activePiece = piece;
                     colorAllSquares();
                     const potentialMoves = piece.possibleMoves(board);
