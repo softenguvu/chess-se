@@ -48,6 +48,7 @@ QUnit.module("Board", hooks => {
      * Test reset().
      */
     QUnit.test("reset()", assert => {
+        board.reset();
         assert.deepEqual(
             board.board,
             Array.from(new Array(8), () => Array(8)),
