@@ -43,4 +43,27 @@ QUnit.module("Board", hooks => {
             "Verify [lastPieceMoved] member is null."
         );
     });
+
+    /**
+     * Test reset().
+     */
+    QUnit.test("reset()", assert => {
+        assert.deepEqual(
+            board.board,
+            Array.from(new Array(8), () => Array(8)),
+            "Verify [board] member is now an empty 8x8 Array."
+        );
+
+        assert.deepEqual(
+            board.takenPieces,
+            new Map(),
+            "Verify [takenPieces] member is now an empty Map."
+        );
+
+        assert.deepEqual(
+            board.lastPieceMoved,
+            null,
+            "Verify [lastPieceMoved] member is now null."
+        );
+    });
 });
