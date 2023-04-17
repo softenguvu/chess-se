@@ -160,4 +160,25 @@ QUnit.module("Board", hooks => {
             "Verify [board] member contains black Pawn at A7."
         );
     });
+
+    /**
+     * Test _initPawnRow().
+     */
+    QUnit.test("_initPawnRow()", assert => {
+        assert.deepEqual(
+            board._initPawnRow(0, 0, 0),
+            8,
+            "Verify piece id is 8 after initializing a row of Pawns."
+        );
+
+        const pawnRow = Array(8);
+        for (let i = 0; i < 8; ++i) {
+            pawnRow[i] = new Pawn(i, 0, i, 0);
+        }
+        assert.deepEqual(
+            board.board[0],
+            pawnRow,
+            "Verify row contains only Pawns after initialization."
+        );
+    });
 });
