@@ -1,6 +1,8 @@
 import { Board } from  "../js/board.js";
 import { Rook } from "../js/rook.js";
 import { Pawn } from "../js/pawn.js";
+import { King } from "../js/king.js";
+import { Queen } from "../js/queen.js";
 
 /**
  * Test suite for the Board class.
@@ -127,6 +129,35 @@ QUnit.module("Board", hooks => {
             board.lastPieceMoved,
             null,
             "Verify [lastPieceMoved] member is still null."
+        );
+    });
+
+    /**
+     * Test _initPlayerPieces().
+     */
+    QUnit.test("_initPlayerPieces()", assert => {
+        assert.deepEqual(
+            board._initPlayerPieces(0, 1, 0, 1),
+            16,
+            "Verify piece id is 16 after initializing a player's pieces."
+        );
+
+        assert.deepEqual(
+            board.board[0][4],
+            new King(4, 0, 4, 1),
+            "Verify [board] member contains black King at E8."
+        );
+
+        assert.deepEqual(
+            board.board[0][3],
+            new Queen(3, 0, 3, 1),
+            "Verify [board] member contains black Queen at D8."
+        );
+
+        assert.deepEqual(
+            board.board[1][0],
+            new Pawn(8, 1, 0, 1),
+            "Verify [board] member contains black Pawn at A7."
         );
     });
 });
