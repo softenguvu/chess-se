@@ -13,4 +13,34 @@ QUnit.module("Board", hooks => {
     hooks.afterEach(() => {
         board.reset();
     });
+
+    /**
+     * Test constructor().
+     */
+    QUnit.test("constructor()", assert => {
+        const anotherBoard = new Board();
+        assert.deepEqual(
+            anotherBoard,
+            board,
+            "Verify singleton constructor produces singleton."
+        );
+
+        assert.deepEqual(
+            board.board,
+            Array.from(new Array(8), () => Array(8)),
+            "Verify [board] member is an empty 8x8 Array."
+        );
+
+        assert.deepEqual(
+            board.takenPieces,
+            new Map(),
+            "Verify [takenPieces] member is an empty Map."
+        );
+
+        assert.deepEqual(
+            board.lastPieceMoved,
+            null,
+            "Verify [lastPieceMoved] member is null."
+        );
+    });
 });
