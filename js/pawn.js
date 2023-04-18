@@ -47,4 +47,9 @@ export class Pawn extends Piece{
 
         return possibleMoves;
     }
+
+    movePiece(row, col, board) {
+        super.movePiece(row, col, board);
+        this.moved = true;
+    }
 }
