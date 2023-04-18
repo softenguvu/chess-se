@@ -3,6 +3,8 @@ import { Rook } from "../js/rook.js";
 import { Pawn } from "../js/pawn.js";
 import { King } from "../js/king.js";
 import { Queen } from "../js/queen.js";
+import { Knight } from "../js/knight.js";
+import { Bishop } from "../js/bishop.js";
 
 /**
  * Test suite for the Board class.
@@ -179,6 +181,29 @@ QUnit.module("Board", hooks => {
             board.board[0],
             pawnRow,
             "Verify row contains only Pawns after initialization."
+        );
+    });
+
+    /**
+     * Test _initPowerRow().
+     */
+    QUnit.test("_initPowerRow()", assert => {
+        assert.deepEqual(
+            board._initPowerRow(0, 0, 0),
+            8,
+            "Verify piece id is 8 after initializing a row of power pieces."
+        );
+
+        const powerPieces = [
+            Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook
+        ];
+        const powerRow = powerPieces.map(
+            (pieceType, i) => new pieceType(i, 0, i, 0)
+        );
+        assert.deepEqual(
+            board.board[0],
+            powerRow,
+            "Verify row contains power pieces in correct order after initialization."
         );
     });
 });
