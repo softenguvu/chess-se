@@ -10,9 +10,10 @@ export class Piece {
         this.id = undefined;
         this.rowPos = undefined;
         this.colPos = undefined;
-        this.playerId = undefined;
         this.prevRowPos = null;
         this.prevColPos = null;
+        this.unicodeChar = undefined;
+        this.playerId = null;
         this.lastTake = null;
     }
 
@@ -68,16 +69,16 @@ export class Piece {
      * Gets the piece player owner
      * @returns {*}
      */
-    getPlayerOwner() {
-        return this.playerOwner;
+    getPlayerId() {
+        return this.playerId;
     }
 
     /**
-     * Sets the piece player owner
-     * @param playerOwner 0 or 1
+     * Sets the piece player id
+     * @param id 0 or 1
      */
-    setPlayerOwner(playerOwner) {
-        this.playerOwner = playerOwner;
+    setPlayerId(id) {
+        this.playerId = id;
     }
 
     /**
@@ -115,10 +116,28 @@ export class Piece {
     }
 
     /**
-     * Move piece to new location and sets piece location property
+     * Moves piece to {row}, {col} and updates board
+     * @param row new row
+     * @param col new column
+     * @param board Board.board
      */
-    movePiece() {
-        throw new Error("Method 'movePiece' must be implemented");
+    movePiece(row, col, board) {
+        if (board.board[row][col]) { // taking a piece
+            this.lastTake = board.board[row][col];
+            this.lastTake.setTaken();
+            board.board[row][col] = null;
+        }
+        else {
+            this.lastTake = null;
+        }
+
+        // Update board
+        board.board[this.rowPos][this.colPos] = null;
+        board.board[row][col] = this;
+
+        // Update piece position
+        this.rowPos = row;
+        this.colPos = col;
     }
 
     /**
