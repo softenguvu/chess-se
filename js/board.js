@@ -45,8 +45,8 @@ export class Board {
             const [rowIndex, colIndex] = location;
             const squarePos = Board.colStr[colIndex] + Board.rowStr[rowIndex];
             const color = this.board[rowIndex][colIndex] ?
-                "primaryRed" :  // Red if contains piece.
-                "primaryRedBlack";  // RedBlack if doesn't contain piece.
+                "primaryRedBlack" :  // RedBlack if contains piece.
+                "primaryGrey";  // Grey if doesn't contain piece.
 
             this._markSquare(squarePos, color);
         });
@@ -70,8 +70,8 @@ export class Board {
 
         // Initialize white's pieces.
         const playerOneId = 0;
-        const powerRowWhite = 0;  // Row index of white's power pieces.
-        const pawnRowWhite = 1;  // Row index of white's pawns.
+        const powerRowWhite = 7;  // Row index of white's power pieces.
+        const pawnRowWhite = 6;  // Row index of white's pawns.
         currPieceId = this._initPlayerPieces(
             currPieceId, playerOneId, powerRowWhite, pawnRowWhite
         );
@@ -79,8 +79,8 @@ export class Board {
 
         // Initialize black's pieces.
         const playerTwoId = 1;
-        const powerRowBlack = 7;  // Row index of black's power pieces.
-        const pawnRowBlack = 6;  // Row index of black's pawns.
+        const powerRowBlack = 0;  // Row index of black's power pieces.
+        const pawnRowBlack = 1;  // Row index of black's pawns.
         currPieceId = this._initPlayerPieces(
             currPieceId, playerTwoId, powerRowBlack, pawnRowBlack
         );
@@ -107,7 +107,7 @@ export class Board {
      */
     _markSquare(squarePos, color) {
         const squareBgColors = [
-            "bg-black", "bg-white", "bg-primaryRedBlack", "bg-primaryRed"
+            "bg-light-brown", "bg-white", "bg-primaryGrey", "bg-primaryRedBlack"
         ];
         const boardSquare = document.getElementById(squarePos);
         boardSquare.classList.remove(...squareBgColors);
@@ -189,7 +189,15 @@ export class Board {
             row.forEach((col, colIndex) => {
                 const squarePos = Board.colStr[colIndex] + Board.rowStr[rowIndex];
                 const boardSquare = document.getElementById(squarePos);
-                boardSquare.innerHTML = (col) ? col.unicodeChar : "";
+                boardSquare.classList.remove("white-piece", "black-piece");
+                if (col) {
+                    boardSquare.innerHTML = col.unicodeChar;
+                    boardSquare.classList.add(
+                        (col.getPlayerId() === 0) ? "white-piece" : "black-piece"
+                    );
+                } else {
+                    boardSquare.innerHTML = "";
+                }
             })
         );
     }

@@ -101,7 +101,7 @@ function initBoardEvListener() {
     });
 
     const c8Board = document.getElementById("c8");
-    c8Board.addEventListener("click", function(event) {;
+    c8Board.addEventListener("click", function(event) {
     });
 
     // First column. 'd' column
