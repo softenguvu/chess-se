@@ -7,11 +7,11 @@ export class Piece {
         if (this.constructor === Piece) {
             throw new Error("Error: cannot instantiate abstract Piece class");
         }
-        this.id = null;
-        this.rowPos = null;
-        this.colPos = null;
-        this.active = false;
-        this.taken = false;
+        this.id = undefined;
+        this.rowPos = undefined;
+        this.colPos = undefined;
+        this.prevRowPos = null;
+        this.prevColPos = null;
         this.unicodeChar = undefined;
         this.playerId = null;
         this.lastTake = null;
@@ -66,43 +66,6 @@ export class Piece {
     }
 
     /**
-     * Check if piece is active
-     * @returns {boolean}
-     */
-    isActive() {
-        return this.active;
-    }
-
-    /**
-     * Set piece to active state
-     */
-    setActive() {
-        this.active = true;
-    }
-
-    /**
-     * Set piece to inactive state
-     */
-    setInactive() {
-        this.active = false;
-    }
-
-    /**
-     * Check if piece is taken
-     * @returns {boolean}
-     */
-    isTaken() {
-        return this.taken;
-    }
-
-    /**
-     * Set piece to taken state
-     */
-    setTaken() {
-        this.taken = true;
-    }
-
-    /**
      * Gets the piece player owner
      * @returns {*}
      */
@@ -121,8 +84,35 @@ export class Piece {
     /**
      * Undo previous action
      */
-    undo() {
-        throw new Error("Method 'undo()' must be implemented");
+    undo(board) {
+        // Remove the piece from its current location
+        board.board[this.rowPos][this.colPos] = null;
+
+        // See if we took a piece during that last move
+        if (this.lastTake != null) {
+            board.board[this.rowPos][this.colPos] = this.lastTake;
+
+            // Remove the taken piece from the graveyard
+            let oppID;
+            let retLoc;
+
+            if (this.playerId == 1) {
+                oppID = 0;
+            }
+            else {
+                oppID = 1;
+            }
+
+            retLoc = board.takenPieces.get(oppID).indexOf(this.lastTake);
+
+            board.takenPieces.get(oppID).splice(retLoc, 1);
+        }
+
+        // Set the current location to the previous location and put the piece in its new current location
+        this.rowPos = this.prevRowPos;
+        this.colPos = this.prevColPos;
+
+        board.board[this.rowPos][this.colPos] = this;
     }
 
     /**
