@@ -27,34 +27,64 @@ function colorAllSquares() {
 
 
 /*
+Function to determine if a square is marked. 
+*/
+
+function isMarkedSquare(squareString) {
+    //Convert the square string to row/col 
+    const [row, col] = squareStringConverter(squareString);
+    return board.markPossibleMoves[row][col];
+}
+
+/*
+Function to help with converting string to row col. 
+*/
+
+function squareStringConverter(squareString){
+    const numRow = parseInt(squareString[1]) - 1; //get row number from squarestring
+    const cols = ["a", "b", "c", "d", "e", "f", "g", "h"]; //array for cols 
+    const numCol = cols.indexOf(squareString[0]);  //get the col number from squarestring
+    return [numRow, numCol];
+}
+
+
+/*
 Function for event handlers that will resets the colors of the chess squares,
 marks the possible squares a chess piece can move to, 
 and will then proceed to move the piece to the selected square. 
 Active piece variable is then updated.
 */
+
 function initBoardEvListener() {
     const rows = 8;
     const cols = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
     for (let i = 1; i <= rows; i++) {
         for (let j = 0; j < cols.length; j++) {
-            const squareString = cols[j] + i.toString();
-            const element = document.getElementById(squareString);
-            element.addEventListener("click", () => {
-                const piece = getPiece(squareString);
-                if (piece && piece.getPlayerId() == currentPlayer) {
-                    activePiece = piece;
-                    colorAllSquares(); 
-                    const potentialMoves = piece.possibleMoves(board); 
-                    board.markPossibleMoves(potentialMoves); //mark the squares the piece can move to
-                    //movepiece functionality added here: 
-                } else if (activePiece) {
-                    const numRow = parseInt(squareString[1]) - 1; //get row number from squarestring
-                    const numCol = cols.indexOf(squareString[0]);  //get the col number from squarestring
-                    activePiece.movePiece(numRow, numCol, board);//move piece func call from piece class 
-                    colorAllSquares(); //Reset colors of all squares 
-                    activePiece = null; //Reset the activePiece variable 
+                const squareString = cols[j] + i.toString();
+                const element = document.getElementById(squareString);
+                element.addEventListener("click", () => {
+                    handleClick(squareString);
+                });
+            }
+        }
+    }
 
+initBoardEvListener();
+
+function handleClick(squareString){
+    const piece = getPiece(squareString);
+    if (piece && piece.getPlayerId() == currentPlayer) {
+        activePiece = piece;
+        colorAllSquares();
+        const potentialMoves = piece.possibleMoves(board);
+        board.markPossibleMoves(potentialMoves);
+        //Register the event listener for handling when the marked square is selected
+        const handleInnerClick = () => {
+            if (isMarkedSquare(squareString)) {
+                const [row, col] = squareStringConverter(squareString);
+                activePiece.movePiece(row, col, board);
+                colorAllSquares();
                     //Now that piece has moved, make the check for if opposing player is in check/checkmate:
                     const enemyPlayerID = (currentPlayer === 0) ? 1 : 0;
                     const kingPiece = getKingPiece(enemyPlayerID);
@@ -68,14 +98,14 @@ function initBoardEvListener() {
                             }
                         }
                     }
-                }
-            });
-        }
+            }
+        };
+        const element = document.getElementById(squareString);
+        element.removeEventListener("click", handleInnerClick); 
+        element.addEventListener("click", handleInnerClick);
     }
+
 }
-
-initBoardEvListener();
-
 
 /* 
 Helper function to get the piece on the board. 
