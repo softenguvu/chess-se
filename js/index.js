@@ -98,7 +98,7 @@ function initBoardEvListener() {
     });
 
     const c8Board = document.getElementById("c8");
-    c8Board.addEventListener("click", function(event) {;
+    c8Board.addEventListener("click", function(event) {
     });
 
     // First column. 'd' column
@@ -277,7 +277,7 @@ newGameButton.addEventListener("click", () => {
     board.renderPieces();
     playerOnePieces = [];
     playerTwoPieces = [];
-    getPlayerPieces()
+    getPlayerPieces();
 });
 
 // Add 'click' event-listener to the 'Undo' button.
@@ -365,10 +365,10 @@ function detectCheck(kingPiece, board) {
      */
     for (let i = kingPiece.rowPos + 1; i < maxRows; i++) {
         if (board[i][kingPiece.colPos] !== undefined && board[i][kingPiece.colPos].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
-            currClosestFriend = board[i][kingPiece.colPos]
+            currClosestFriend = board[i][kingPiece.colPos];
         }
         if (board[i][kingPiece.colPos] !== undefined && board[i][kingPiece.colPos].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
-            currClosestEnemy = board[i][kingPiece.colPos]
+            currClosestEnemy = board[i][kingPiece.colPos];
         }
     }
 
@@ -382,10 +382,10 @@ function detectCheck(kingPiece, board) {
      */
     for (let i = kingPiece.rowPos - 1; i >= minRows; i--) {
         if (board[i][kingPiece.colPos] !== undefined && board[i][kingPiece.colPos].getPlayerId() == kingPiece.playerId && currClosestFriend == null) {
-            currClosestFriend = board[i][kingPiece.colPos]
+            currClosestFriend = board[i][kingPiece.colPos];
         }
         if (board[i][kingPiece.colPos] !== undefined && board[i][kingPiece.colPos].getPlayerId() != kingPiece.playerId && currClosestEnemy == null) {
-            currClosestEnemy = board[i][kingPiece.colPos]
+            currClosestEnemy = board[i][kingPiece.colPos];
         }
     }
 
@@ -541,7 +541,7 @@ function detectCheckmate(kingPiece, board) {
             acceptableMoves.push([newRow, newCol]);
             res[0].forEach((attackingPiece) => {
                 attackingPieces.push(attackingPiece);
-            })
+            });
         }
 
         kingPiece.setRowPos(oldRow);
@@ -564,9 +564,9 @@ function detectCheckmate(kingPiece, board) {
             let tempVectors = currPiece.possibleMoves();
             tempVectors.forEach((vectors) => {
                 attackVectors.push(vectors);
-            })
+            });
             attackVectors.push([currPiece.getRowPos(), currPiece.getColPos()]);
-        })
+        });
 
         /**
          * Iterate through the list of friendly pieces seeing if any of their possible movesets include

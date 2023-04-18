@@ -14,7 +14,7 @@ export class King extends Piece {
         this.rowPos = rowPos;
         this.colPos = colPos;
         this.playerId = playerId;
-        this.unicodeChar = "&#9812;";
+        this.unicodeChar = "&#9818;";
     }
 
     /**

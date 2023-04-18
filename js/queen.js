@@ -20,7 +20,7 @@ export class Queen extends Piece{
         this.rowPos = rowPos;
         this.colPos = colPos;
         this.playerId = playerId;
-        this.unicodeChar = "&#9813;";
+        this.unicodeChar = "&#9819;";
     }
 
     /**

@@ -19,7 +19,7 @@ export class Knight extends Piece {
         this.rowPos = rowPos;
         this.colPos = colPos;
         this.playerId = playerId;
-        this.unicodeChar = "&#9816;";  // White knight chess piece.
+        this.unicodeChar = "&#9822;";  // White knight chess piece.
     }
 
     /**
