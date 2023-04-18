@@ -206,4 +206,21 @@ QUnit.module("Board", hooks => {
             "Verify row contains power pieces in correct order after initialization."
         );
     });
+
+    /**
+     * Test _initPiece().
+     */
+    QUnit.test("_initPiece()", assert => {
+        board._initPiece(King, 0, 0, 0, 0);
+        assert.true(
+            !!board.board[0][0],
+            "Verify [board] member contains piece after initializing piece."
+        );
+
+        assert.deepEqual(
+            board.board[0][0],
+            new King(0, 0, 0, 0),
+            "Verify [board] member contains correct piece after initializing piece."
+        );
+    });
 });
