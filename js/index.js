@@ -4,6 +4,7 @@ const board = new Board();
 let activePiece = null; //global variable to keep track of active piece
 let currentPlayer = 0; //global variable to keep track of currentPlayer turn- set to white piece initially. 
 /* 
+
 Helper function to "reset" the colors of the board,
 and makes the colors of the squares black and white, 
 (if it's an even square, it's white; if it's odd, it's black)
@@ -26,9 +27,10 @@ function colorAllSquares() {
 
 
 /*
-Function for event handlers that resets the colors of the chess squares,
-and then proceeds to mark the possible squares a chess piece can 
-move to if the piece is there. Active piece variable is then updated.
+Function for event handlers that will resets the colors of the chess squares,
+marks the possible squares a chess piece can move to, 
+and will then proceed to move the piece to the selected square. 
+Active piece variable is then updated.
 */
 function initBoardEvListener() {
     const rows = 8;
@@ -42,19 +44,35 @@ function initBoardEvListener() {
                 const piece = getPiece(squareString);
                 if (piece && piece.getPlayerId() == currentPlayer) {
                     activePiece = piece;
-                    colorAllSquares();
-                    const potentialMoves = piece.possibleMoves(board);
-                    board.markPossibleMoves(potentialMoves);
-                }
+                    colorAllSquares(); 
+                    const potentialMoves = piece.possibleMoves(board); 
+                    board.markPossibleMoves(potentialMoves); //mark the squares the piece can move to
+                    //movepiece functionality added here: 
+                } else if (activePiece) {
+                    const numRow = parseInt(squareString[1]) - 1; //get row number from squarestring
+                    const numCol = cols.indexOf(squareString[0]);  //get the col number from squarestring
+                    activePiece.movePiece(numRow, numCol, board);//move piece func call from piece class 
+                    colorAllSquares(); //Reset colors of all squares 
+                    activePiece = null; //Reset the activePiece variable 
 
-                currentPlayer = currentPlayer === 0 ? 1 : 0; //update currentPlayer after turn is up 
-            }
-            );
+                    //Now that piece has moved, make the check for if opposing player is in check/checkmate:
+                    const enemyPlayerID = (currentPlayer === 0) ? 1 : 0;
+                    const kingPiece = getKingPiece(enemyPlayerID);
+                    if (kingPiece) {
+                        if (detectCheck(kingPiece, board)) {
+                            console.log("The opposing King has been placed in check.");
+                            if (detectCheckmate(kingPiece, board)) {
+                                console.log("The opposing King is in checkmate, game over.")
+                            } else {
+                                currentPlayer = (currentPlayer === 0) ? 1 : 0; //switch turns if opposing King isn't in checkmate. 
+                            }
+                        }
+                    }
+                }
+            });
         }
     }
-
 }
-
 
 initBoardEvListener();
 
@@ -73,17 +91,25 @@ function getPiece(position) {
     return piece;
 }
 
-//function movePiece {
-    //check that piece is not null. 
-    //check that piece belongs to current player who's turn it is.
-    //check that it's a valid move. 
-    //if it's a valid move, then we can call movePiece. 
-    //set the active piece to the piece that was clicked. 
-    //move piece to clicked on square.
-    //call my colorAllSquares function.
-    //call detectCheckmate after piece is moved.
-    //do it after you move a piece. 
-//}
+/*
+Function for getting the King piece 
+in order to perform
+the check/checkmate checks.
+*/
+function getKingPiece(playerId) {
+    //loop through all rows and cols to find King piece
+    for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+            const piece = board.board[row][col];
+            //Once we find piece, return it 
+            if (piece instanceof King && piece.getPlayerId() === playerId) {
+                return piece;
+            }
+        }
+    }
+    return null;  // Return null if King piece not found
+}
+
 
 // Add 'click' event-listener to the 'New Game' button.
 const newGameButton = document.getElementById("new-game");
