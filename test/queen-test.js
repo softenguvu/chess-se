@@ -35,19 +35,19 @@ QUnit.module("Queen", hooks => {
         assert.deepEqual(
             queen.prevRowPos,
             null,
-            "Verify [prevRowPos] member is null."
+            "Verify [prevRowPos] member is initialized as null."
         );
 
         assert.deepEqual(
             queen.prevColPos,
             null,
-            "Verify [prevColPos] member is null."
+            "Verify [prevColPos] member is initialized as null."
         );
 
         assert.deepEqual(
             queen.lastTake,
             null,
-            "Verify [lastTake] member is null."
+            "Verify [lastTake] member is initialized as null."
         );
 
         assert.deepEqual(
