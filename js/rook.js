@@ -14,7 +14,7 @@ export class Rook extends Piece {
         this.rowPos = rowPos;
         this.colPos = colPos;
         this.playerId = playerId;
-        this.unicodeChar = "&#9814;";
+        this.unicodeChar = "&#9820;";
     }
 
     /**

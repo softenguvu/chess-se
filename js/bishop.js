@@ -20,7 +20,7 @@ export class Bishop extends Piece {
         this.rowPos = rowPos;
         this.colPos = colPos;
         this.playerId = playerId;
-        this.unicodeChar = "&#9815;";
+        this.unicodeChar = "&#9821;";
     }
 
     /**
