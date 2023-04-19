@@ -48,7 +48,6 @@ QUnit.module("Bishop", hooks => {
     //Unicode Character test 
     QUnit.test('Test unicodeChar', function (assert) {
         let testPiece = new Bishop(0, 1, 1, 1);
-        testPiece.unicodeChar
         assert.strictEqual(testPiece.unicodeChar, "&#9821;", 'unicodeChar is correct.');
     });
 
