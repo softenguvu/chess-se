@@ -1,6 +1,5 @@
 import { Board } from  "../js/board.js";
 import { King } from "../js/king.js";
-import {king} from "../js/king";
 
 QUnit.module("King", hooks => {
     let board;
@@ -56,7 +55,7 @@ QUnit.module("King", hooks => {
         );
         assert.deepEqual(
             king.unicodeChar,
-            "&#9820;",
+            "&#9818;",
             "Verify {unicodeChar} is correct."
         );
         assert.deepEqual(
@@ -66,95 +65,95 @@ QUnit.module("King", hooks => {
         );
     });
 
-    // /**
-    //  * Test possibleMoves() with king at {0, 0} on empty board.
-    //  */
-    // QUnit.test("possibleMoves() at {0, 0}", assert => {
-    //     let king = new King(1234, 0, 0, 0);
-    //     let possibleMoves = king.possibleMoves(board.board);
-    //     let actualMoves = [
-    //         [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7],
-    //         [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0]
-    //     ];
-    //     possibleMoves.sort();
-    //     actualMoves.sort();
-    //     assert.deepEqual(
-    //         JSON.stringify(possibleMoves),
-    //         JSON.stringify(actualMoves),
-    //         "Verify possibleMoves contains all row 0 and all col 0."
-    //     );
-    // });
-    //
-    // /**
-    //  * Test possibleMoves() with king at {7, 7} on empty board.
-    //  */
-    // QUnit.test("possibleMoves() at {7, 7}", assert => {
-    //     let king = new king(1234, 7, 7, 0);
-    //     let possibleMoves = king.possibleMoves(board.board);
-    //     let actualMoves = [
-    //         [7, 0], [7, 1], [7, 2], [7, 3], [7, 4], [7, 5], [7, 6],
-    //         [0, 7], [1, 7], [2, 7], [3, 7], [4, 7], [5, 7], [6, 7]
-    //     ];
-    //     possibleMoves.sort();
-    //     actualMoves.sort();
-    //     assert.deepEqual(
-    //         JSON.stringify(possibleMoves),
-    //         JSON.stringify(actualMoves),
-    //         "Verify possibleMoves contains all row 7 and all col 7."
-    //     );
-    // });
-    //
-    // /**
-    //  * Test possibleMoves() with king at {3, 3} on empty board.
-    //  */
-    // QUnit.test("possibleMoves() at {3, 3}", assert => {
-    //     let king = new king(1234, 3, 3, 0);
-    //     let possibleMoves = king.possibleMoves(board.board);
-    //     let actualMoves = [
-    //         [3, 0], [3, 1], [3, 2], [3, 4], [3, 5], [3, 6], [3, 7],
-    //         [0, 3], [1, 3], [2, 3], [4, 3], [5, 3], [6, 3], [7, 3]
-    //     ];
-    //     possibleMoves.sort();
-    //     actualMoves.sort();
-    //     assert.deepEqual(
-    //         JSON.stringify(possibleMoves),
-    //         JSON.stringify(actualMoves),
-    //         "Verify possibleMoves contains all row 3 and all col 3."
-    //     );
-    // });
-    //
-    // /**
-    //  * Test possibleMoves() with init board.
-    //  */
-    // QUnit.test("possibleMoves() with init board", assert => {
-    //     let king = new king(1234, 0, 0, 0);
-    //     board.initBoard();
-    //     let possibleMoves = king.possibleMoves(board.board);
-    //     let actualMoves = [];
-    //     assert.deepEqual(
-    //         JSON.stringify(possibleMoves),
-    //         JSON.stringify(actualMoves),
-    //         "Verify possibleMoves with init board returns nothing."
-    //     );
-    // });
-    //
-    // /**
-    //  * Test possibleMoves() attack moves.
-    //  */
-    // QUnit.test("possibleMoves() with attack moves", assert => {
-    //     let king = new king(1234, 0, 0, 0);
-    //     let king2 = new king(1, 1, 0, 1);
-    //     let king3 = new king (12, 0, 1, 1);
-    //     board.board[1][0] = king2;
-    //     board.board[0][1] = king2;
-    //     let possibleMoves = king.possibleMoves(board.board);
-    //     let actualMoves = [
-    //         [1, 0], [0, 1]
-    //     ];
-    //     assert.deepEqual(
-    //         JSON.stringify(possibleMoves),
-    //         JSON.stringify(actualMoves),
-    //         "Verify possibleMoves includes attack moves."
-    //     );
-    // });
+    /**
+     * Test possibleMoves() with king at {0, 0} on empty board.
+     */
+    QUnit.test("possibleMoves() at {0, 0}", assert => {
+        let king = new King(1234, 0, 0, 0);
+        let possibleMoves = king.possibleMoves(board.board);
+        let actualMoves = [
+            [0, 1], [1, 0], [1, 1]
+        ];
+        possibleMoves.sort();
+        actualMoves.sort();
+        assert.deepEqual(
+            JSON.stringify(possibleMoves),
+            JSON.stringify(actualMoves),
+            "Verify possibleMoves contains valid moves."
+        );
+    });
+
+    /**
+     * Test possibleMoves() with king at {7, 7} on empty board.
+     */
+    QUnit.test("possibleMoves() at {7, 7}", assert => {
+        let king = new King(1234, 7, 7, 0);
+        let possibleMoves = king.possibleMoves(board.board);
+        let actualMoves = [
+            [7, 6], [6, 7], [6, 6]
+        ];
+        possibleMoves.sort();
+        actualMoves.sort();
+        assert.deepEqual(
+            JSON.stringify(possibleMoves),
+            JSON.stringify(actualMoves),
+            "Verify possibleMoves contains valid moves."
+        );
+    });
+
+    /**
+     * Test possibleMoves() with king at {3, 3} on empty board.
+     */
+    QUnit.test("possibleMoves() at {3, 3}", assert => {
+        let king = new King(1234, 3, 3, 0);
+        let possibleMoves = king.possibleMoves(board.board);
+        let actualMoves = [
+            [2, 2],[2, 3],[2, 4],[3, 2],
+            [3, 4],[4, 2],[4, 3],[4, 4]
+        ];
+        possibleMoves.sort();
+        actualMoves.sort();
+        assert.deepEqual(
+            JSON.stringify(possibleMoves),
+            JSON.stringify(actualMoves),
+            "Verify possibleMoves contains valid moves."
+        );
+    });
+
+    /**
+     * Test possibleMoves() with init board.
+     */
+    QUnit.test("possibleMoves() with init board", assert => {
+        let king = new King(1234, 0, 0, 1);
+        board.initBoard();
+        let possibleMoves = king.possibleMoves(board.board);
+        let actualMoves = [];
+        assert.deepEqual(
+            JSON.stringify(possibleMoves),
+            JSON.stringify(actualMoves),
+            "Verify possibleMoves with init board returns nothing."
+        );
+    });
+
+    /**
+     * Test possibleMoves() attack moves.
+     */
+    QUnit.test("possibleMoves() with attack moves", assert => {
+        let king = new King(1234, 0, 0, 0);
+        let king2 = new King(1, 1, 0, 1);
+        let king3 = new King (12, 0, 1, 1);
+        board.board[1][0] = king2;
+        board.board[0][1] = king3;
+        let possibleMoves = king.possibleMoves(board.board);
+        let actualMoves = [
+            [1, 0], [0, 1], [1, 1]
+        ];
+        possibleMoves.sort();
+        actualMoves.sort();
+        assert.deepEqual(
+            JSON.stringify(possibleMoves),
+            JSON.stringify(actualMoves),
+            "Verify possibleMoves includes attack moves."
+        );
+    });
 });
