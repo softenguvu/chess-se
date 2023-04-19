@@ -39,18 +39,23 @@ QUnit.module("Rook", hooks => {
             "Verify {playerId} is 0."
         );
         assert.deepEqual(
-            rook.isActive(),
-            false,
-            "Verify {active} is false."
-        );
+            rook.prevRowPos,
+            null,
+            "Verify {prevRowPos} is null"
+        )
         assert.deepEqual(
-            rook.isTaken(),
-            false,
+            rook.prevColPos,
+            null,
+            "Verify {prevColPos} is null"
+        )
+        assert.deepEqual(
+            rook.lastTake,
+            null,
             "Verify {taken} is false."
         );
         assert.deepEqual(
             rook.unicodeChar,
-            "&#9814;",
+            "&#9820;",
             "Verify {unicodeChar} is correct."
         );
         assert.deepEqual(
@@ -121,7 +126,7 @@ QUnit.module("Rook", hooks => {
      * Test possibleMoves() with init board.
      */
     QUnit.test("possibleMoves() with init board", assert => {
-        let rook = new Rook(1234, 0, 0, 0);
+        let rook = new Rook(1234, 0, 0, 1);
         board.initBoard();
         let possibleMoves = rook.possibleMoves(board.board);
         let actualMoves = [];
