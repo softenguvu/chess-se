@@ -196,7 +196,7 @@ function detectCheck(kingPiece, board) {
     let defendingFriends = [];
     let attackingEnemies = [];
 
-    let maxCols = board.board[0].length;
+    let maxCols = board[0].length;
     let minRows, minCols = 0;
 
     /**
