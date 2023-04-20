@@ -11,7 +11,7 @@ export class Pawn extends Piece{
         this.moved = false;
         this.playerId = playerId;
         this.lastTake = null;
-        this.unicodeChar = "&#9817;";
+        this.unicodeChar = "&#9823;";
     }
 
     possibleMoves(board) {
