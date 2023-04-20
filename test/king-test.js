@@ -156,4 +156,26 @@ QUnit.module("King", hooks => {
             "Verify possibleMoves includes attack moves."
         );
     });
+
+    /**
+     * Test possibleMoves() to verify cant take own pieces.
+     */
+    QUnit.test("possibleMoves() to verify cant take own piece", assert => {
+        let king = new King(1234, 0, 0, 1);
+        let king2 = new King(1, 1, 0, 1);
+        let king3 = new King (12, 0, 1, 1);
+        let king4 = new King (123, 1, 1, 1);
+        board.board[1][0] = king2;
+        board.board[0][1] = king3;
+        board.board[1][1] = king4;
+        let possibleMoves = king.possibleMoves(board.board);
+        let actualMoves = [];
+        possibleMoves.sort();
+        actualMoves.sort();
+        assert.deepEqual(
+            JSON.stringify(possibleMoves),
+            JSON.stringify(actualMoves),
+            "Verify cant take own pieces."
+        );
+    });
 });

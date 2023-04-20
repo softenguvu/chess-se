@@ -145,7 +145,7 @@ QUnit.module("Rook", hooks => {
         let rook2 = new Rook(1, 1, 0, 1);
         let rook3 = new Rook (12, 0, 1, 1);
         board.board[1][0] = rook2;
-        board.board[0][1] = rook2;
+        board.board[0][1] = rook3;
         let possibleMoves = rook.possibleMoves(board.board);
         let actualMoves = [
             [1, 0], [0, 1]
