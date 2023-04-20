@@ -1,7 +1,5 @@
 import {Board} from './board.js';
 import { King } from './king.js';
-import { Messages } from './messages.js';
-
 
 let activePiece = null; //global variable to keep track of active piece
 let currentPlayer = 0; //global variable to keep track of currentPlayer turn- set to white piece initially. 
@@ -9,7 +7,7 @@ let currentPlayer = 0; //global variable to keep track of currentPlayer turn- se
 /* 
 Helper function to "reset" the colors of the board,
 and makes the colors of the squares black and white, 
-(if it's an even square, it's white; if it's odd, it's black)
+(if it's an even square, it's white; if it's odd, it's light brown.)
 and removes the highlights. 
 */
 
