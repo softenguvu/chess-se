@@ -6,7 +6,7 @@ let currentPlayer = 0; //global variable to keep track of currentPlayer turn- se
 
 /* 
 Helper function to "reset" the colors of the board,
-and makes the colors of the squares black and white, 
+and makes the colors of the squares white and light brown, 
 (if it's an even square, it's white; if it's odd, it's light brown.)
 and removes the highlights. 
 */
@@ -81,10 +81,10 @@ function handleMoveToSquare(event) {
     const clickedSquareId = clickedSquare.id; // get the id of the clicked square
     const [row, col] = squareStringConverter(clickedSquareId); // convert id to row and col
     activePiece.movePiece(row, col, board); // move the active piece to the clicked square
-    board.renderPieces();
+    board.renderPieces(); //render pieces on board  to reflect this
     colorAllSquares(); // reset colors of all squares
     activePiece = null; // reset active piece back to null
-    //currentPlayer = (currentPlayer === 0) ? 1 : 0; testing that switching turns works. 
+    //currentPlayer = (currentPlayer === 0) ? 1 : 0; testing that switching turns works properly.
 
     const enemyPlayerID = (currentPlayer === 0) ? 1 : 0;
     const kingPiece = getKingPiece(enemyPlayerID);
@@ -196,8 +196,7 @@ function detectCheck(kingPiece, board) {
     let defendingFriends = [];
     let attackingEnemies = [];
 
-    let maxRows = board.length;
-    let maxCols = board[0].length;
+    let maxCols = board.board[0].length;
     let minRows, minCols = 0;
 
     /**
