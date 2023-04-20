@@ -8,12 +8,13 @@ export class Piece {
             throw new Error("Error: cannot instantiate abstract Piece class");
         }
         this.id = undefined;
-        this.rowPos = undefined
+        this.rowPos = undefined;
         this.colPos = undefined;
-        this.active = false;
-        this.taken = false;
-        this.playerOwner = undefined;
-        this.takenPiece = undefined;
+        this.prevRowPos = null;
+        this.prevColPos = null;
+        this.unicodeChar = undefined;
+        this.playerId = null;
+        this.lastTake = null;
     }
 
     /**
@@ -65,70 +66,78 @@ export class Piece {
     }
 
     /**
-     * Check if piece is active
-     * @returns {boolean}
-     */
-    isActive() {
-        return this.active;
-    }
-
-    /**
-     * Set piece to active state
-     */
-    setActive() {
-        this.active = true;
-    }
-
-    /**
-     * Set piece to inactive state
-     */
-    setInactive() {
-        this.active = false;
-    }
-
-    /**
-     * Check if piece is taken
-     * @returns {boolean}
-     */
-    isTaken() {
-        return this.taken;
-    }
-
-    /**
-     * Set piece to taken state
-     */
-    setTaken() {
-        this.taken = true;
-    }
-
-    /**
      * Gets the piece player owner
      * @returns {*}
      */
-    getPlayerOwner() {
-        return this.playerOwner;
+    getPlayerId() {
+        return this.playerId;
     }
 
     /**
-     * Sets the piece player owner
-     * @param playerOwner 0 or 1
+     * Sets the piece player id
+     * @param id 0 or 1
      */
-    setPlayerOwner(playerOwner) {
-        this.playerOwner = playerOwner;
+    setPlayerId(id) {
+        this.playerId = id;
     }
 
     /**
      * Undo previous action
      */
-    undo() {
-        throw new Error("Method 'undo()' must be implemented");
+    undo(board) {
+        // Remove the piece from its current location
+        board.board[this.rowPos][this.colPos] = null;
+
+        // See if we took a piece during that last move
+        if (this.lastTake != null) {
+            board.board[this.rowPos][this.colPos] = this.lastTake;
+
+            // Remove the taken piece from the graveyard
+            let oppID;
+            let retLoc;
+
+            if (this.playerId == 1) {
+                oppID = 0;
+            }
+            else {
+                oppID = 1;
+            }
+
+            retLoc = board.takenPieces.get(oppID).indexOf(this.lastTake);
+
+            board.takenPieces.get(oppID).splice(retLoc, 1);
+        }
+
+        // Set the current location to the previous location and put the piece in its new current location
+        this.rowPos = this.prevRowPos;
+        this.colPos = this.prevColPos;
+
+        board.board[this.rowPos][this.colPos] = this;
     }
 
     /**
-     * Move piece to new location and sets piece location property
+     * Moves piece to {row}, {col} and updates board
+     * @param row new row
+     * @param col new column
+     * @param board Board.board
      */
-    movePiece() {
-        throw new Error("Method 'movePiece' must be implemented");
+    movePiece(row, col, board) {
+        if (board.board[row][col]) { // taking a piece
+            this.lastTake = board.board[row][col];
+            this.lastTake.setTaken();
+            board.board[row][col] = null;
+        }
+        else {
+            this.lastTake = null;
+        }
+
+        // Update board
+        board.board[this.rowPos][this.colPos] = null;
+        board.board[row][col] = this;
+
+        // Update piece position
+        this.rowPos = row;
+        this.colPos = col;
     }
 
     /**
