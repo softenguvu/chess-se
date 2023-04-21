@@ -92,13 +92,18 @@ function handleMoveToSquare(event) {
          if (detectCheck(kingPiece, board)) {
              console.log("The opposing King has been placed in check.");
              if (detectCheckmate(kingPiece, board)) {
-                 console.log("The opposing King is in checkmate, game over.")
-             } else {
-                 currentPlayer = (currentPlayer === 0) ? 1 : 0; // switch turns here if opposing King isn't in checkmate.
-             }
-         }
-     }
+                 console.log("The opposing King is in checkmate, game over.");
+            } else {
+                currentPlayer = (currentPlayer === 0) ? 1 : 0; // switch turns here if opposing King isn't in checkmate.
+            }
+        }
+    }
+    const markedSquares = document.getElementsByClassName("markedSquare");
+    for (let i = 0; i < markedSquares.length; i++) {
+        markedSquares[i].removeEventListener("click", handleMoveToSquare); //Remove event listener here after the check/checkmate checks.
+    }
 }
+
 
 /*
 Function for getting the King piece 
