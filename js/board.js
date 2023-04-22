@@ -27,7 +27,7 @@ export class Board {
         // Column labels indexed from left to right.
         Board.colStr = "abcdefgh";
         // 2D array of Piece.
-        this.board = Array.from(new Array(8), () => new Array(8));
+        this.board = Array.from(new Array(8), () => (new Array(8)).fill(null));
         // Mapping between player id and list of taken pieces.
         this.takenPieces = new Map();
         // The most recently moved piece.
@@ -56,7 +56,7 @@ export class Board {
      * Clears the board of all chess pieces and taken pieces.
      */
     reset() {
-        this.board = Array.from(new Array(8), () => new Array(8));
+        this.board = Array.from(new Array(8), () => (new Array(8)).fill(null));
         this.takenPieces.clear();
         this.lastPieceMoved = null;
     }
