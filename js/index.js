@@ -1,4 +1,4 @@
-import {Board} from './board.js';
+import { Board } from './board.js';
 import { King } from './king.js';
 
 let activePiece = null; //global variable to keep track of active piece
@@ -14,7 +14,7 @@ and removes the highlights.
 function colorAllSquares() {
     const rowStr = "87654321";
     const colStr = "abcdefgh";
-    for (let i = 0; i < board.board.length; i++){
+    for (let i = 0; i < board.board.length; i++) {
         for (let j = 0; j < board.board[i].length; j++) {
             const squarePos = colStr[j] + rowStr[i];
             const evenSquare = (i + j) % 2 == 0;
@@ -26,21 +26,23 @@ function colorAllSquares() {
     }
 }
 
+
 /*
 Function to help with converting string to row col. 
 */
 
-function squareStringConverter(squareString){
+function squareStringConverter(squareString) {
     const numRow = 8 - parseInt(squareString[1]);
     const numCol = squareString.charCodeAt(0) - 97;
     return [numRow, numCol];
 }
 
 
+
+
 /*
-Function for event handlers that resets the colors of the chess squares,
-and then proceeds to mark the possible squares a chess piece can 
-move to if the piece is there. Active piece variable is then updated.
+Add functionality to the event listeners for when 
+a piece is clicked on the chessboard.
 */
 function initBoardEvListener() {
     const rows = 8;
@@ -48,65 +50,78 @@ function initBoardEvListener() {
 
     for (let i = 1; i <= rows; i++) {
         for (let j = 0; j < cols.length; j++) {
-                const squareString = cols[j] + i.toString();
-                const element = document.getElementById(squareString);
-                element.addEventListener("click", () => {
-                    handleSquareClick(squareString);
-                });
-            }
+            const squareString = cols[j] + i.toString();
+            const element = document.getElementById(squareString);
+            element.addEventListener("click", () => {
+                handleSquareClick(squareString);
+            });
+
         }
+
     }
+}
 
-initBoardEvListener();
-
-
+/*
+Function to mark the possible moves on the chessboard that 
+a player can move to. 
+*/
 function handleSquareClick(squareString) {
     const piece = getPiece(squareString); //get the Piece on the square 
     if (piece && piece.getPlayerId() == currentPlayer) { //if piece belongs to current player 
-        activePiece = piece; //sets activePiece to piece 
-        colorAllSquares(); //resets the colors of the squares 
+        activePiece = piece; //sets activePiece to piece
+        colorAllSquares(); //resets the colors of the squares
         const potentialMoves = piece.possibleMoves(board.board); //potential moves that the piece can go
         board.markPossibleMoves(potentialMoves); //Marking the possible squares a piece can move to 
-        //Adding move piece functionality here. 
         const markedSquares = document.getElementsByClassName("markedSquare");
         for (let i = 0; i < markedSquares.length; i++) {
             markedSquares[i].addEventListener("click", handleMoveToSquare);
         }
     }
-
 }
 
-function handleMoveToSquare(event) {
-    const clickedSquare = event.target; // get the clicked square element
-    const clickedSquareId = clickedSquare.id; // get the id of the clicked square
-    const [row, col] = squareStringConverter(clickedSquareId); // convert id to row and col
-    activePiece.movePiece(row, col, board); // move the active piece to the clicked square
-    board.renderPieces(); //render pieces on board  to reflect this
-    colorAllSquares(); // reset colors of all squares
-    activePiece = null; // reset active piece back to null
-    //currentPlayer = (currentPlayer === 0) ? 1 : 0; testing that switching turns works properly.
 
-    const enemyPlayerID = (currentPlayer === 0) ? 1 : 0;
-    const kingPiece = getKingPiece(enemyPlayerID);
+/*
+Function to mark the possible moves on the chessboard that 
+a player can move to. 
+*/
+function handleMoveToSquare(event) {
+    //get marked square that was clicked 
+    const clickedSquare = event.target; 
+    const clickedSquareId = clickedSquare.id; 
+    const [row, col] = squareStringConverter(clickedSquareId); 
+    //move the piece, update board, reset board colors and active piece variable.
+    activePiece.movePiece(row, col, board);
+    board.renderPieces(); 
+    colorAllSquares(); 
+    activePiece = null; 
+    //remove event listener here 
+    const markedSquares = document.getElementsByClassName("markedSquare");
+    for (let i = 0; i < markedSquares.length; i++) {
+        markedSquares[i].removeEventListener("click", handleMoveToSquare);
+        markedSquares[i].classList.remove("markedSquare");
+    }
+    //Get opposing player Id: 
+    const enemyPlayerId = (currentPlayer === 0) ? 1 : 0;
+    const kingPiece = getKingPiece(enemyPlayerId);
+
+    //Check for check/checkmate state 
     if (kingPiece) {
          if (detectCheck(kingPiece, board)) {
              console.log("The opposing King has been placed in check.");
              if (detectCheckmate(kingPiece, board)) {
                  console.log("The opposing King is in checkmate, game over.");
             } else {
-                currentPlayer = (currentPlayer === 0) ? 1 : 0; // switch turns here if opposing King isn't in checkmate.
+                // switch turns here if opposing King isn't in checkmate.
+                currentPlayer = (currentPlayer === 0) ? 1 : 0; 
             }
         }
     }
-    const markedSquares = document.getElementsByClassName("markedSquare");
-    for (let i = 0; i < markedSquares.length; i++) {
-        markedSquares[i].removeEventListener("click", handleMoveToSquare); //Remove event listener here after the check/checkmate checks.
-    }
 }
 
+initBoardEvListener();
 
 /*
-Function for getting the King piece 
+Helper function for getting the King piece 
 in order to perform
 the check/checkmate checks.
 */
