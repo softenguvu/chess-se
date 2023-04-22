@@ -104,7 +104,6 @@ QUnit.module("Queen", hooks => {
             "Verify [possibleMoves] detects moves in all directions to board's edges."
         );
 
-
         const posDiffs = [
             [1, 0], [-1, 0], [0, 1], [0, -1],  // S., N., E., W.
             [1, 1], [-1, -1], [1, -1], [-1, 1]  // SE., NW., SW., NE.
