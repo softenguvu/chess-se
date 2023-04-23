@@ -1,273 +1,162 @@
-import { Board } from "./board.js";
+import { Board } from './board.js';
+import { King } from './king.js';
 
-// Function that handles adding event listeners to the chess board
+let activePiece = null; //global variable to keep track of active piece
+let currentPlayer = 0; //global variable to keep track of currentPlayer turn- set to white piece initially. 
+
+/* 
+Helper function to "reset" the colors of the board,
+and makes the colors of the squares white and light brown, 
+(if it's an even square, it's white; if it's odd, it's light brown.)
+and removes the highlights. 
+*/
+
+function colorAllSquares() {
+    const rowStr = "87654321";
+    const colStr = "abcdefgh";
+    for (let i = 0; i < board.board.length; i++) {
+        for (let j = 0; j < board.board[i].length; j++) {
+            const squarePos = colStr[j] + rowStr[i];
+            const evenSquare = (i + j) % 2 == 0;
+            const color = evenSquare ? "white" : "light-brown";
+            const getSquare = document.getElementById(squarePos);
+            getSquare.classList.remove("bg-primaryGrey", "bg-primaryRedBlack");
+            getSquare.classList.add("bg-" + color);
+        }
+    }
+}
+
+
+/*
+Function to help with converting string to row col. 
+*/
+
+function squareStringConverter(squareString) {
+    const numRow = 8 - parseInt(squareString[1]);
+    const numCol = squareString.charCodeAt(0) - 97;
+    return [numRow, numCol];
+}
+
+
+/*
+Determines if a DOM element's classList contains any of the CSS classes
+in the {cssClasses} collection. 
+*/
+
+function containsCssClass(cssClassList, cssClasses) {
+    let classFound = false;
+    for (const cssClass of cssClasses){
+        if (cssClassList.contains(cssClass)){
+            classFound = true;
+            break;
+        }
+    }
+    return classFound; 
+}
+
+
+
+/*
+Add functionality to the event listeners for when 
+a piece is clicked on the chessboard.
+*/
 function initBoardEvListener() {
-    // First column. 'a' column
-    const a1Board = document.getElementById("a1");
-    a1Board.addEventListener("click", function(event) {
-    });
+    const rows = 8;
+    const cols = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
-    const a2Board = document.getElementById("a2");
-    a2Board.addEventListener("click", function(event) {
-    });
+    for (let i = 1; i <= rows; i++) {
+        for (let j = 0; j < cols.length; j++) {
+            const squareString = cols[j] + i.toString();
+            const element = document.getElementById(squareString);
+            element.addEventListener("click", () => {
+                handleSquareClick(squareString);
+            });
 
-    const a3Board = document.getElementById("a3");
-    a3Board.addEventListener("click", function(event) {
-    });
+        }
 
-    const a4Board = document.getElementById("a4");
-    a4Board.addEventListener("click", function(event) {
-    });
+    }
+}
 
-    const a5Board = document.getElementById("a5");
-    a5Board.addEventListener("click", function(event) {
-    });
 
-    const a6Board = document.getElementById("a6");
-    a6Board.addEventListener("click", function(event) {
-    });
 
-    const a7Board = document.getElementById("a7");
-    a7Board.addEventListener("click", function(event) {
-    });
+/*
+Function to mark the possible moves on the chessboard that 
+a player can move to. 
+*/
+function handleSquareClick(squareString) {
+    const markedSquares = ["bg-primaryGrey", "bg-primaryRedBlack"];
+    const squareEl = document.getElementById(squareString);
+    const piece = getPiece(squareString); //get the Piece on the square 
+    if (piece && piece.getPlayerId() == currentPlayer) { //if piece belongs to current player 
+        activePiece = piece; //sets activePiece to piece
+        colorAllSquares(); //resets the colors of the squares
+        const potentialMoves = piece.possibleMoves(board.board); //potential moves that the piece can go
+        board.markPossibleMoves(potentialMoves); //Marking the possible squares a piece can move to 
+    } else if (containsCssClass(squareEl.classList, markedSquares)) {
+        const [row, col] = squareStringConverter(squareString);
+        //move the piece, update board, reset board colors and active piece variable.
+        activePiece.movePiece(row, col, board);
+        board.renderPieces();
+        colorAllSquares();
+        activePiece = null;
 
-    const a8Board = document.getElementById("a8");
-    a8Board.addEventListener("click", function(event) {
-    });
+        //Get opposing player Id: 
+        const enemyPlayerId = (currentPlayer === 0) ? 1 : 0;
+        const kingPiece = getKingPiece(enemyPlayerId);
 
-    // First column. 'b' column
-    const b1Board = document.getElementById("b1");
-    b1Board.addEventListener("click", function(event) {
-    });
+        //Check for check/checkmate state 
+        if (kingPiece) {
+            if (detectCheckmate(kingPiece, board.board)) {
+                console.log("The opposing King is in checkmate, game over.");
 
-    const b2Board = document.getElementById("b2");
-    b2Board.addEventListener("click", function(event) {
-    });
+                return;
+            }
+            if (detectCheck(kingPiece, board.board)) {
+                console.log("The opposing King has been placed in check.");
+                if (detectCheckmate(kingPiece, board)) {
+                    console.log("The opposing King is in checkmate, game over.");
+                }
+            }
+            currentPlayer = (currentPlayer === 0) ? 1 : 0;
+        }
 
-    const b3Board = document.getElementById("b3");
-    b3Board.addEventListener("click", function(event) {
-    });
-
-    const b4Board = document.getElementById("b4");
-    b4Board.addEventListener("click", function(event) {
-    });
-
-    const b5Board = document.getElementById("b5");
-    b5Board.addEventListener("click", function(event) {
-    });
-
-    const b6Board = document.getElementById("b6");
-    b6Board.addEventListener("click", function(event) {
-    });
-
-    const b7Board = document.getElementById("b7");
-    b7Board.addEventListener("click", function(event) {
-    });
-
-    const b8Board = document.getElementById("b8");
-    b8Board.addEventListener("click", function(event) {
-    });
-
-    // First column. 'c' column
-    const c1Board = document.getElementById("c1");
-    c1Board.addEventListener("click", function(event) {
-    });
-
-    const c2Board = document.getElementById("c2");
-    c2Board.addEventListener("click", function(event) {
-    });
-
-    const c3Board = document.getElementById("c3");
-    c3Board.addEventListener("click", function(event) {
-    });
-
-    const c4Board = document.getElementById("c4");
-    c4Board.addEventListener("click", function(event) {
-    });
-
-    const c5Board = document.getElementById("c5");
-    c5Board.addEventListener("click", function(event) {
-    });
-
-    const c6Board = document.getElementById("c6");
-    c6Board.addEventListener("click", function(event) {
-    });
-
-    const c7Board = document.getElementById("c7");
-    c7Board.addEventListener("click", function(event) {
-    });
-
-    const c8Board = document.getElementById("c8");
-    c8Board.addEventListener("click", function(event) {
-    });
-
-    // First column. 'd' column
-    const d1Board = document.getElementById("d1");
-    d1Board.addEventListener("click", function(event) {
-    });
-
-    const d2Board = document.getElementById("d2");
-    d2Board.addEventListener("click", function(event) {
-    });
-
-    const d3Board = document.getElementById("d3");
-    d3Board.addEventListener("click", function(event) {
-    });
-
-    const d4Board = document.getElementById("d4");
-    d4Board.addEventListener("click", function(event) {
-    });
-
-    const d5Board = document.getElementById("d5");
-    d5Board.addEventListener("click", function(event) {
-    });
-
-    const d6Board = document.getElementById("d6");
-    d6Board.addEventListener("click", function(event) {
-    });
-
-    const d7Board = document.getElementById("d7");
-    d7Board.addEventListener("click", function(event) {
-    });
-
-    const d8Board = document.getElementById("d8");
-    d8Board.addEventListener("click", function(event) {
-    });
-
-    // First column. 'e' column
-    const e1Board = document.getElementById("e1");
-    e1Board.addEventListener("click", function(event) {
-    });
-
-    const e2Board = document.getElementById("e2");
-    e2Board.addEventListener("click", function(event) {
-    });
-
-    const e3Board = document.getElementById("e3");
-    e3Board.addEventListener("click", function(event) {
-    });
-
-    const e4Board = document.getElementById("e4");
-    e4Board.addEventListener("click", function(event) {
-    });
-
-    const e5Board = document.getElementById("e5");
-    e5Board.addEventListener("click", function(event) {
-    });
-
-    const e6Board = document.getElementById("e6");
-    e6Board.addEventListener("click", function(event) {
-    });
-
-    const e7Board = document.getElementById("e7");
-    e7Board.addEventListener("click", function(event) {
-    });
-
-    const e8Board = document.getElementById("e8");
-    e8Board.addEventListener("click", function(event) {
-    });
-
-    // First column. 'f' column
-    const f1Board = document.getElementById("f1");
-    f1Board.addEventListener("click", function(event) {
-    });
-
-    const f2Board = document.getElementById("f2");
-    f2Board.addEventListener("click", function(event) {
-    });
-
-    const f3Board = document.getElementById("f3");
-    f3Board.addEventListener("click", function(event) {
-    });
-
-    const f4Board = document.getElementById("f4");
-    f4Board.addEventListener("click", function(event) {
-    });
-
-    const f5Board = document.getElementById("f5");
-    f5Board.addEventListener("click", function(event) {
-    });
-
-    const f6Board = document.getElementById("f6");
-    f6Board.addEventListener("click", function(event) {
-    });
-
-    const f7Board = document.getElementById("f7");
-    f7Board.addEventListener("click", function(event) {
-    });
-
-    const f8Board = document.getElementById("f8");
-    f8Board.addEventListener("click", function(event) {
-    });
-
-    // First column. 'g' column
-    const g1Board = document.getElementById("g1");
-    g1Board.addEventListener("click", function(event) {
-    });
-
-    const g2Board = document.getElementById("g2");
-    g2Board.addEventListener("click", function(event) {
-    });
-
-    const g3Board = document.getElementById("g3");
-    g3Board.addEventListener("click", function(event) {
-    });
-
-    const g4Board = document.getElementById("g4");
-    g4Board.addEventListener("click", function(event) {
-    });
-
-    const g5Board = document.getElementById("g5");
-    g5Board.addEventListener("click", function(event) {
-    });
-
-    const g6Board = document.getElementById("g6");
-    g6Board.addEventListener("click", function(event) {
-    });
-
-    const g7Board = document.getElementById("g7");
-    g7Board.addEventListener("click", function(event) {
-    });
-
-    const g8Board = document.getElementById("g8");
-    g8Board.addEventListener("click", function(event) {
-    });
-
-    // First column. 'h' column
-    const h1Board = document.getElementById("h1");
-    h1Board.addEventListener("click", function(event) {
-    });
-
-    const h2Board = document.getElementById("h2");
-    h2Board.addEventListener("click", function(event) {
-    });
-
-    const h3Board = document.getElementById("h3");
-    h3Board.addEventListener("click", function(event) {
-    });
-
-    const h4Board = document.getElementById("h4");
-    h4Board.addEventListener("click", function(event) {
-    });
-
-    const h5Board = document.getElementById("h5");
-    h5Board.addEventListener("click", function(event) {
-    });
-
-    const h6Board = document.getElementById("h6");
-    h6Board.addEventListener("click", function(event) {
-    });
-
-    const h7Board = document.getElementById("h7");
-    h7Board.addEventListener("click", function(event) {
-    });
-
-    const h8Board = document.getElementById("h8");
-    h8Board.addEventListener("click", function(event) {
-    });
+    }
 }
 
 initBoardEvListener();
+
+/*
+Helper function for getting the King piece 
+in order to perform
+the check/checkmate checks.
+*/
+function getKingPiece(playerId) {
+    //loop through all rows and cols to find King piece
+    for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+            const piece = board.board[row][col];
+            //Once we find piece, return it 
+            if (piece instanceof King && piece.getPlayerId() === playerId) {
+                return piece;
+            }
+        }
+    }
+    return null;  // Return null if King piece not found
+}
+
+/* 
+Helper function to get the piece on the board. 
+*/
+function getPiece(position) {
+    //Convert the piece position to row-col indicies.
+    const row = 8 - parseInt(position[1]);
+    const col = position.charCodeAt(0) - 97;
+
+    //Gets the piece at given position from board. 
+    const piece = board.board[row][col];
+
+    return piece;
+}
 
 // Add 'click' event-listener to the 'New Game' button.
 const newGameButton = document.getElementById("new-game");
@@ -332,7 +221,6 @@ function detectCheck(kingPiece, board) {
     let defendingFriends = [];
     let attackingEnemies = [];
 
-    let maxRows = board.length;
     let maxCols = board[0].length;
     let minRows, minCols = 0;
 

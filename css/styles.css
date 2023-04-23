@@ -19,9 +19,11 @@ Middle main row
 
 }
 
+
 #chess-board-container {
     height: 100%;
     border: 1px solid black;
+    cursor: pointer;
 }
 
 .round-ts {
@@ -52,6 +54,7 @@ Middle main row
 .black-piece {
     color: #000000;
 }
+
 
 #undo-move, #new-game {
     font-weight: 200;
