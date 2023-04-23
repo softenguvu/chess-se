@@ -49,8 +49,6 @@ export class Board {
                 "primaryGrey";  // Grey if doesn't contain piece.
 
             this._markSquare(squarePos, color);
-            const markedSquare = document.getElementById(squarePos);
-            markedSquare.classList.add("markedSquare");
         });
     }
 

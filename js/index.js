@@ -38,6 +38,22 @@ function squareStringConverter(squareString) {
 }
 
 
+/*
+Determines if a DOM element's classList contains any of the CSS classes
+in the {cssClasses} collection. 
+*/
+
+function containsCssClass(cssClassList, cssClasses) {
+    let classFound = false;
+    for (const cssClass of cssClasses){
+        if (cssClassList.contains(cssClass)){
+            classFound = true;
+            break;
+        }
+    }
+    return classFound; 
+}
+
 
 
 /*
@@ -61,60 +77,49 @@ function initBoardEvListener() {
     }
 }
 
+
+
 /*
 Function to mark the possible moves on the chessboard that 
 a player can move to. 
 */
 function handleSquareClick(squareString) {
+    const markedSquares = ["bg-primaryGrey", "bg-primaryRedBlack"];
+    const squareEl = document.getElementById(squareString);
     const piece = getPiece(squareString); //get the Piece on the square 
     if (piece && piece.getPlayerId() == currentPlayer) { //if piece belongs to current player 
         activePiece = piece; //sets activePiece to piece
         colorAllSquares(); //resets the colors of the squares
         const potentialMoves = piece.possibleMoves(board.board); //potential moves that the piece can go
         board.markPossibleMoves(potentialMoves); //Marking the possible squares a piece can move to 
-        const markedSquares = document.getElementsByClassName("markedSquare");
-        for (let i = 0; i < markedSquares.length; i++) {
-            markedSquares[i].addEventListener("click", handleMoveToSquare);
-        }
-    }
-}
+    } else if (containsCssClass(squareEl.classList, markedSquares)) {
+        const [row, col] = squareStringConverter(squareString);
+        //move the piece, update board, reset board colors and active piece variable.
+        activePiece.movePiece(row, col, board);
+        board.renderPieces();
+        colorAllSquares();
+        activePiece = null;
 
+        //Get opposing player Id: 
+        const enemyPlayerId = (currentPlayer === 0) ? 1 : 0;
+        const kingPiece = getKingPiece(enemyPlayerId);
 
-/*
-Function to mark the possible moves on the chessboard that 
-a player can move to. 
-*/
-function handleMoveToSquare(event) {
-    //get marked square that was clicked 
-    const clickedSquare = event.target; 
-    const clickedSquareId = clickedSquare.id; 
-    const [row, col] = squareStringConverter(clickedSquareId); 
-    //move the piece, update board, reset board colors and active piece variable.
-    activePiece.movePiece(row, col, board);
-    board.renderPieces(); 
-    colorAllSquares(); 
-    activePiece = null; 
-    //remove event listener here 
-    const markedSquares = document.getElementsByClassName("markedSquare");
-    for (let i = 0; i < markedSquares.length; i++) {
-        markedSquares[i].removeEventListener("click", handleMoveToSquare);
-        markedSquares[i].classList.remove("markedSquare");
-    }
-    //Get opposing player Id: 
-    const enemyPlayerId = (currentPlayer === 0) ? 1 : 0;
-    const kingPiece = getKingPiece(enemyPlayerId);
+        //Check for check/checkmate state 
+        if (kingPiece) {
+            if (detectCheckmate(kingPiece, board.board)) {
+                console.log("The opposing King is in checkmate, game over.");
 
-    //Check for check/checkmate state 
-    if (kingPiece) {
-         if (detectCheck(kingPiece, board)) {
-             console.log("The opposing King has been placed in check.");
-             if (detectCheckmate(kingPiece, board)) {
-                 console.log("The opposing King is in checkmate, game over.");
-            } else {
-                // switch turns here if opposing King isn't in checkmate.
-                currentPlayer = (currentPlayer === 0) ? 1 : 0; 
+                return;
             }
+            if (detectCheck(kingPiece, board.board)) {
+                console.log("The opposing King has been placed in check.");
+                if (detectCheckmate(kingPiece, board)) {
+                    console.log("The opposing King is in checkmate, game over.");
+                }
+            }
+            currentPlayer = (currentPlayer === 0) ? 1 : 0;
         }
+
     }
 }
 
