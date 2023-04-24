@@ -302,10 +302,10 @@ function getPlayerPieces() {
 
     // Row 6 and 7 go to player two
     for(let i = 0; i < board.board[6].length; ++i) {
-        playerOnePieces.push(board.board[6][i]);
+        playerTwoPieces.push(board.board[6][i]);
     }
     for(let i = 0; i < board.board[7].length; ++i) {
-        playerOnePieces.push(board.board[7][i]);
+        playerTwoPieces.push(board.board[7][i]);
     }
 }
 
@@ -334,7 +334,8 @@ function detectCheck(kingPiece, board) {
 
     let maxRows = board.length;
     let maxCols = board[0].length;
-    let minRows, minCols = 0;
+    let minRows = 0;
+    let minCols = 0;
 
     /**
      * These are used to track the closest friendly piece and closest enemy pieces to see if king is actually under attack
@@ -524,7 +525,7 @@ function detectCheckmate(kingPiece, board) {
     /**
      * See if the king has no possible moves
      */
-    let possibleMoveSet = kingPiece.possibleMoves();
+    let possibleMoveSet = kingPiece.possibleMoves(board);
     let acceptableMoves = [];
     let attackingPieces = [];
 
@@ -561,7 +562,7 @@ function detectCheckmate(kingPiece, board) {
          */
         let attackVectors = [];
         attackingPieces.forEach((currPiece) => {
-            let tempVectors = currPiece.possibleMoves();
+            let tempVectors = currPiece.possibleMoves(board);
             tempVectors.forEach((vectors) => {
                 attackVectors.push(vectors);
             })
@@ -577,7 +578,7 @@ function detectCheckmate(kingPiece, board) {
             // Use playerOnePieces
             playerOnePieces.forEach((piece) => {
                 if (!piece.isTaken()) {
-                    const pieceMoves = piece.possibleMoves();
+                    const pieceMoves = piece.possibleMoves(board);
                     for(i = 0; i < pieceMoves.length; ++i) {
                         for(j = 0; j < attackVectors.length; ++j) {
                             if(pieceMoves[i][0] == attackVectors[j][0] && pieceMoves[i][1] == attackVectors[j][1]) {
@@ -592,7 +593,7 @@ function detectCheckmate(kingPiece, board) {
             // Use playerTwoPieces
             playerTwoPieces.forEach((piece) => {
                 if (!piece.isTaken()) {
-                    const pieceMoves = piece.possibleMoves();
+                    const pieceMoves = piece.possibleMoves(board);
                     for(i = 0; i < pieceMoves.length; ++i) {
                         for(j = 0; j < attackVectors.length; ++j) {
                             if(pieceMoves[i][0] == attackVectors[j][0] && pieceMoves[i][1] == attackVectors[j][1]) {
