@@ -96,6 +96,7 @@ function handleSquareClick(squareString) {
         const [row, col] = squareStringConverter(squareString);
         //move the piece, update board, reset board colors and active piece variable.
         activePiece.movePiece(row, col, board);
+        board.lastPieceMoved = activePiece;
         board.renderPieces();
         colorAllSquares();
         activePiece = null;
