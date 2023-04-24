@@ -17,8 +17,8 @@ QUnit.test("confirmReset() Test", function(assert) {
 
 // Test the method to print out message for who's turn it is
 QUnit.test('printPlayerTurn() should show correct player turn message', function(assert) {
-    const playerId = 1;
-    const expectedMsg = `Player ${playerId}'s Turn.`;
+    const playerId = 0;
+    const expectedMsg = `Red's Turn.`;
     let alertCalled = false;
     window.alert = function(msg) {
         assert.strictEqual(msg, expectedMsg, 'Player turn message should display correctly');
@@ -29,10 +29,10 @@ QUnit.test('printPlayerTurn() should show correct player turn message', function
 });
 
 
-// Test the method to print out message for who's turn it is
+// Test the method to print out the winning message
 QUnit.test('printWinMsg() should show correct message when player wins', function(assert) {
     const playerId = 1;
-    const expectedMsg = `Checkmate. Player ${playerId} Wins!`;
+    const expectedMsg = `Checkmate. Black Wins!`;
     let alertCalled = false;
     window.alert = function(msg) {
         assert.strictEqual(msg, expectedMsg, 'Player win message should be displayed correctly');
