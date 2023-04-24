@@ -43,7 +43,7 @@ QUnit.module("Knight", hooks => {
         );
         assert.deepEqual(
             knight.unicodeChar,
-            "U+265E",
+            "&#9822;",
             "Verify {unicodeChar} is correct."
         );
     });
@@ -65,13 +65,13 @@ QUnit.module("Knight", hooks => {
             JSON.stringify(expectedMoves),
             "Verify {possibleMoves()} in center of empty board."
         );
-    })
+    });
 
     /**
      * Test possibleMoves() with knight at [0,0]
      */
     QUnit.test("possibleMoves() at {0,0}", assert => {
-        let knight = new Knight(6969, 0, 0, 0)
+        let knight = new Knight(6969, 0, 0, 0);
         let possibleMoves = knight.possibleMoves(board.board);
         let expectedMoves = [[1,2], [2,1]];
         possibleMoves.sort();
@@ -87,7 +87,7 @@ QUnit.module("Knight", hooks => {
     * Test possibleMoves() with knight at [7,7]
     */
     QUnit.test("possibleMoves() at {7,7}", assert => {
-        let knight = new Knight(6969, 7, 7, 0)
+        let knight = new Knight(6969, 7, 7, 0);
         let possibleMoves = knight.possibleMoves(board.board);
         let expectedMoves = [[6,5], [5,6]];
         possibleMoves.sort();
