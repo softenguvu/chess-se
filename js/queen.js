@@ -44,7 +44,7 @@ export class Queen extends Piece{
          * Get row increasing moves
          */
         for (let i = this.rowPos + 1; i < maxRows; i++) {
-            if (board[i][this.colPos] && board[i][this.colPos].getPlayerId() == this.playerId) {
+            if (board[i][this.colPos] && board[i][this.colPos].getPlayerId() === this.playerId) {
                 break;
             }
             else if(board[i][this.colPos] && board[i][this.colPos].getPlayerId() !== this.playerId) {
@@ -57,7 +57,7 @@ export class Queen extends Piece{
          * Get row decreasing moves
          */
         for (let i = this.rowPos - 1; i >= minRows; i--) {
-            if (board[i][this.colPos] && board[i][this.colPos].getPlayerId() == this.playerId) {
+            if (board[i][this.colPos] && board[i][this.colPos].getPlayerId() === this.playerId) {
                 break;
             }
             else if (board[i][this.colPos] && board[i][this.colPos].getPlayerId() !== this.playerId) {
@@ -70,7 +70,7 @@ export class Queen extends Piece{
          * Get col increasing moves
          */
         for (let i = this.colPos + 1; i < maxCols; i++) {
-            if (board[this.rowPos][i] && board[this.rowPos][i].getPlayerId() == this.playerId) {
+            if (board[this.rowPos][i] && board[this.rowPos][i].getPlayerId() === this.playerId) {
                 break;
             }
             else if (board[this.rowPos][i] && board[this.rowPos][i].getPlayerId() !== this.playerId) {
@@ -83,7 +83,7 @@ export class Queen extends Piece{
          * Get col decreasing moves
          */
         for (let i = this.colPos - 1; i >= minCols; i--) {
-            if (board[this.rowPos][i] && board[this.rowPos][i].getPlayerId() == this.playerId) {
+            if (board[this.rowPos][i] && board[this.rowPos][i].getPlayerId() === this.playerId) {
                 break;
             }
             else if (board[this.rowPos][i] && board[this.rowPos][i].getPlayerId() !== this.playerId) {
@@ -96,7 +96,7 @@ export class Queen extends Piece{
          * Get row and col increasing moves
          */
         for (let i = this.rowPos + 1, y = this.colPos + 1; i < maxRows && y < maxCols; i++, y++) {
-            if (board[i][y] && board[i][y].getPlayerId() == this.playerId) {
+            if (board[i][y] && board[i][y].getPlayerId() === this.playerId) {
                 break;
             }
             else if (board[i][y] && board[i][y].getPlayerId() !== this.playerId) {
@@ -110,7 +110,7 @@ export class Queen extends Piece{
          * Get row and col decreasing moves
          */
         for (let i = this.rowPos - 1, y = this.colPos - 1; i >= minRows && y >= minCols; i--, y--) {
-            if (board[i][y] && board[i][y].getPlayerId() == this.playerId) {
+            if (board[i][y] && board[i][y].getPlayerId() === this.playerId) {
                 break;
             }
             else if (board[i][y] && board[i][y].getPlayerId() !== this.playerId) {
@@ -123,7 +123,7 @@ export class Queen extends Piece{
          * Get row increasing and col decreasing moves
          */
         for (let i = this.rowPos + 1, y = this.colPos - 1; i < maxRows && y >= minCols; i++, y--) {
-            if (board[i][y] && board[i][y].getPlayerId() == this.playerId) {
+            if (board[i][y] && board[i][y].getPlayerId() === this.playerId) {
                 break;
             }
             else if (board[i][y] && board[i][y].getPlayerId() !== this.playerId) {
@@ -136,7 +136,7 @@ export class Queen extends Piece{
          * Get row decreasing and col increasing moves
          */
         for (let i = this.rowPos - 1, y = this.colPos + 1; i >= minRows && y < maxCols; i--, y++) {
-            if (board[i][y] && board[i][y].getPlayerId() == this.playerId) {
+            if (board[i][y] && board[i][y].getPlayerId() === this.playerId) {
                 break;
             }
             else if (board[i][y] && board[i][y].getPlayerId() !== this.playerId) {
