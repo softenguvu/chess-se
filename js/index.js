@@ -294,18 +294,18 @@ undoButton.addEventListener("click", () => {
 function getPlayerPieces() {
     // Row zero and one go to player one
     for(let i = 0; i < board.board[0].length; ++i) {
-        playerOnePieces.push(board.board[0][i]);
+        playerTwoPieces.push(board.board[0][i]);
     }
     for(let i = 0; i < board.board[1].length; ++i) {
-        playerOnePieces.push(board.board[1][i]);
+        playerTwoPieces.push(board.board[1][i]);
     }
 
     // Row 6 and 7 go to player two
     for(let i = 0; i < board.board[6].length; ++i) {
-        playerTwoPieces.push(board.board[6][i]);
+        playerOnePieces.push(board.board[6][i]);
     }
     for(let i = 0; i < board.board[7].length; ++i) {
-        playerTwoPieces.push(board.board[7][i]);
+        playerOnePieces.push(board.board[7][i]);
     }
 }
 
