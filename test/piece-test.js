@@ -96,10 +96,35 @@ QUnit.test("undo()", assert => {
 
 
 /**
- * Test movePiece()
+ * Test undo() method when the player had taken an opponent piece
  */
 
-QUnit.test('movePiece', assert => {
+QUnit.test('undo() - attack move', assert => {
+
+    // Set piece position, call movePiece() to attack enemy piece 
+    let enemyPiece = new Rook(12, 0, 0, 0);
+    let myPiece = new Rook(15, 6, 0, 1);
+    board.board[6][0] = myPiece;
+    board.board[0][0] = enemyPiece; 
+    myPiece.movePiece(0, 0, board);
+
+    // Undo the previous action
+    myPiece.undo(board);
+
+    // Assert that the piece is back at its previous position
+    assert.equal(myPiece.getRowPos(), 6, 'Piece should be at previous row position');
+    assert.equal(myPiece.getColPos(), 0, 'Piece should be at previous column position');
+    assert.equal(board.board[0][0], enemyPiece, "Taken piece restored correctly on the board");
+  });
+
+
+
+
+/**
+ * Test movePiece() 
+ */
+
+QUnit.test('movePiece()', assert => {
 
     // Set piece position, call movePiece()
     testPiece.setRowPos(0);
@@ -113,6 +138,27 @@ QUnit.test('movePiece', assert => {
     // Assert that the board has been updated correctly to reflect the move
     assert.equal(board.board[0][0], null, 'Previous board position should be null');
     assert.equal(board.board[7][0], testPiece, 'New board position should contain the moved piece');
+});
+
+
+/**
+ * Test movePiece() when the player takes opponent piece
+ */
+
+QUnit.test('movePiece() - attack move', assert => {
+
+    // Set piece position, call movePiece() to attack enemy piece
+    let enemyPiece2 = new Rook(12, 0, 0, 0);
+    let myPiece2 = new Rook(15, 6, 0, 1);
+    board.board[6][0] = myPiece2;
+    board.board[0][0] = enemyPiece2;
+    myPiece2.movePiece(0, 0, board);
+
+    assert.strictEqual(myPiece2.rowPos, 0, 'myPiece should have moved to row 0');
+    assert.strictEqual(myPiece2.colPos, 0, 'myPiece should have moved to col 0');
+    assert.strictEqual(board.board[6][0], null, 'myPiece should have left its previous position');
+    assert.strictEqual(board.board[0][0], myPiece2, 'myPiece should have moved to where enemyPiece was');
+    assert.strictEqual(myPiece2.lastTake, enemyPiece2, 'myPiece.lastTake attribute should contain the captured piece');
 });
 
 });
