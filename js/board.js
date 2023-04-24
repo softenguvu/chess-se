@@ -93,9 +93,9 @@ export class Board {
     renderPieces() {
         this._renderLivePieces();
         const playerOneId = 0;
-        this._renderTakenPieces(playerOneId, "left-graveyard");
+        this._renderTakenPieces(playerOneId, "left-graveyard-content");
         const playerTwoId = 1;
-        this._renderTakenPieces(playerTwoId, "right-graveyard");
+        this._renderTakenPieces(playerTwoId, "right-graveyard-content");
     }
 
     /**
@@ -204,18 +204,18 @@ export class Board {
 
     /**
      * Renders taken chess pieces for the player with the given player id in the
-     * corresponding frontend graveyard with the given element id.
+     * corresponding frontend graveyard content with the given element id.
      * 
      * @param {int} playerId Player's id.
-     * @param {string} graveyardId Frontend graveyard's HTML element id.
+     * @param {string} graveyardContentId Frontend graveyard content's HTML element id.
      */
-    _renderTakenPieces(playerId, graveyardId) {
+    _renderTakenPieces(playerId, graveyardContentId) {
         const takenPiecesHTML = [];
         this.takenPieces.get(playerId).forEach(takenPiece =>
             takenPiecesHTML.push(`<div class="col">${takenPiece.unicodeChar}</div>`)
         );
 
-        const graveyard = document.getElementById(graveyardId);
+        const graveyard = document.getElementById(graveyardContentId);
         graveyard.innerHTML = takenPiecesHTML.join("");
     }
 }
