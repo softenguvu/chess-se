@@ -10,7 +10,7 @@ export class Pawn extends Piece{
         this.prevColPos = colIndex;
         this.rowPos = rowIndex;
         this.colPos = colIndex;
-        this.moved = false;
+        this.moved = 0;
         this.playerId = playerId;
         this.lastTake = null;
         this.unicodeChar = "&#9823;";
@@ -27,14 +27,14 @@ export class Pawn extends Piece{
             moveDir = 1;
         }
         
-        if (!this.moved &&
-                board[this.rowPos+(moveDir*2)][this.colPos] === undefined &&
-                board[this.rowPos+moveDir][this.colPos] === undefined) { // Check 'in front' of the piece if it hasn't moved yet
+        if (this.moved == 0 &&
+                !board[this.rowPos+(moveDir*2)][this.colPos] &&
+                !board[this.rowPos+moveDir][this.colPos]) { // Check 'in front' of the piece if it hasn't moved yet
             possibleMoves.push([this.rowPos+(moveDir*2), this.colPos]);
         }
 
         if (0 <= this.rowPos+moveDir && this.rowPos+moveDir <= 7) {
-            if (board[this.rowPos+moveDir][this.colPos] === undefined) { // Check 'in front' of the piece
+            if (!board[this.rowPos+moveDir][this.colPos]) { // Check 'in front' of the piece
                 possibleMoves.push([this.rowPos+moveDir, this.colPos]);
             }
 
@@ -52,6 +52,6 @@ export class Pawn extends Piece{
 
     movePiece(row, col, board) {
         super.movePiece(row, col, board);
-        this.moved = true;
+        this.moved += 1;
     }
 }
