@@ -6,6 +6,8 @@ export class Pawn extends Piece{
         super();
 
         this.id = pieceId;
+        this.prevRowPos = rowIndex;
+        this.prevColPos = colIndex;
         this.rowPos = rowIndex;
         this.colPos = colIndex;
         this.moved = false;

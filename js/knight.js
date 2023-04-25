@@ -16,6 +16,8 @@ export class Knight extends Piece {
     constructor(id, rowPos, colPos, playerId) {
         super();
         this.id = id;
+        this.prevRowPos = rowPos;
+        this.prevColPos = colPos;
         this.rowPos = rowPos;
         this.colPos = colPos;
         this.playerId = playerId;
