@@ -28,10 +28,10 @@ QUnit.test("constructor()", assert => {
     assert.strictEqual(testPiece.id, undefined, 'Piece Id should be set to undefined');
     assert.strictEqual(testPiece.rowPos, undefined, 'Piece row position should be set to undefined');
     assert.strictEqual(testPiece.colPos, undefined, 'Piece column position should be set to undefined');
-    assert.strictEqual(testPiece.prevRowPos, null, 'Piece previous row position should be set to null');
-    assert.strictEqual(testPiece.prevColPos, null, 'Piece previous column position should be set to null');
+    assert.strictEqual(testPiece.prevRowPos, undefined, 'Piece previous row position should be set to null');
+    assert.strictEqual(testPiece.prevColPos, undefined, 'Piece previous column position should be set to null');
     assert.strictEqual(testPiece.unicodeChar, "&#9820;", 'Unicode character for piece should be set to &#9820');
-    assert.strictEqual(testPiece.playerId, null, 'Piece player ID should be set to null');
+    assert.strictEqual(testPiece.playerId, undefined, 'Piece player ID should be set to null');
     assert.strictEqual(testPiece.lastTake, null, 'Piece Last take attribute should be set to null');
 });
 
@@ -100,6 +100,7 @@ QUnit.test("undo()", assert => {
  */
 
 QUnit.test('undo() - attack move', assert => {
+    board.takenPieces.set(0, []);
 
     // Set piece position, call movePiece() to attack enemy piece 
     let enemyPiece = new Rook(12, 0, 0, 0);
@@ -146,6 +147,7 @@ QUnit.test('movePiece()', assert => {
  */
 
 QUnit.test('movePiece() - attack move', assert => {
+    board.takenPieces.set(0, []);
 
     // Set piece position, call movePiece() to attack enemy piece
     let enemyPiece2 = new Rook(12, 0, 0, 0);
