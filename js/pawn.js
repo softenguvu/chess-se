@@ -40,11 +40,16 @@ export class Pawn extends Piece{
                 possibleMoves.push([this.rowPos+moveDir, this.colPos+moveDir]);
             }
 
-            if (0 <= this.colPos-moveDir && this.colPos-moveDir <= 7 && board[this.rowPos+moveDir][this.colPos+moveDir] != null && board[this.rowPos+moveDir][this.colPos-moveDir].getPlayerId() != this.playerId) { // Check the pieces attackable locations for pieces
+            if (0 <= this.colPos-moveDir && this.colPos-moveDir <= 7 && board[this.rowPos+moveDir][this.colPos-moveDir] != null && board[this.rowPos+moveDir][this.colPos-moveDir].getPlayerId() != this.playerId) { // Check the pieces attackable locations for pieces
                 possibleMoves.push([this.rowPos+moveDir, this.colPos-moveDir]);
             }
         }
 
         return possibleMoves;
+    }
+
+    movePiece(row, col, board) {
+        super.movePiece(row, col, board);
+        this.moved = true;
     }
 }
