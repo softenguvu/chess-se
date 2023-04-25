@@ -40,14 +40,14 @@ QUnit.module("King", hooks => {
         );
         assert.deepEqual(
             king.prevRowPos,
-            null,
-            "Verify {prevRowPos} is null"
-        )
+            0,
+            "Verify {prevRowPos} is 0"
+        );
         assert.deepEqual(
             king.prevColPos,
-            null,
-            "Verify {prevColPos} is null"
-        )
+            0,
+            "Verify {prevColPos} is 0"
+        );
         assert.deepEqual(
             king.lastTake,
             null,
