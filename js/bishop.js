@@ -14,13 +14,13 @@ export class Bishop extends Piece {
     * @param {int} colPos Piece's column index.
     * @param {int} playerId Player id that the piece belongs to.
     */
-    constructor(pieceId, rowPos, colPos, playerId) {
+    constructor(id, rowPos, colPos, playerId) {
         super();
-        this.pieceId = pieceId;
+        this.id = id;
         this.rowPos = rowPos;
         this.colPos = colPos;
         this.playerId = playerId;
-        this.unicodeChar = "&#9815;";
+        this.unicodeChar = "&#9821;";
     }
 
     /**

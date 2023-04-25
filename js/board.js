@@ -27,7 +27,7 @@ export class Board {
         // Column labels indexed from left to right.
         Board.colStr = "abcdefgh";
         // 2D array of Piece.
-        this.board = Array.from(new Array(8), () => new Array(8));
+        this.board = Array.from(new Array(8), () => (new Array(8)).fill(null));
         // Mapping between player id and list of taken pieces.
         this.takenPieces = new Map();
         // The most recently moved piece.
@@ -45,8 +45,8 @@ export class Board {
             const [rowIndex, colIndex] = location;
             const squarePos = Board.colStr[colIndex] + Board.rowStr[rowIndex];
             const color = this.board[rowIndex][colIndex] ?
-                "primaryRed" :  // Red if contains piece.
-                "primaryRedBlack";  // RedBlack if doesn't contain piece.
+                "primaryRedBlack" :  // RedBlack if contains piece.
+                "primaryGrey";  // Grey if doesn't contain piece.
 
             this._markSquare(squarePos, color);
         });
@@ -56,7 +56,7 @@ export class Board {
      * Clears the board of all chess pieces and taken pieces.
      */
     reset() {
-        this.board = Array.from(new Array(8), () => new Array(8));
+        this.board = Array.from(new Array(8), () => (new Array(8)).fill(null));
         this.takenPieces.clear();
         this.lastPieceMoved = null;
     }
@@ -70,8 +70,8 @@ export class Board {
 
         // Initialize white's pieces.
         const playerOneId = 0;
-        const powerRowWhite = 0;  // Row index of white's power pieces.
-        const pawnRowWhite = 1;  // Row index of white's pawns.
+        const powerRowWhite = 7;  // Row index of white's power pieces.
+        const pawnRowWhite = 6;  // Row index of white's pawns.
         currPieceId = this._initPlayerPieces(
             currPieceId, playerOneId, powerRowWhite, pawnRowWhite
         );
@@ -79,8 +79,8 @@ export class Board {
 
         // Initialize black's pieces.
         const playerTwoId = 1;
-        const powerRowBlack = 7;  // Row index of black's power pieces.
-        const pawnRowBlack = 6;  // Row index of black's pawns.
+        const powerRowBlack = 0;  // Row index of black's power pieces.
+        const pawnRowBlack = 1;  // Row index of black's pawns.
         currPieceId = this._initPlayerPieces(
             currPieceId, playerTwoId, powerRowBlack, pawnRowBlack
         );
@@ -93,9 +93,9 @@ export class Board {
     renderPieces() {
         this._renderLivePieces();
         const playerOneId = 0;
-        this._renderTakenPieces(playerOneId, "left-graveyard");
+        this._renderTakenPieces(playerOneId, "left-graveyard-content");
         const playerTwoId = 1;
-        this._renderTakenPieces(playerTwoId, "right-graveyard");
+        this._renderTakenPieces(playerTwoId, "right-graveyard-content");
     }
 
     /**
@@ -107,7 +107,7 @@ export class Board {
      */
     _markSquare(squarePos, color) {
         const squareBgColors = [
-            "bg-black", "bg-white", "bg-primaryRedBlack", "bg-primaryRed"
+            "bg-light-brown", "bg-white", "bg-primaryGrey", "bg-primaryRedBlack"
         ];
         const boardSquare = document.getElementById(squarePos);
         boardSquare.classList.remove(...squareBgColors);
@@ -189,25 +189,33 @@ export class Board {
             row.forEach((col, colIndex) => {
                 const squarePos = Board.colStr[colIndex] + Board.rowStr[rowIndex];
                 const boardSquare = document.getElementById(squarePos);
-                boardSquare.innerHTML = (col) ? col.unicodeChar : "";
+                boardSquare.classList.remove("white-piece", "black-piece");
+                if (col) {
+                    boardSquare.innerHTML = col.unicodeChar;
+                    boardSquare.classList.add(
+                        (col.getPlayerId() === 0) ? "white-piece" : "black-piece"
+                    );
+                } else {
+                    boardSquare.innerHTML = "";
+                }
             })
         );
     }
 
     /**
      * Renders taken chess pieces for the player with the given player id in the
-     * corresponding frontend graveyard with the given element id.
+     * corresponding frontend graveyard content with the given element id.
      * 
      * @param {int} playerId Player's id.
-     * @param {string} graveyardId Frontend graveyard's HTML element id.
+     * @param {string} graveyardContentId Frontend graveyard content's HTML element id.
      */
-    _renderTakenPieces(playerId, graveyardId) {
+    _renderTakenPieces(playerId, graveyardContentId) {
         const takenPiecesHTML = [];
         this.takenPieces.get(playerId).forEach(takenPiece =>
             takenPiecesHTML.push(`<div class="col">${takenPiece.unicodeChar}</div>`)
         );
 
-        const graveyard = document.getElementById(graveyardId);
+        const graveyard = document.getElementById(graveyardContentId);
         graveyard.innerHTML = takenPiecesHTML.join("");
     }
 }

@@ -15,6 +15,7 @@ export class Piece {
         this.unicodeChar = undefined;
         this.playerId = null;
         this.lastTake = null;
+        this.isTaken = false;
     }
 
     /**
@@ -82,6 +83,14 @@ export class Piece {
     }
 
     /**
+     * Returns whether this piece has been taken by the enemy.
+     * @returns Boolean indicating whether this piece has been taken by the enemy.
+     */
+    isTaken() {
+        return this.isTaken;
+    }
+
+    /**
      * Undo previous action
      */
     undo(board) {
@@ -119,12 +128,14 @@ export class Piece {
      * Moves piece to {row}, {col} and updates board
      * @param row new row
      * @param col new column
-     * @param board Board.board
+     * @param board instance of Board class
      */
     movePiece(row, col, board) {
         if (board.board[row][col]) { // taking a piece
             this.lastTake = board.board[row][col];
-            this.lastTake.setTaken();
+            this.lastTake.isTaken = true;
+            const enemyTakenPieces = board.takenPieces.get(this.lastTake.getPlayerId());
+            enemyTakenPieces.push(this.lastTake);
             board.board[row][col] = null;
         }
         else {
@@ -136,8 +147,13 @@ export class Piece {
         board.board[row][col] = this;
 
         // Update piece position
+        this.prevRowPos = this.rowPos;
+        this.prevColPos = this.colPos;
         this.rowPos = row;
         this.colPos = col;
+        if (this.constructor.name === "Piece") {
+            this.moved = true;
+        }
     }
 
     /**

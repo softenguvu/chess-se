@@ -4,21 +4,6 @@
 }
 
 /*
-Top title Row
- */
-#title-row {
-    height: 10vh;
-    display: flex;
-    align-items: center;
-}
-
-.title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/*
 Middle main row
  */
 #main-row {
@@ -34,22 +19,44 @@ Middle main row
 
 }
 
+
 #chess-board-container {
     height: 100%;
     border: 1px solid black;
+    cursor: pointer;
 }
 
-/*
-Bottom buttons row
- */
-#buttons-row {
-    height: 10vh;
-    width: 100%;
+.round-ts {
+    border-top-left-radius: 10%;
 }
+
+.round-te {
+    border-top-right-radius: 10%;
+}
+
+.round-bs {
+    border-bottom-left-radius: 10%;
+}
+
+.round-be {
+    border-bottom-right-radius: 10%;
+}
+
+.bg-light-brown {
+
+    background-color: rgb(255, 211, 172);
+}
+
+.white-piece {
+    color: #E42929;
+}
+
+.black-piece {
+    color: #000000;
+}
+
 
 #undo-move, #new-game {
-    max-width: 100%;
-    font-size: x-large;
     font-weight: 200;
     padding: 5px 5px; 
     background-color: #E42929;
@@ -57,8 +64,7 @@ Bottom buttons row
     box-shadow: 4px 6px 5px 0 #000000;
     text-decoration: none;
     cursor: pointer;
-    text-align: center; 
-    
+    text-align: center;
  }
  
  #undo-move:hover, #new-game:hover {
