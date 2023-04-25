@@ -122,6 +122,10 @@ export class Piece {
         this.colPos = this.prevColPos;
 
         board.board[this.rowPos][this.colPos] = this;
+
+        if (this.constructor.name === "Pawn") {
+            this.moved -= 1;
+        }
     }
 
     /**
@@ -151,9 +155,6 @@ export class Piece {
         this.prevColPos = this.colPos;
         this.rowPos = row;
         this.colPos = col;
-        if (this.constructor.name === "Piece") {
-            this.moved = true;
-        }
     }
 
     /**
