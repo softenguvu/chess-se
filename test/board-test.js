@@ -33,7 +33,7 @@ QUnit.module("Board", hooks => {
 
         assert.deepEqual(
             board.board,
-            Array.from(new Array(8), () => Array(8)),
+            Array.from(new Array(8), () => (new Array(8)).fill(null)),
             "Verify [board] member is an empty 8x8 Array."
         );
 
@@ -57,7 +57,7 @@ QUnit.module("Board", hooks => {
         board.reset();
         assert.deepEqual(
             board.board,
-            Array.from(new Array(8), () => Array(8)),
+            Array.from(new Array(8), () => (new Array(8)).fill(null)),
             "Verify [board] member is now an empty 8x8 Array."
         );
 
