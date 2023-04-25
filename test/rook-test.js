@@ -40,14 +40,14 @@ QUnit.module("Rook", hooks => {
         );
         assert.deepEqual(
             rook.prevRowPos,
-            null,
-            "Verify {prevRowPos} is null"
-        )
+            0,
+            "Verify {prevRowPos} is 0"
+        );
         assert.deepEqual(
             rook.prevColPos,
-            null,
-            "Verify {prevColPos} is null"
-        )
+            0,
+            "Verify {prevColPos} is 0"
+        );
         assert.deepEqual(
             rook.lastTake,
             null,
