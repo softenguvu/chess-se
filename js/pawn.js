@@ -19,10 +19,10 @@ export class Pawn extends Piece{
         var moveDir = 0;
 
         if (this.playerId == 0) { // Check which direction the piece can move
-            moveDir = 1;
+            moveDir = -1;
         }
         else {
-            moveDir = -1;
+            moveDir = 1;
         }
         
         if (!this.moved &&
