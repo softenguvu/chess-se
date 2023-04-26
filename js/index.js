@@ -112,6 +112,7 @@ function handleSquareClick(squareString) {
                 console.log("The opposing King has been placed in check.");
                 if (detectCheckmate(kingPiece, board.board)) {
                     console.log("The opposing King is in checkmate, game over.");
+                    Messages.printWinMsg(currentPlayer);
                 }
             }
             currentPlayer = (currentPlayer === 0) ? 1 : 0;
@@ -245,7 +246,9 @@ function detectCheck(kingPiece, board) {
     function checkAndReset() {
         if (currClosestEnemy != null) {
             if (currClosestFriend == null) {
-                attackingEnemies.push(currClosestEnemy);
+                if (harmsWay(kingPiece, currClosestEnemy.possibleMoves(board))) {
+                    attackingEnemies.push(currClosestEnemy);
+                }
             }
             else if (harmsWay(currClosestFriend, currClosestEnemy.possibleMoves(board))) {
                 defendingFriends.push(currClosestFriend);
@@ -408,6 +411,7 @@ function detectCheck(kingPiece, board) {
         }
     });
 
+
     return [attackingEnemies, defendingFriends];
 
 }
@@ -435,7 +439,10 @@ function detectCheckmate(kingPiece, board) {
 
         if (res[0].length == 0) {
             acceptableMoves.push([newRow, newCol]);
+        }
+        else {
             res[0].forEach((attackingPiece) => {
+                console.log(attackingPiece)
                 attackingPieces.push(attackingPiece);
             });
         }
@@ -447,7 +454,6 @@ function detectCheckmate(kingPiece, board) {
     if (acceptableMoves.length == 0) {
         console.log("King can't move out of his predicament");
     }
-
     /**
      * Now see if any of your pieces can block or take the attacking piece
      */
@@ -472,10 +478,10 @@ function detectCheckmate(kingPiece, board) {
         if (kingPiece.playerId == 0) {
             // Use playerOnePieces
             playerOnePieces.forEach((piece) => {
-                if (!piece.isTaken()) {
+                if (!piece.isTaken) {
                     const pieceMoves = piece.possibleMoves(board);
-                    for(i = 0; i < pieceMoves.length; ++i) {
-                        for(j = 0; j < attackVectors.length; ++j) {
+                    for(let i = 0; i < pieceMoves.length; ++i) {
+                        for(let j = 0; j < attackVectors.length; ++j) {
                             if(pieceMoves[i][0] == attackVectors[j][0] && pieceMoves[i][1] == attackVectors[j][1]) {
                                 powerPieces.push(piece);
                             }
@@ -487,10 +493,10 @@ function detectCheckmate(kingPiece, board) {
         else {
             // Use playerTwoPieces
             playerTwoPieces.forEach((piece) => {
-                if (!piece.isTaken()) {
+                if (!piece.isTaken) {
                     const pieceMoves = piece.possibleMoves(board);
-                    for(i = 0; i < pieceMoves.length; ++i) {
-                        for(j = 0; j < attackVectors.length; ++j) {
+                    for(let i = 0; i < pieceMoves.length; ++i) {
+                        for(let j = 0; j < attackVectors.length; ++j) {
                             if(pieceMoves[i][0] == attackVectors[j][0] && pieceMoves[i][1] == attackVectors[j][1]) {
                                 powerPieces.push(piece);
                             }
