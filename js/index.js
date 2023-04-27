@@ -110,9 +110,12 @@ function handleSquareClick(squareString) {
         if (kingPiece) {
             if (detectCheck(kingPiece, board.board)[0].length > 0) {
                 console.log("The opposing King has been placed in check.");
-                if (detectCheckmate(kingPiece, board.board)) {
+                if (detectCheckmate(kingPiece, board.board).length == 0) {
                     console.log("The opposing King is in checkmate, game over.");
-                    Messages.printWinMsg(currentPlayer);
+                    Messages.printWinMsg(enemyPlayerId);
+                }
+                else {
+                    Messages.printInCheck(enemyPlayerId);
                 }
             }
             currentPlayer = (currentPlayer === 0) ? 1 : 0;
@@ -411,7 +414,6 @@ function detectCheck(kingPiece, board) {
         }
     });
 
-
     return [attackingEnemies, defendingFriends];
 
 }
@@ -451,9 +453,6 @@ function detectCheckmate(kingPiece, board) {
         kingPiece.setColPos(oldCol);
     });
 
-    if (acceptableMoves.length == 0) {
-        console.log("King can't move out of his predicament");
-    }
     /**
      * Now see if any of your pieces can block or take the attacking piece
      */
@@ -467,7 +466,82 @@ function detectCheckmate(kingPiece, board) {
             tempVectors.forEach((vectors) => {
                 attackVectors.push(vectors);
             });
-            attackVectors.push([currPiece.getRowPos(), currPiece.getColPos()]);
+
+            let tempVector = [];
+
+            for (let i = kingPiece.rowPos + 1; i < 7; i++) {
+                tempVector.push([i, kingPiece.getColPos()]);
+                if (board[i][kingPiece.colPos] !== null && board[i][kingPiece.colPos].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[i][kingPiece.colPos].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.colPos + 1; i < 7; i++) {
+                tempVector.push([kingPiece.getRowPos(), i]);
+                if (board[kingPiece.rowPos][i] !== null && board[kingPiece.rowPos][i].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[kingPiece.rowPos][i].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.rowPos - 1; i >= 0; i--) {
+                tempVector.push([i, kingPiece.getColPos()]);
+                if (board[i][kingPiece.colPos] !== null && board[i][kingPiece.colPos].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[i][kingPiece.colPos].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.colPos - 1; i >= 0; i--) {
+                tempVector.push([kingPiece.getRowPos(), i]);
+                if (board[kingPiece.rowPos][i] !== null && board[kingPiece.rowPos][i].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[kingPiece.rowPos][i].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.rowPos + 1, y = kingPiece.colPos + 1; i < 7 && y < 7; i++, y++) {
+                tempVector.push([i, y]);
+                if (board[i][y] !== null && board[i][y].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[i][y].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.rowPos - 1, y = kingPiece.colPos - 1; i >= 0 && y >= 0; i--, y--) {
+                tempVector.push([i, y]);
+                if (board[i][y] !== null && board[i][y].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[i][y].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.rowPos + 1, y = kingPiece.colPos - 1; i < 7 && y >= 0; i++, y--) {
+                tempVector.push([i, y]);
+                if (board[i][y] !== null && board[i][y].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[i][y].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.rowPos - 1, y = kingPiece.colPos + 1; i >= 0 && y < 7; i--, y++) {
+                tempVector.push([i, y]);
+                if (board[i][y] !== null && board[i][y].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[i][y].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            if (attackVectors.length == 0) {
+                attackVectors.push([currPiece.getRowPos(), currPiece.getColPos()]);
+            }
         });
 
         /**
@@ -478,7 +552,7 @@ function detectCheckmate(kingPiece, board) {
         if (kingPiece.playerId == 0) {
             // Use playerOnePieces
             playerOnePieces.forEach((piece) => {
-                if (!piece.isTaken) {
+                if (!piece.isTaken && piece.constructor.name != "King") {
                     const pieceMoves = piece.possibleMoves(board);
                     for(let i = 0; i < pieceMoves.length; ++i) {
                         for(let j = 0; j < attackVectors.length; ++j) {
@@ -493,7 +567,7 @@ function detectCheckmate(kingPiece, board) {
         else {
             // Use playerTwoPieces
             playerTwoPieces.forEach((piece) => {
-                if (!piece.isTaken) {
+                if (!piece.isTaken && piece.constructor.name != "King") {
                     const pieceMoves = piece.possibleMoves(board);
                     for(let i = 0; i < pieceMoves.length; ++i) {
                         for(let j = 0; j < attackVectors.length; ++j) {
@@ -505,13 +579,14 @@ function detectCheckmate(kingPiece, board) {
                 }
             });
         }
+        console.log(powerPieces)
         return powerPieces;
     }
     else if (attackingPieces.length >= 2) {
-        return true;
+        return [];
     }
     else {
-        return false;
+        return [1, 2];
     }
 }
 
