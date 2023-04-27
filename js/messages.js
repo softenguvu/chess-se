@@ -23,4 +23,10 @@ export class Messages{
         const playerWinMsg = `Checkmate. ${Messages.getPlayerColor(playerId)} Wins!`;
         alert(playerWinMsg);
     }
+
+    static printInCheck(playerId)
+    {
+        const playerWinMsg = `${Messages.getPlayerColor(playerId)} is in check`;
+        alert(playerWinMsg);
+    }
 }

@@ -110,8 +110,12 @@ function handleSquareClick(squareString) {
         if (kingPiece) {
             if (detectCheck(kingPiece, board.board)[0].length > 0) {
                 console.log("The opposing King has been placed in check.");
-                if (detectCheckmate(kingPiece, board.board)) {
+                if (detectCheckmate(kingPiece, board.board).length == 0) {
                     console.log("The opposing King is in checkmate, game over.");
+                    Messages.printWinMsg(enemyPlayerId);
+                }
+                else {
+                    Messages.printInCheck(enemyPlayerId);
                 }
             }
             currentPlayer = (currentPlayer === 0) ? 1 : 0;
@@ -245,7 +249,9 @@ function detectCheck(kingPiece, board) {
     function checkAndReset() {
         if (currClosestEnemy != null) {
             if (currClosestFriend == null) {
-                attackingEnemies.push(currClosestEnemy);
+                if (harmsWay(kingPiece, currClosestEnemy.possibleMoves(board))) {
+                    attackingEnemies.push(currClosestEnemy);
+                }
             }
             else if (harmsWay(currClosestFriend, currClosestEnemy.possibleMoves(board))) {
                 defendingFriends.push(currClosestFriend);
@@ -435,7 +441,10 @@ function detectCheckmate(kingPiece, board) {
 
         if (res[0].length == 0) {
             acceptableMoves.push([newRow, newCol]);
+        }
+        else {
             res[0].forEach((attackingPiece) => {
+                console.log(attackingPiece)
                 attackingPieces.push(attackingPiece);
             });
         }
@@ -443,10 +452,6 @@ function detectCheckmate(kingPiece, board) {
         kingPiece.setRowPos(oldRow);
         kingPiece.setColPos(oldCol);
     });
-
-    if (acceptableMoves.length == 0) {
-        console.log("King can't move out of his predicament");
-    }
 
     /**
      * Now see if any of your pieces can block or take the attacking piece
@@ -461,7 +466,82 @@ function detectCheckmate(kingPiece, board) {
             tempVectors.forEach((vectors) => {
                 attackVectors.push(vectors);
             });
-            attackVectors.push([currPiece.getRowPos(), currPiece.getColPos()]);
+
+            let tempVector = [];
+
+            for (let i = kingPiece.rowPos + 1; i < 7; i++) {
+                tempVector.push([i, kingPiece.getColPos()]);
+                if (board[i][kingPiece.colPos] !== null && board[i][kingPiece.colPos].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[i][kingPiece.colPos].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.colPos + 1; i < 7; i++) {
+                tempVector.push([kingPiece.getRowPos(), i]);
+                if (board[kingPiece.rowPos][i] !== null && board[kingPiece.rowPos][i].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[kingPiece.rowPos][i].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.rowPos - 1; i >= 0; i--) {
+                tempVector.push([i, kingPiece.getColPos()]);
+                if (board[i][kingPiece.colPos] !== null && board[i][kingPiece.colPos].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[i][kingPiece.colPos].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.colPos - 1; i >= 0; i--) {
+                tempVector.push([kingPiece.getRowPos(), i]);
+                if (board[kingPiece.rowPos][i] !== null && board[kingPiece.rowPos][i].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[kingPiece.rowPos][i].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.rowPos + 1, y = kingPiece.colPos + 1; i < 7 && y < 7; i++, y++) {
+                tempVector.push([i, y]);
+                if (board[i][y] !== null && board[i][y].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[i][y].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.rowPos - 1, y = kingPiece.colPos - 1; i >= 0 && y >= 0; i--, y--) {
+                tempVector.push([i, y]);
+                if (board[i][y] !== null && board[i][y].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[i][y].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.rowPos + 1, y = kingPiece.colPos - 1; i < 7 && y >= 0; i++, y--) {
+                tempVector.push([i, y]);
+                if (board[i][y] !== null && board[i][y].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[i][y].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            tempVector = [];
+
+            for (let i = kingPiece.rowPos - 1, y = kingPiece.colPos + 1; i >= 0 && y < 7; i--, y++) {
+                tempVector.push([i, y]);
+                if (board[i][y] !== null && board[i][y].getPlayerId() != kingPiece.playerId && currPiece.getId() == board[i][y].getId()) {
+                    attackVectors = tempVector;
+                }
+            }
+
+            if (attackVectors.length == 0) {
+                attackVectors.push([currPiece.getRowPos(), currPiece.getColPos()]);
+            }
         });
 
         /**
@@ -472,10 +552,10 @@ function detectCheckmate(kingPiece, board) {
         if (kingPiece.playerId == 0) {
             // Use playerOnePieces
             playerOnePieces.forEach((piece) => {
-                if (!piece.isTaken()) {
+                if (!piece.isTaken && piece.constructor.name != "King") {
                     const pieceMoves = piece.possibleMoves(board);
-                    for(i = 0; i < pieceMoves.length; ++i) {
-                        for(j = 0; j < attackVectors.length; ++j) {
+                    for(let i = 0; i < pieceMoves.length; ++i) {
+                        for(let j = 0; j < attackVectors.length; ++j) {
                             if(pieceMoves[i][0] == attackVectors[j][0] && pieceMoves[i][1] == attackVectors[j][1]) {
                                 powerPieces.push(piece);
                             }
@@ -487,10 +567,10 @@ function detectCheckmate(kingPiece, board) {
         else {
             // Use playerTwoPieces
             playerTwoPieces.forEach((piece) => {
-                if (!piece.isTaken()) {
+                if (!piece.isTaken && piece.constructor.name != "King") {
                     const pieceMoves = piece.possibleMoves(board);
-                    for(i = 0; i < pieceMoves.length; ++i) {
-                        for(j = 0; j < attackVectors.length; ++j) {
+                    for(let i = 0; i < pieceMoves.length; ++i) {
+                        for(let j = 0; j < attackVectors.length; ++j) {
                             if(pieceMoves[i][0] == attackVectors[j][0] && pieceMoves[i][1] == attackVectors[j][1]) {
                                 powerPieces.push(piece);
                             }
@@ -499,13 +579,14 @@ function detectCheckmate(kingPiece, board) {
                 }
             });
         }
+        console.log(powerPieces)
         return powerPieces;
     }
     else if (attackingPieces.length >= 2) {
-        return true;
+        return [];
     }
     else {
-        return false;
+        return [1, 2];
     }
 }
 
