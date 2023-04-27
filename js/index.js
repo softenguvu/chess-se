@@ -112,7 +112,7 @@ function handleSquareClick(squareString) {
                 console.log("The opposing King has been placed in check.");
                 if (detectCheckmate(kingPiece, board.board).length == 0) {
                     console.log("The opposing King is in checkmate, game over.");
-                    Messages.printWinMsg(enemyPlayerId);
+                    Messages.printWinMsg(currentPlayer);
                 }
                 else {
                     Messages.printInCheck(enemyPlayerId);
